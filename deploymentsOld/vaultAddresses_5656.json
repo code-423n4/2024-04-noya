@@ -1,0 +1,8 @@
+{
+  "8453": { "accountingManager": "0xf0Ff5Ab02f1e564Ec31A4A2FAf34bdEaACfFa645" },
+  "name": "Noya test vault",
+  "symbol": "Noya test vault",
+  "baseToken": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+  "vaultId": 5656,
+  "connectors": []
+}

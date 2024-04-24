@@ -1,0 +1,48 @@
+{
+  "name": "noya-vaults",
+  "scripts": {
+    "compile": "forge build"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.19.1"
+  },
+  "dependencies": {
+    "@balancer-labs/v2-interfaces": "^0.4.0",
+    "@gearbox-protocol/core-v2": "^1.21.1",
+    "@layerzerolabs/lz-evm-messagelib-v2": "^2.1.18",
+    "@layerzerolabs/lz-evm-oapp-v2": "^2.0.25",
+    "@layerzerolabs/lz-evm-protocol-v2": "^2.0.25",
+    "@layerzerolabs/ua-utils": "^0.0.26",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.0.0",
+    "@openzeppelin/contracts": "^4.8.1",
+    "@openzeppelin/contracts-3.4": "npm:@openzeppelin/contracts@3.4.2-solc-0.7",
+    "@openzeppelin/contracts-5.0": "npm:@openzeppelin/contracts@^5.0.1",
+    "@openzeppelin/contracts-upgradeable": "^4.8.1 || ^5.0.0",
+    "@tenderly/hardhat-tenderly": "^2.1.0",
+    "@typechain/ethers-v6": "^0.4.0",
+    "@typechain/hardhat": "^8.0.0",
+    "@types/chai": "^4.2.0",
+    "@types/mocha": ">=9.1.0",
+    "@types/node": "*",
+    "@uniswap/v3-core": "^1.0.1",
+    "@uniswap/v3-periphery": "^1.4.4",
+    "chai": "^4.2.0",
+    "dotenv": "^16.3.2",
+    "ethers": "^6.8.1",
+    "hardhat-contract-sizer": "^2.10.0",
+    "hardhat-deploy": "^0.11.44",
+    "hardhat-gas-reporter": "^1.0.8",
+    "ds-test": "https://github.com/dapphub/ds-test.git",
+    "solidity-bytes-utils": "^0.8.0",
+    "solidity-coverage": "^0.8.11",
+    "solidity-docgen": "^0.6.0-beta.36",
+    "tenderly": "^0.8.0",
+    "ts-node": ">=8.0.0",
+    "typechain": "^8.2.0",
+    "typescript": ">=4.5.0"
+  }
+}
