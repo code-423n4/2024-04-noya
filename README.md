@@ -262,7 +262,7 @@ _See [out_of_scope.txt](https://github.com/code-423n4/2024-04-noya/blob/main/out
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
 | ERC20 used by the protocol              |       Any             |
-| Test coverage                           | ✅ SCOUTS: Please populate this after running the test coverage command                          |
+| Test coverage                           | 90.2%                          |
 | ERC721 used  by the protocol            |            Yes, uniswap non fungible positions              |
 | ERC777 used by the protocol             |           No                |
 | ERC1155 used by the protocol            |              No            |
@@ -341,6 +341,11 @@ sh coverage.sh
 # See slither.txt
 slither . --foundry-out-directory artifactsFoundry
 ```
+
+- Coverage report:
+
+![](https://github.com/code-423n4/2024-04-noya/assets/47150934/5d9938e0-aea6-4319-9159-5d9904717785)
+
 
 ## Miscellaneous
 
