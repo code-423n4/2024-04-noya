@@ -1,14 +1,10 @@
 # NOYA audit details
-- Total Prize Pool: $65000 in USDC
-  - HM awards: $49920 in USDC
-  - (remove this line if there is no Analysis pool) Analysis awards: XXX XXX USDC (Notion: Analysis pool)
+- Total Prize Pool: $65,000 in USDC
+  - HM awards: $49,920 in USDC
   - QA awards: $2080 in USDC
-  - (remove this line if there is no Bot race) Bot Race awards: XXX XXX USDC (Notion: Bot Race pool)
- 
-  - Judge awards: $7500 in USDC
-  - Lookout awards: XXX XXX USDC (Notion: Sum of Pre-sort fee + Pre-sort early bonus)
+  - Judge awards: $7,500 in USDC
+  - Lookout awards: $5,000 in USDC
   - Scout awards: $500 in USDC
-  - (this line can be removed if there is no mitigation) Mitigation Review: XXX XXX USDC (*Opportunity goes to top 3 backstage wardens based on placement in this audit who RSVP.*)
 - Join [C4 Discord](https://discord.gg/code4rena) to register
 - Submit findings [using the C4 form](https://code4rena.com/contests/2024-04-noya/submit)
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
@@ -31,12 +27,12 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 ## Links
 
-- **Previous audits:**  Not yet finished (with Hacken)
+- **Previous audits:**  Hacken - (Need link from sponsor)
   - ✅ SCOUTS: If there are multiple report links, please format them in a list.
 - **Documentation:** docs.noya.ai
-- **Website:** 🐺 CA: add a link to the sponsor's website
-- **X/Twitter:** 🐺 CA: add a link to the sponsor's Twitter
-- **Discord:** 🐺 CA: add a link to the sponsor's Discord
+- **Website:** https://noya.ai/
+- **X/Twitter:** https://twitter.com/NetworkNoya
+- **Discord:** https://discord.com/invite/BGS5qX6fPj
 
 ---
 
@@ -425,4 +421,4 @@ make gas
 ✅ SCOUTS: Add a screenshot of your terminal showing the test coverage
 
 ## Miscellaneous
-Employees of [SPONSOR NAME] and employees' family members are ineligible to participate in this audit.
+Employees of NOYA and employees' family members are ineligible to participate in this audit.
