@@ -1,0 +1,737 @@
+INFO:Detectors:
+AccountingManager.executeWithdraw(uint256) (contracts/accountingManager/AccountingManager.sol#396-446) performs a multiplication on the result of a division:
+	- baseTokenAmount = data.amount * currentWithdrawGroup.totalABAmount / currentWithdrawGroup.totalCBAmountFullfilled (contracts/accountingManager/AccountingManager.sol#415-416)
+	- feeAmount = baseTokenAmount * withdrawFee / FEE_PRECISION (contracts/accountingManager/AccountingManager.sol#423)
+CompoundConnector.getCollBlanace(IComet,bool) (contracts/connectors/CompoundConnector.sol#95-123) performs a multiplication on the result of a division:
+	- collateralValueInVirtualBase = collateralBalance * collateralPriceInVirtualBase * baseScale / info.scale / basePrice (contracts/connectors/CompoundConnector.sol#117-118)
+	- CollValue += collateralValueInVirtualBase * info.liquidateCollateralFactor / 1e18 (contracts/connectors/CompoundConnector.sol#119)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+INFO:Detectors:
+AccountingManager.neededAssetsForWithdraw() (contracts/accountingManager/AccountingManager.sol#616-625) uses a dangerous strict equality:
+	- currentWithdrawGroup.isStarted == false || currentWithdrawGroup.isFullfilled == true || availableAssets >= currentWithdrawGroup.totalCBAmount (contracts/accountingManager/AccountingManager.sol#619-620)
+BaseConnector._updateTokenInRegistry(address) (contracts/helpers/BaseConnector.sol#158-160) uses a dangerous strict equality:
+	- _updateTokenInRegistry(token,IERC20(token).balanceOf(address(this)) == 0) (contracts/helpers/BaseConnector.sol#159)
+BaseConnector._getValue(address,address,uint256) (contracts/helpers/BaseConnector.sol#253-261) uses a dangerous strict equality:
+	- amount == 0 (contracts/helpers/BaseConnector.sol#257)
+AerodromeConnector.withdraw(WithdrawData) (contracts/connectors/AerodromeConnector.sol#79-98) uses a dangerous strict equality:
+	- IERC20(data.pool).balanceOf(address(this)) == 0 (contracts/connectors/AerodromeConnector.sol#92)
+BalancerConnector.decreasePosition(DecreasePositionParams) (contracts/connectors/BalancerConnector.sol#115-160) uses a dangerous strict equality:
+	- totalLpBalanceOf(p.poolId) == 0 (contracts/connectors/BalancerConnector.sol#146)
+BalancerFlashLoan.receiveFlashLoan(IERC20[],uint256[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#54-94) uses a dangerous strict equality:
+	- require(bool,string)(tokens[i_scope_2].balanceOf(address(this)) == 0,BalancerFlashLoan: Flash loan extra tokens) (contracts/connectors/BalancerFlashLoan.sol#92)
+CamelotConnector.removeLiquidityFromCamelotPool(CamelotRemoveLiquidityParams) (contracts/connectors/CamelotConnector.sol#65-86) uses a dangerous strict equality:
+	- IERC20(pool).balanceOf(address(this)) == 0 (contracts/connectors/CamelotConnector.sol#77)
+CurveConnector.LPToUnder(PoolInfo,uint256) (contracts/connectors/CurveConnector.sol#279-288) uses a dangerous strict equality:
+	- balance == 0 (contracts/connectors/CurveConnector.sol#280)
+CurveConnector.decreaseCurvePosition(address,uint256,uint256,uint256) (contracts/connectors/CurveConnector.sol#160-175) uses a dangerous strict equality:
+	- totalLpBalanceOf(poolInfo) == 0 (contracts/connectors/CurveConnector.sol#171)
+PendleConnector.isMarketEmpty(IPMarket) (contracts/connectors/PendleConnector.sol#303-309) uses a dangerous strict equality:
+	- (_SY.balanceOf(address(this)) == 0 && _PT.balanceOf(address(this)) == 0 && _YT.balanceOf(address(this)) == 0 && market.balanceOf(address(this)) == 0) (contracts/connectors/PendleConnector.sol#305-308)
+SiloConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/SiloConnector.sol#109-128) uses a dangerous strict equality:
+	- depositAmount == 0 && borrowAmount == 0 (contracts/connectors/SiloConnector.sol#120)
+StargateConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/StargateConnector.sol#110-121) uses a dangerous strict equality:
+	- lpAmount == 0 (contracts/connectors/StargateConnector.sol#115)
+StargateConnector.withdrawFromStargatePool(StargateRequest) (contracts/connectors/StargateConnector.sol#76-97) uses a dangerous strict equality:
+	- IERC20(lpAddress).balanceOf(address(this)) + LPAmount == 0 (contracts/connectors/StargateConnector.sol#89)
+ConnectorMock2._updateTokenInRegistry(address) (contracts/helpers/ConnectorMock2.sol#91-93) uses a dangerous strict equality:
+	- _updateTokenInRegistry(token,IERC20(token).balanceOf(address(this)) == 0) (contracts/helpers/ConnectorMock2.sol#92)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+INFO:Detectors:
+Reentrancy in AccountingManager.executeDeposit(uint256,address,bytes) (contracts/accountingManager/AccountingManager.sol#257-299):
+	External calls:
+	- IConnector(connector).addLiquidity(tokens,amounts,addLPdata) (contracts/accountingManager/AccountingManager.sol#293)
+	State variables written after the call(s):
+	- depositQueue.first = firstTemp (contracts/accountingManager/AccountingManager.sol#298)
+	AccountingManager.depositQueue (contracts/accountingManager/AccountingManager.sol#21) can be used in cross function reentrancies:
+	- AccountingManager.TVL() (contracts/accountingManager/AccountingManager.sol#627-630)
+	- AccountingManager.depositQueue (contracts/accountingManager/AccountingManager.sol#21)
+	- AccountingManager.getQueueItems(bool,uint256[]) (contracts/accountingManager/AccountingManager.sol#596-613)
+	- AccountingManager.neededAssetsForWithdraw() (contracts/accountingManager/AccountingManager.sol#616-625)
+	- AccountingManager.resetMiddle(uint256,bool) (contracts/accountingManager/AccountingManager.sol#453-469)
+Reentrancy in AccountingManager.executeWithdraw(uint256) (contracts/accountingManager/AccountingManager.sol#396-446):
+	External calls:
+	- baseToken.safeTransfer(data.receiver,baseTokenAmount) (contracts/accountingManager/AccountingManager.sol#428)
+	- baseToken.safeTransfer(withdrawFeeReceiver,withdrawFeeAmount) (contracts/accountingManager/AccountingManager.sol#439)
+	State variables written after the call(s):
+	- delete currentWithdrawGroup (contracts/accountingManager/AccountingManager.sol#444)
+	AccountingManager.currentWithdrawGroup (contracts/accountingManager/AccountingManager.sol#79) can be used in cross function reentrancies:
+	- AccountingManager.currentWithdrawGroup (contracts/accountingManager/AccountingManager.sol#79)
+	- AccountingManager.neededAssetsForWithdraw() (contracts/accountingManager/AccountingManager.sol#616-625)
+	- AccountingManager.resetMiddle(uint256,bool) (contracts/accountingManager/AccountingManager.sol#453-469)
+	- withdrawQueue.first = firstTemp (contracts/accountingManager/AccountingManager.sol#441)
+	AccountingManager.withdrawQueue (contracts/accountingManager/AccountingManager.sol#23) can be used in cross function reentrancies:
+	- AccountingManager.getQueueItems(bool,uint256[]) (contracts/accountingManager/AccountingManager.sol#596-613)
+	- AccountingManager.resetMiddle(uint256,bool) (contracts/accountingManager/AccountingManager.sol#453-469)
+	- AccountingManager.withdrawQueue (contracts/accountingManager/AccountingManager.sol#23)
+Reentrancy in AccountingManager.retrieveTokensForWithdraw(RetrieveData[]) (contracts/accountingManager/AccountingManager.sol#548-573):
+	External calls:
+	- amount = IConnector(retrieveData[i].connectorAddress).sendTokensToTrustedAddress(address(baseToken),retrieveData[i].withdrawAmount,address(this),retrieveData[i].data) (contracts/accountingManager/AccountingManager.sol#556-558)
+	State variables written after the call(s):
+	- amountAskedForWithdraw += amountAskedForWithdraw_temp (contracts/accountingManager/AccountingManager.sol#569)
+	AccountingManager.amountAskedForWithdraw (contracts/accountingManager/AccountingManager.sol#30) can be used in cross function reentrancies:
+	- AccountingManager.amountAskedForWithdraw (contracts/accountingManager/AccountingManager.sol#30)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+INFO:Detectors:
+TVLHelper.getLatestUpdateTime(uint256,PositionRegistry).latestUpdateTime (contracts/helpers/TVLHelper.sol#42) is a local variable never initialized
+TVLHelper.getTVL(uint256,PositionRegistry,address).totalTVL (contracts/helpers/TVLHelper.sol#15) is a local variable never initialized
+TVLHelper.getTVL(uint256,PositionRegistry,address).totalDebt (contracts/helpers/TVLHelper.sol#16) is a local variable never initialized
+BalancerConnector.totalLpBalanceOf(PoolInfo).auraShares (contracts/connectors/BalancerConnector.sol#176) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+INFO:Detectors:
+NoyaGovernanceBase.onlyManager() (contracts/governance/NoyaGovernanceBase.sol#31-37) ignores return value by (keeperContract,emergencyManager) = registry.getGovernanceAddresses(vaultId) (contracts/governance/NoyaGovernanceBase.sol#32)
+NoyaGovernanceBase.onlyEmergency() (contracts/governance/NoyaGovernanceBase.sol#43-47) ignores return value by (emergencyManager) = registry.getGovernanceAddresses(vaultId) (contracts/governance/NoyaGovernanceBase.sol#44)
+NoyaGovernanceBase.onlyEmergencyOrWatcher() (contracts/governance/NoyaGovernanceBase.sol#53-59) ignores return value by (watcherContract,emergencyManager) = registry.getGovernanceAddresses(vaultId) (contracts/governance/NoyaGovernanceBase.sol#54)
+NoyaGovernanceBase.onlyMaintainerOrEmergency() (contracts/governance/NoyaGovernanceBase.sol#65-69) ignores return value by (maintainer,emergencyManager) = registry.getGovernanceAddresses(vaultId) (contracts/governance/NoyaGovernanceBase.sol#66)
+NoyaGovernanceBase.onlyMaintainer() (contracts/governance/NoyaGovernanceBase.sol#75-79) ignores return value by (maintainer) = registry.getGovernanceAddresses(vaultId) (contracts/governance/NoyaGovernanceBase.sol#76)
+NoyaGovernanceBase.onlyGovernance() (contracts/governance/NoyaGovernanceBase.sol#85-89) ignores return value by (governer) = registry.getGovernanceAddresses(vaultId) (contracts/governance/NoyaGovernanceBase.sol#86)
+BaseConnector.sendTokensToTrustedAddress(address,uint256,address,bytes) (contracts/helpers/BaseConnector.sol#84-108) ignores return value by (accountingManager) = registry.getVaultAddresses(vaultId) (contracts/helpers/BaseConnector.sol#89)
+BaseConnector.sendTokensToTrustedAddress(address,uint256,address,bytes) (contracts/helpers/BaseConnector.sol#84-108) ignores return value by (watcherContract) = registry.getGovernanceAddresses(vaultId) (contracts/helpers/BaseConnector.sol#91)
+BaseConnector._updateTokenInRegistry(address,bool) (contracts/helpers/BaseConnector.sol#135-146) ignores return value by (accountingManager) = registry.getVaultAddresses(vaultId) (contracts/helpers/BaseConnector.sol#136)
+BaseConnector._updateTokenInRegistry(address,bool) (contracts/helpers/BaseConnector.sol#135-146) ignores return value by registry.updateHoldingPosition(vaultId,positionId,abi.encode(address(this)),,remove) (contracts/helpers/BaseConnector.sol#144)
+BaseConnector.addLiquidity(address[],uint256[],bytes) (contracts/helpers/BaseConnector.sol#169-193) ignores return value by ITokenTransferCallBack(msg.sender).sendTokensToTrustedAddress(tokens[i],amounts[i],msg.sender,) (contracts/helpers/BaseConnector.sol#181)
+AaveConnector.supply(address,uint256) (contracts/connectors/AaveConnector.sol#46-54) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),AAVE_POSITION_ID,),,,false) (contracts/connectors/AaveConnector.sol#49-51)
+AaveConnector.borrow(uint256,uint256,address) (contracts/connectors/AaveConnector.sol#62-76) ignores return value by (healthFactor) = IPool(pool).getUserAccountData(address(this)) (contracts/connectors/AaveConnector.sol#72)
+AaveConnector.repay(address,uint256,uint256) (contracts/connectors/AaveConnector.sol#81-86) ignores return value by IPool(pool).repay(asset,amount,i,address(this)) (contracts/connectors/AaveConnector.sol#83)
+AaveConnector.repayWithCollateral(uint256,uint256,address) (contracts/connectors/AaveConnector.sol#88-91) ignores return value by IPool(pool).repayWithATokens(_borrowAsset,_amount,i) (contracts/connectors/AaveConnector.sol#89)
+AaveConnector.withdrawCollateral(uint256,address) (contracts/connectors/AaveConnector.sol#100-112) ignores return value by IPool(pool).withdraw(_collateral,_collateralAmount,address(this)) (contracts/connectors/AaveConnector.sol#101)
+AaveConnector.withdrawCollateral(uint256,address) (contracts/connectors/AaveConnector.sol#100-112) ignores return value by (totalCollateralBase,healthFactor) = IPool(pool).getUserAccountData(address(this)) (contracts/connectors/AaveConnector.sol#103)
+AaveConnector.withdrawCollateral(uint256,address) (contracts/connectors/AaveConnector.sol#100-112) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),AAVE_POSITION_ID,),,,true) (contracts/connectors/AaveConnector.sol#107-109)
+AaveConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/AaveConnector.sol#114-118) ignores return value by (totalCollateralBase,totalDebtBase) = IPool(pool).getUserAccountData(address(this)) (contracts/connectors/AaveConnector.sol#115)
+AerodromeConnector.supply(DepositData) (contracts/connectors/AerodromeConnector.sol#53-73) ignores return value by aerodromeRouter.addLiquidity(IPool(data.pool).token0(),IPool(data.pool).token1(),IPool(data.pool).stable(),data.amount0,data.amount1,data.min0Min,data.min1Min,address(this),data.deadline) (contracts/connectors/AerodromeConnector.sol#57-67)
+AerodromeConnector.supply(DepositData) (contracts/connectors/AerodromeConnector.sol#53-73) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,false) (contracts/connectors/AerodromeConnector.sol#68)
+AerodromeConnector.withdraw(WithdrawData) (contracts/connectors/AerodromeConnector.sol#79-98) ignores return value by aerodromeRouter.removeLiquidity(IPool(data.pool).token0(),IPool(data.pool).token1(),IPool(data.pool).stable(),data.amountLiquidity,data.min0Min,data.min1Min,address(this),data.deadline) (contracts/connectors/AerodromeConnector.sol#82-91)
+AerodromeConnector.withdraw(WithdrawData) (contracts/connectors/AerodromeConnector.sol#79-98) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,true) (contracts/connectors/AerodromeConnector.sol#93)
+AerodromeConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/AerodromeConnector.sol#125-134) ignores return value by (reserve0,reserve1) = IPool(pool).getReserves() (contracts/connectors/AerodromeConnector.sol#130)
+BalancerConnector.openPosition(bytes32,uint256[],uint256[],uint256,uint256) (contracts/connectors/BalancerConnector.sol#64-107) ignores return value by (tokens,None,None) = IBalancerVault(balancerVault).getPoolTokens(poolId) (contracts/connectors/BalancerConnector.sol#73)
+BalancerConnector.openPosition(bytes32,uint256[],uint256[],uint256,uint256) (contracts/connectors/BalancerConnector.sol#64-107) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,false) (contracts/connectors/BalancerConnector.sol#97)
+BalancerConnector.openPosition(bytes32,uint256[],uint256[],uint256,uint256) (contracts/connectors/BalancerConnector.sol#64-107) ignores return value by IRewardPool(_poolInfo.auraPoolAddress).deposit(auraAmount,address(this)) (contracts/connectors/BalancerConnector.sol#104)
+BalancerConnector.depositIntoAuraBooster(bytes32,uint256) (contracts/connectors/BalancerConnector.sol#109-113) ignores return value by IRewardPool(_poolInfo.auraPoolAddress).deposit(_amount,address(this)) (contracts/connectors/BalancerConnector.sol#112)
+BalancerConnector.decreasePosition(DecreasePositionParams) (contracts/connectors/BalancerConnector.sol#115-160) ignores return value by IRewardPool(_poolInfo.auraPoolAddress).withdrawAndUnwrap(p._auraAmount,true) (contracts/connectors/BalancerConnector.sol#119)
+BalancerConnector.decreasePosition(DecreasePositionParams) (contracts/connectors/BalancerConnector.sol#115-160) ignores return value by (tokens,None,None) = IBalancerVault(balancerVault).getPoolTokens(p.poolId) (contracts/connectors/BalancerConnector.sol#125)
+BalancerConnector.decreasePosition(DecreasePositionParams) (contracts/connectors/BalancerConnector.sol#115-160) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),BALANCER_LP_POSITION,abi.encode(p.poolId)),,,true) (contracts/connectors/BalancerConnector.sol#147-153)
+BalancerConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/BalancerConnector.sol#162-173) ignores return value by (_tokenBalances) = IBalancerVault(balancerVault).getPoolTokens(pool.poolId) (contracts/connectors/BalancerConnector.sol#166)
+BalancerFlashLoan.receiveFlashLoan(IERC20[],uint256[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#54-94) ignores return value by (keeperContract,emergencyManager) = registry.getGovernanceAddresses(vaultId) (contracts/connectors/BalancerFlashLoan.sol#69)
+BalancerFlashLoan.receiveFlashLoan(IERC20[],uint256[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#54-94) ignores return value by BaseConnector(receiver).sendTokensToTrustedAddress(address(tokens[i_scope_1]),amounts[i_scope_1],address(this),) (contracts/connectors/BalancerFlashLoan.sol#86)
+CamelotConnector.addLiquidityInCamelotPool(CamelotAddLiquidityParams) (contracts/connectors/CamelotConnector.sol#43-58) ignores return value by router.addLiquidity(p.tokenA,p.tokenB,p.amountA,p.amountB,p.minAmountA,p.minAmountB,address(this),p.deadline) (contracts/connectors/CamelotConnector.sol#46-48)
+CamelotConnector.addLiquidityInCamelotPool(CamelotAddLiquidityParams) (contracts/connectors/CamelotConnector.sol#43-58) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),CAMELOT_POSITION_ID,abi.encode(p.tokenA,p.tokenB)),,,false) (contracts/connectors/CamelotConnector.sol#51-57)
+CamelotConnector.removeLiquidityFromCamelotPool(CamelotRemoveLiquidityParams) (contracts/connectors/CamelotConnector.sol#65-86) ignores return value by router.removeLiquidity(p.tokenA,p.tokenB,p.amountLiquidty,p.minAmountA,p.minAmountB,address(this),p.deadline) (contracts/connectors/CamelotConnector.sol#72-74)
+CamelotConnector.removeLiquidityFromCamelotPool(CamelotRemoveLiquidityParams) (contracts/connectors/CamelotConnector.sol#65-86) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),CAMELOT_POSITION_ID,abi.encode(p.tokenA,p.tokenB)),,,true) (contracts/connectors/CamelotConnector.sol#78-84)
+CamelotConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/CamelotConnector.sol#88-97) ignores return value by (reserves0,reserves1) = ICamelotPair(pool).getReserves() (contracts/connectors/CamelotConnector.sol#93)
+CompoundConnector.supply(address,address,uint256) (contracts/connectors/CompoundConnector.sol#29-38) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),COMPOUND_LP,abi.encode(market)),,,false) (contracts/connectors/CompoundConnector.sol#33-35)
+CompoundConnector.withdrawOrBorrow(address,address,uint256) (contracts/connectors/CompoundConnector.sol#48-60) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),COMPOUND_LP,abi.encode(_market)),,,true) (contracts/connectors/CompoundConnector.sol#54-56)
+CompoundConnector.getCollBlanace(IComet,bool) (contracts/connectors/CompoundConnector.sol#95-123) ignores return value by (collateralBalance) = comet.userCollateral(address(this),info.asset) (contracts/connectors/CompoundConnector.sol#112)
+CurveConnector.depositIntoPrisma(address,uint256,bool) (contracts/connectors/CurveConnector.sol#81-94) ignores return value by IDepositToken(depostiToken).deposit(address(this),amount) (contracts/connectors/CurveConnector.sol#93)
+CurveConnector.depositIntoConvexBooster(address,uint256,uint256,bool) (contracts/connectors/CurveConnector.sol#103-108) ignores return value by convexBooster.deposit(pid,amount,stake) (contracts/connectors/CurveConnector.sol#107)
+CurveConnector.openCurvePosition(address,uint256,uint256,uint256) (contracts/connectors/CurveConnector.sol#117-151) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,false) (contracts/connectors/CurveConnector.sol#150)
+CurveConnector.decreaseCurvePosition(address,uint256,uint256,uint256) (contracts/connectors/CurveConnector.sol#160-175) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,true) (contracts/connectors/CurveConnector.sol#172)
+CurveConnector.withdrawFromConvexBooster(uint256,uint256) (contracts/connectors/CurveConnector.sol#182-185) ignores return value by convexBooster.withdraw(pid,amount) (contracts/connectors/CurveConnector.sol#183)
+CurveConnector.withdrawFromConvexRewardPool(address,uint256) (contracts/connectors/CurveConnector.sol#192-195) ignores return value by IConvexBasicRewards(pool).withdraw(amount,true) (contracts/connectors/CurveConnector.sol#193)
+CurveConnector.withdrawFromPrisma(address,uint256) (contracts/connectors/CurveConnector.sol#212-215) ignores return value by IDepositToken(depostiToken).withdraw(address(this),amount) (contracts/connectors/CurveConnector.sol#213)
+CurveConnector.harvestPrismaRewards(address[]) (contracts/connectors/CurveConnector.sol#233-241) ignores return value by IDepositToken(pools[i]).claimReward(address(this)) (contracts/connectors/CurveConnector.sol#235)
+CurveConnector.harvestConvexRewards(address[]) (contracts/connectors/CurveConnector.sol#247-255) ignores return value by baseRewardPool.getReward(address(this),true) (contracts/connectors/CurveConnector.sol#250)
+DolomiteConnector.deposit(uint256,uint256) (contracts/connectors/Dolomite.sol#30-41) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),DOL_POSITION_ID,),abi.encode(0),,false) (contracts/connectors/Dolomite.sol#38-40)
+DolomiteConnector.withdraw(uint256,uint256) (contracts/connectors/Dolomite.sol#43-56) ignores return value by (markets) = dolomiteMargin.getAccountBalances(Info(address(this),0)) (contracts/connectors/Dolomite.sol#50)
+DolomiteConnector.withdraw(uint256,uint256) (contracts/connectors/Dolomite.sol#43-56) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),DOL_POSITION_ID,),abi.encode(0),,true) (contracts/connectors/Dolomite.sol#52-54)
+DolomiteConnector.openBorrowPosition(uint256,uint256,uint256) (contracts/connectors/Dolomite.sol#58-75) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),DOL_POSITION_ID,),abi.encode(accountId),,true) (contracts/connectors/Dolomite.sol#72-74)
+DolomiteConnector.closeBorrowPosition(uint256[],uint256) (contracts/connectors/Dolomite.sol#98-104) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),DOL_POSITION_ID,),abi.encode(accountId),,true) (contracts/connectors/Dolomite.sol#101-103)
+DolomiteConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/Dolomite.sol#106-122) ignores return value by (markets,tokens,amounts) = dolomiteMargin.getAccountBalances(Info(address(this),accountId)) (contracts/connectors/Dolomite.sol#109-110)
+FraxConnector.borrowAndSupply(IFraxPair,uint256,uint256) (contracts/connectors/FraxConnector.sol#38-61) ignores return value by pool.borrowAsset(borrowAmount,collateralAmount,address(this)) (contracts/connectors/FraxConnector.sol#50)
+FraxConnector.borrowAndSupply(IFraxPair,uint256,uint256) (contracts/connectors/FraxConnector.sol#38-61) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,false) (contracts/connectors/FraxConnector.sol#58)
+FraxConnector.withdraw(IFraxPair,uint256) (contracts/connectors/FraxConnector.sol#68-80) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,true) (contracts/connectors/FraxConnector.sol#74)
+FraxConnector.repay(IFraxPair,uint256) (contracts/connectors/FraxConnector.sol#87-98) ignores return value by IFraxPair(pool).repayAsset(sharesToRepay,address(this)) (contracts/connectors/FraxConnector.sol#95)
+FraxConnector._getHealthFactor(IFraxPair,uint256) (contracts/connectors/FraxConnector.sol#120-140) ignores return value by (LTV_PRECISION,EXCHANGE_PRECISION) = _fraxlendPair.getConstants() (contracts/connectors/FraxConnector.sol#127)
+Gearboxv3.openAccount(address,uint256) (contracts/connectors/GearBoxV3.sol#24-34) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),GEARBOX_POSITION_ID,abi.encode(facade)),abi.encode(c),,false) (contracts/connectors/GearBoxV3.sol#26-32)
+Gearboxv3.closeAccount(address,address) (contracts/connectors/GearBoxV3.sol#41-52) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),GEARBOX_POSITION_ID,abi.encode(facade)),abi.encode(creditAccount),,true) (contracts/connectors/GearBoxV3.sol#44-50)
+LidoConnector.deposit(uint256) (contracts/connectors/LidoConnector.sol#37-45) ignores return value by ILido(lido).submit{value: amountIn}(address(0)) (contracts/connectors/LidoConnector.sol#41)
+LidoConnector.requestWithdrawals(uint256) (contracts/connectors/LidoConnector.sol#51-63) ignores return value by registry.updateHoldingPosition(vaultId,positionId,abi.encode(requestIds[0]),abi.encode(amount),false) (contracts/connectors/LidoConnector.sol#59)
+LidoConnector.claimWithdrawal(uint256) (contracts/connectors/LidoConnector.sol#69-87) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),LIDO_WITHDRAWAL_REQUEST_ID,),abi.encode(requestId),,true) (contracts/connectors/LidoConnector.sol#78-84)
+MaverickConnector.addLiquidityInMaverickPool(MavericAddLiquidityParams) (contracts/connectors/MaverickConnector.sol#91-108) ignores return value by (tokenId,None,None,None) = IMaverickRouter(maverickRouter).addLiquidityToPool{value: sendEthAmount}(p.pool,0,p.params,p.minTokenAAmount,p.minTokenBAmount,p.deadline) (contracts/connectors/MaverickConnector.sol#98-100)
+MaverickConnector.addLiquidityInMaverickPool(MavericAddLiquidityParams) (contracts/connectors/MaverickConnector.sol#91-108) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),MAVERICK_LP,abi.encode(p.pool)),,,false) (contracts/connectors/MaverickConnector.sol#102-104)
+MaverickConnector.removeLiquidityFromMaverickPool(MavericRemoveLiquidityParams) (contracts/connectors/MaverickConnector.sol#115-131) ignores return value by IMaverickRouter(maverickRouter).removeLiquidity(p.pool,address(this),p.tokenId,p.params,p.minTokenAAmount,p.minTokenBAmount,p.deadline) (contracts/connectors/MaverickConnector.sol#122-124)
+MaverickConnector.removeLiquidityFromMaverickPool(MavericRemoveLiquidityParams) (contracts/connectors/MaverickConnector.sol#115-131) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),MAVERICK_LP,abi.encode(p.pool)),,,true) (contracts/connectors/MaverickConnector.sol#125-127)
+MaverickConnector.claimBoostedPositionRewards(IMaverickReward) (contracts/connectors/MaverickConnector.sol#137-147) ignores return value by rewardContract.getReward(address(this),tokenIndex) (contracts/connectors/MaverickConnector.sol#143)
+MorphoBlueConnector.supply(uint256,Id,bool) (contracts/connectors/MorphoBlueConnector.sol#35-50) ignores return value by morphoBlue.supply(params,amount,0,address(this),) (contracts/connectors/MorphoBlueConnector.sol#39)
+MorphoBlueConnector.supply(uint256,Id,bool) (contracts/connectors/MorphoBlueConnector.sol#35-50) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),MORPHO_POSITION_ID,abi.encode(id)),,,false) (contracts/connectors/MorphoBlueConnector.sol#46-48)
+MorphoBlueConnector.withdraw(uint256,Id,bool) (contracts/connectors/MorphoBlueConnector.sol#58-73) ignores return value by morphoBlue.withdraw(params,amount,0,address(this),address(this)) (contracts/connectors/MorphoBlueConnector.sol#61)
+MorphoBlueConnector.withdraw(uint256,Id,bool) (contracts/connectors/MorphoBlueConnector.sol#58-73) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),MORPHO_POSITION_ID,abi.encode(id)),,,true) (contracts/connectors/MorphoBlueConnector.sol#67-69)
+MorphoBlueConnector.borrow(uint256,Id) (contracts/connectors/MorphoBlueConnector.sol#80-88) ignores return value by morphoBlue.borrow(market,amount,0,address(this),address(this)) (contracts/connectors/MorphoBlueConnector.sol#82)
+MorphoBlueConnector.repay(uint256,Id) (contracts/connectors/MorphoBlueConnector.sol#95-101) ignores return value by morphoBlue.repay(params,amount,0,address(this),) (contracts/connectors/MorphoBlueConnector.sol#98)
+UNIv3Connector.openPosition(MintParams) (contracts/connectors/UNIv3Connector.sol#40-57) ignores return value by (tokenId,None,None,None) = positionManager.mint(p) (contracts/connectors/UNIv3Connector.sol#49)
+UNIv3Connector.openPosition(MintParams) (contracts/connectors/UNIv3Connector.sol#40-57) ignores return value by registry.updateHoldingPosition(vaultId,positionId,positionData,abi.encode(p.tickLower,p.tickUpper,p.fee),false) (contracts/connectors/UNIv3Connector.sol#51-53)
+UNIv3Connector.decreasePosition(DecreaseLiquidityParams) (contracts/connectors/UNIv3Connector.sol#63-81) ignores return value by positionManager.decreaseLiquidity(p) (contracts/connectors/UNIv3Connector.sol#68)
+UNIv3Connector.decreasePosition(DecreaseLiquidityParams) (contracts/connectors/UNIv3Connector.sol#63-81) ignores return value by registry.updateHoldingPosition(vaultId,positionId,positionData,,true) (contracts/connectors/UNIv3Connector.sol#78)
+UNIv3Connector.increasePosition(IncreaseLiquidityParams) (contracts/connectors/UNIv3Connector.sol#87-96) ignores return value by positionManager.increaseLiquidity(p) (contracts/connectors/UNIv3Connector.sol#92)
+UNIv3Connector.getCurrentLiquidity(uint256) (contracts/connectors/UNIv3Connector.sol#116-119) ignores return value by (token0,token1,liquidity) = positionManager.positions(tokenId) (contracts/connectors/UNIv3Connector.sol#117)
+UNIv3Connector._getPositionTVL(HoldingPI,address) (contracts/connectors/UNIv3Connector.sol#127-150) ignores return value by (liquidity,tokensOwed0,tokensOwed1) = pool.positions(key) (contracts/connectors/UNIv3Connector.sol#138)
+UNIv3Connector._getPositionTVL(HoldingPI,address) (contracts/connectors/UNIv3Connector.sol#127-150) ignores return value by (sqrtPriceX96) = pool.slot0() (contracts/connectors/UNIv3Connector.sol#140)
+PendleConnector.supply(address,uint256) (contracts/connectors/PendleConnector.sol#78-90) ignores return value by (_SY,_PT) = IPMarket(market).readTokens() (contracts/connectors/PendleConnector.sol#79)
+PendleConnector.supply(address,uint256) (contracts/connectors/PendleConnector.sol#78-90) ignores return value by (_underlyingToken) = _SY.assetInfo() (contracts/connectors/PendleConnector.sol#81)
+PendleConnector.supply(address,uint256) (contracts/connectors/PendleConnector.sol#78-90) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,false) (contracts/connectors/PendleConnector.sol#88)
+PendleConnector.mintPTAndYT(address,uint256) (contracts/connectors/PendleConnector.sol#97-102) ignores return value by _YT.mintPY(address(this),address(this)) (contracts/connectors/PendleConnector.sol#100)
+PendleConnector.depositIntoMarket(IPMarket,uint256,uint256) (contracts/connectors/PendleConnector.sol#112-119) ignores return value by (_SY,_PT) = IPMarket(market).readTokens() (contracts/connectors/PendleConnector.sol#113)
+PendleConnector.depositIntoMarket(IPMarket,uint256,uint256) (contracts/connectors/PendleConnector.sol#112-119) ignores return value by market.mint(address(this),SYamount,PTamount) (contracts/connectors/PendleConnector.sol#116)
+PendleConnector.swapYTForPT(address,uint256,uint256,ApproxParams) (contracts/connectors/PendleConnector.sol#149-157) ignores return value by pendleRouter.swapExactYtForPt(address(this),market,exactYTIn,min,guess) (contracts/connectors/PendleConnector.sol#155)
+PendleConnector.swapYTForSY(address,uint256,uint256,LimitOrderData) (contracts/connectors/PendleConnector.sol#166-174) ignores return value by pendleRouter.swapExactYtForSy(address(this),market,exactYTIn,min,orderData) (contracts/connectors/PendleConnector.sol#172)
+PendleConnector.swapExactPTForSY(IPMarket,uint256,bytes,uint256) (contracts/connectors/PendleConnector.sol#183-196) ignores return value by (_SY,_PT) = IPMarket(market).readTokens() (contracts/connectors/PendleConnector.sol#188)
+PendleConnector.burnLP(IPMarket,uint256) (contracts/connectors/PendleConnector.sol#203-208) ignores return value by market.burn(address(this),address(market),amount) (contracts/connectors/PendleConnector.sol#205)
+PendleConnector.decreasePosition(IPMarket,uint256,bool) (contracts/connectors/PendleConnector.sol#216-233) ignores return value by (SY) = market.readTokens() (contracts/connectors/PendleConnector.sol#217)
+PendleConnector.decreasePosition(IPMarket,uint256,bool) (contracts/connectors/PendleConnector.sol#216-233) ignores return value by (_underlyingToken) = SY.assetInfo() (contracts/connectors/PendleConnector.sol#218)
+PendleConnector.decreasePosition(IPMarket,uint256,bool) (contracts/connectors/PendleConnector.sol#216-233) ignores return value by IPStandardizedYield(address(SY)).redeem(address(this),_amount,_underlyingToken,1,true) (contracts/connectors/PendleConnector.sol#222)
+PendleConnector.decreasePosition(IPMarket,uint256,bool) (contracts/connectors/PendleConnector.sol#216-233) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),PENDLE_POSITION_ID,abi.encode(market)),,,true) (contracts/connectors/PendleConnector.sol#224-230)
+PendleConnector.claimRewards(IPMarket) (contracts/connectors/PendleConnector.sol#241-248) ignores return value by market.redeemRewards(address(this)) (contracts/connectors/PendleConnector.sol#242)
+PendleConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/PendleConnector.sol#257-285) ignores return value by (_underlyingToken) = _SY.assetInfo() (contracts/connectors/PendleConnector.sol#263)
+PendleConnector.getYTValue(address,uint256) (contracts/connectors/PendleConnector.sol#293-296) ignores return value by (netSyOut) = staticRouter.swapExactYtForSyStatic(market,balance) (contracts/connectors/PendleConnector.sol#294)
+PendleConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/PendleConnector.sol#311-317) ignores return value by (SY) = IPMarket(market).readTokens() (contracts/connectors/PendleConnector.sol#313)
+PendleConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/PendleConnector.sol#311-317) ignores return value by (None,tokens[0],None) = SY.assetInfo() (contracts/connectors/PendleConnector.sol#315)
+PrismaConnector.openTrove(IStakeNTroveZap,address,uint256,uint256,uint256) (contracts/connectors/PrismaConnector.sol#52-67) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,false) (contracts/connectors/PrismaConnector.sol#63)
+PrismaConnector.closeTrove(IStakeNTroveZap,address) (contracts/connectors/PrismaConnector.sol#129-136) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,true) (contracts/connectors/PrismaConnector.sol#134)
+SNXV3Connector.createAccount() (contracts/connectors/SNXConnector.sol#25-28) ignores return value by SNXCoreProxy.createAccount() (contracts/connectors/SNXConnector.sol#27)
+SNXV3Connector.deposit(address,uint256,uint128) (contracts/connectors/SNXConnector.sol#30-44) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),SNX_POSITION_ID,),abi.encode(_accountId,_token),,false) (contracts/connectors/SNXConnector.sol#35-41)
+SNXV3Connector.withdraw(address,uint256,uint128) (contracts/connectors/SNXConnector.sol#46-62) ignores return value by (c) = SNXCoreProxy.getAccountCollateral(_accountId,_token) (contracts/connectors/SNXConnector.sol#50)
+SNXV3Connector.withdraw(address,uint256,uint128) (contracts/connectors/SNXConnector.sol#46-62) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),SNX_POSITION_ID,),abi.encode(_accountId,_token),,true) (contracts/connectors/SNXConnector.sol#52-58)
+SNXV3Connector.claimRewards(uint128,uint128,address,address) (contracts/connectors/SNXConnector.sol#94-100) ignores return value by SNXCoreProxy.claimRewards(accountId,poolId,collateralType,distributor) (contracts/connectors/SNXConnector.sol#98)
+SiloConnector.deposit(address,address,uint256,bool) (contracts/connectors/SiloConnector.sol#33-42) ignores return value by silo.deposit(dToken,amount,oC) (contracts/connectors/SiloConnector.sol#36)
+SiloConnector.deposit(address,address,uint256,bool) (contracts/connectors/SiloConnector.sol#33-42) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),SILO_LP_ID,abi.encode(siloToken)),,,false) (contracts/connectors/SiloConnector.sol#38-40)
+SiloConnector.withdraw(address,address,uint256,bool,bool) (contracts/connectors/SiloConnector.sol#52-69) ignores return value by silo.withdraw(wToken,amount,oC) (contracts/connectors/SiloConnector.sol#58)
+SiloConnector.withdraw(address,address,uint256,bool,bool) (contracts/connectors/SiloConnector.sol#52-69) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),SILO_LP_ID,abi.encode(siloToken)),,,true) (contracts/connectors/SiloConnector.sol#61-63)
+SiloConnector.getData(address) (contracts/connectors/SiloConnector.sol#71-77) ignores return value by SolvencyV2.getData(ISilo(siloRepository.getSilo(siloToken)),address(this),minimumHealthFactor) (contracts/connectors/SiloConnector.sol#76)
+SiloConnector.borrow(address,address,uint256) (contracts/connectors/SiloConnector.sol#85-90) ignores return value by silo.borrow(bToken,amount) (contracts/connectors/SiloConnector.sol#87)
+SiloConnector.repay(address,address,uint256) (contracts/connectors/SiloConnector.sol#98-107) ignores return value by silo.repay(rToken,amount) (contracts/connectors/SiloConnector.sol#101)
+SiloConnector.isSiloEmpty(ISilo) (contracts/connectors/SiloConnector.sol#130-141) ignores return value by (assetsS) = silo.getAssetsWithState() (contracts/connectors/SiloConnector.sol#131)
+SiloConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/SiloConnector.sol#143-148) ignores return value by (assets) = silo.getAssetsWithState() (contracts/connectors/SiloConnector.sol#146)
+StargateConnector.depositIntoStargatePool(StargateRequest) (contracts/connectors/StargateConnector.sol#49-70) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,false) (contracts/connectors/StargateConnector.sol#68)
+StargateConnector.withdrawFromStargatePool(StargateRequest) (contracts/connectors/StargateConnector.sol#76-97) ignores return value by stargateRouter.instantRedeemLocal(uint16(withdrawRequest.poolId),withdrawRequest.routerAmount,address(this)) (contracts/connectors/StargateConnector.sol#83-85)
+StargateConnector.withdrawFromStargatePool(StargateRequest) (contracts/connectors/StargateConnector.sol#76-97) ignores return value by registry.updateHoldingPosition(vaultId,positionId,,,true) (contracts/connectors/StargateConnector.sol#93)
+ConnectorMock2.addLiquidity(address[],uint256[],bytes) (contracts/helpers/ConnectorMock2.sol#40-49) ignores return value by ITokenTransferCallBack(msg.sender).sendTokensToTrustedAddress(tokens[i],amounts[i],msg.sender,) (contracts/helpers/ConnectorMock2.sol#44)
+ConnectorMock2.updatePositionToRegistryUsingType(bytes32,bytes,bool) (contracts/helpers/ConnectorMock2.sol#51-53) ignores return value by registry.updateHoldingPosition(vaultId,_positionId,data,,remove) (contracts/helpers/ConnectorMock2.sol#52)
+ConnectorMock2.addPositionToRegistryUsingType(uint256,bytes) (contracts/helpers/ConnectorMock2.sol#59-63) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),_positionType,),data,,false) (contracts/helpers/ConnectorMock2.sol#60-62)
+ConnectorMock2.addPositionToRegistry(bytes) (contracts/helpers/ConnectorMock2.sol#65-69) ignores return value by registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),positionType,),data,,false) (contracts/helpers/ConnectorMock2.sol#66-68)
+ConnectorMock2._updateTokenInRegistry(address,bool) (contracts/helpers/ConnectorMock2.sol#79-89) ignores return value by (accountingManager) = registry.getVaultAddresses(vaultId) (contracts/helpers/ConnectorMock2.sol#80)
+ConnectorMock2._updateTokenInRegistry(address,bool) (contracts/helpers/ConnectorMock2.sol#79-89) ignores return value by registry.updateHoldingPosition(vaultId,positionId,abi.encode(address(this)),,remove) (contracts/helpers/ConnectorMock2.sol#87)
+OmnichainManagerNormalChain.getTVL() (contracts/helpers/OmniChainHandler/OmnichainManagerNormalChain.sol#19-22) ignores return value by (baseToken) = registry.getVaultAddresses(vaultId) (contracts/helpers/OmniChainHandler/OmnichainManagerNormalChain.sol#20)
+LifiImplementation._forward(IERC20,address,uint256,address,bytes,uint256) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#165-183) ignores return value by ITokenTransferCallBack(from).sendTokensToTrustedAddress(address(token),amount,caller,abi.encode(routeId)) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#171)
+ChainlinkOracleConnector.getValueFromChainlinkFeed(AggregatorV3Interface,uint256,uint256,bool) (contracts/helpers/valueOracle/oracles/ChainlinkOracleConnector.sol#115-135) ignores return value by (None,price,None,updatedAt,None) = source.latestRoundData() (contracts/helpers/valueOracle/oracles/ChainlinkOracleConnector.sol#123)
+UniswapValueOracle.getValue(address,address,uint256) (contracts/helpers/valueOracle/oracles/UniswapValueOracle.sol#60-86) ignores return value by (tickCumulatives) = IUniswapV3Pool(pool).observe(secondsAgos) (contracts/helpers/valueOracle/oracles/UniswapValueOracle.sol#74)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+INFO:Detectors:
+PositionRegistry.constructor(address,address,address,address)._flashLoan (contracts/accountingManager/Registry.sol#66) lacks a zero-check on :
+		- flashLoan = _flashLoan (contracts/accountingManager/Registry.sol#76)
+PositionRegistry.setFlashLoanAddress(address)._flashLoan (contracts/accountingManager/Registry.sol#84) lacks a zero-check on :
+		- flashLoan = _flashLoan (contracts/accountingManager/Registry.sol#86)
+Keepers.execute(address,bytes,uint256,address,bytes32[],bytes32[],uint8[],uint256).destination (contracts/governance/Keepers.sol#85) lacks a zero-check on :
+		- (success) = destination.call{gas: gasLimit}(data) (contracts/governance/Keepers.sol#116)
+LifiImplementation.constructor(address,address)._lifi (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#27) lacks a zero-check on :
+		- lifi = _lifi (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#29)
+LifiImplementation.rescueFunds(address,address,uint256).userAddress (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#193) lacks a zero-check on :
+		- (success) = address(userAddress).call{value: amount}() (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#195)
+UniswapValueOracle.constructor(address,PositionRegistry)._factory (contracts/helpers/valueOracle/oracles/UniswapValueOracle.sol#31) lacks a zero-check on :
+		- factory = _factory (contracts/helpers/valueOracle/oracles/UniswapValueOracle.sol#32)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+INFO:Detectors:
+AccountingManager.TVL() (contracts/accountingManager/AccountingManager.sol#627-630) has external calls inside a loop: TVLHelper.getTVL(vaultId,registry,address(baseToken)) + baseToken.balanceOf(address(this)) - depositQueue.totalAWFDeposit (contracts/accountingManager/AccountingManager.sol#628-629)
+TVLHelper.getTVL(uint256,PositionRegistry,address) (contracts/helpers/TVLHelper.sol#14-34) has external calls inside a loop: tvl = IConnector(positions[i].calculatorConnector).getPositionTVL(positions[i],baseToken) (contracts/helpers/TVLHelper.sol#22)
+TVLHelper.getTVL(uint256,PositionRegistry,address) (contracts/helpers/TVLHelper.sol#14-34) has external calls inside a loop: isPositionDebt = registry.isPositionDebt(vaultId,positions[i].positionId) (contracts/helpers/TVLHelper.sol#23)
+TVLHelper.getTVL(uint256,PositionRegistry,address) (contracts/helpers/TVLHelper.sol#14-34) has external calls inside a loop: positions = registry.getHoldingPositions(vaultId) (contracts/helpers/TVLHelper.sol#17)
+AccountingManager.retrieveTokensForWithdraw(RetrieveData[]) (contracts/accountingManager/AccountingManager.sol#548-573) has external calls inside a loop: ! registry.isAnActiveConnector(vaultId,retrieveData[i].connectorAddress) (contracts/accountingManager/AccountingManager.sol#552)
+AccountingManager.retrieveTokensForWithdraw(RetrieveData[]) (contracts/accountingManager/AccountingManager.sol#548-573) has external calls inside a loop: balanceBefore = baseToken.balanceOf(address(this)) (contracts/accountingManager/AccountingManager.sol#555)
+AccountingManager.retrieveTokensForWithdraw(RetrieveData[]) (contracts/accountingManager/AccountingManager.sol#548-573) has external calls inside a loop: amount = IConnector(retrieveData[i].connectorAddress).sendTokensToTrustedAddress(address(baseToken),retrieveData[i].withdrawAmount,address(this),retrieveData[i].data) (contracts/accountingManager/AccountingManager.sol#556-558)
+AccountingManager.retrieveTokensForWithdraw(RetrieveData[]) (contracts/accountingManager/AccountingManager.sol#548-573) has external calls inside a loop: balanceAfter = baseToken.balanceOf(address(this)) (contracts/accountingManager/AccountingManager.sol#559)
+BaseConnector.addLiquidity(address[],uint256[],bytes) (contracts/helpers/BaseConnector.sol#169-193) has external calls inside a loop: _balance = IERC20(tokens[i]).balanceOf(address(this)) (contracts/helpers/BaseConnector.sol#180)
+BaseConnector.addLiquidity(address[],uint256[],bytes) (contracts/helpers/BaseConnector.sol#169-193) has external calls inside a loop: ITokenTransferCallBack(msg.sender).sendTokensToTrustedAddress(tokens[i],amounts[i],msg.sender,) (contracts/helpers/BaseConnector.sol#181)
+BaseConnector.addLiquidity(address[],uint256[],bytes) (contracts/helpers/BaseConnector.sol#169-193) has external calls inside a loop: _balanceAfter = IERC20(tokens[i]).balanceOf(address(this)) (contracts/helpers/BaseConnector.sol#182)
+BaseConnector._updateTokenInRegistry(address) (contracts/helpers/BaseConnector.sol#158-160) has external calls inside a loop: _updateTokenInRegistry(token,IERC20(token).balanceOf(address(this)) == 0) (contracts/helpers/BaseConnector.sol#159)
+BaseConnector._updateTokenInRegistry(address,bool) (contracts/helpers/BaseConnector.sol#135-146) has external calls inside a loop: (accountingManager) = registry.getVaultAddresses(vaultId) (contracts/helpers/BaseConnector.sol#136)
+BaseConnector._updateTokenInRegistry(address,bool) (contracts/helpers/BaseConnector.sol#135-146) has external calls inside a loop: positionId = registry.calculatePositionId(accountingManager,0,abi.encode(token)) (contracts/helpers/BaseConnector.sol#138)
+BaseConnector._updateTokenInRegistry(address,bool) (contracts/helpers/BaseConnector.sol#135-146) has external calls inside a loop: positionIndex = registry.getHoldingPositionIndex(vaultId,positionId,address(this),abi.encode(address(this))) (contracts/helpers/BaseConnector.sol#140-141)
+BaseConnector._updateTokenInRegistry(address,bool) (contracts/helpers/BaseConnector.sol#135-146) has external calls inside a loop: registry.updateHoldingPosition(vaultId,positionId,abi.encode(address(this)),,remove) (contracts/helpers/BaseConnector.sol#144)
+BaseConnector._executeSwap(SwapRequest) (contracts/helpers/BaseConnector.sol#221-223) has external calls inside a loop: amountOut = swapHandler.executeSwap(swapRequest) (contracts/helpers/BaseConnector.sol#222)
+BalancerConnector.harvestAuraRewards(address[]) (contracts/connectors/BalancerConnector.sol#53-59) has external calls inside a loop: baseRewardPool.getReward() (contracts/connectors/BalancerConnector.sol#56)
+BaseConnector._approveOperations(address,address,uint256) (contracts/helpers/BaseConnector.sol#277-283) has external calls inside a loop: currentAllowance = IERC20(_token).allowance(address(this),_spender) (contracts/helpers/BaseConnector.sol#278)
+BalancerFlashLoan.receiveFlashLoan(IERC20[],uint256[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#54-94) has external calls inside a loop: (success) = destinationConnector[i_scope_0].call{gas: gas[i_scope_0],value: 0}(callingData[i_scope_0]) (contracts/connectors/BalancerFlashLoan.sol#81)
+BalancerFlashLoan.receiveFlashLoan(IERC20[],uint256[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#54-94) has external calls inside a loop: BaseConnector(receiver).sendTokensToTrustedAddress(address(tokens[i_scope_1]),amounts[i_scope_1],address(this),) (contracts/connectors/BalancerFlashLoan.sol#86)
+BalancerFlashLoan.receiveFlashLoan(IERC20[],uint256[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#54-94) has external calls inside a loop: require(bool,string)(tokens[i_scope_2].balanceOf(address(this)) == 0,BalancerFlashLoan: Flash loan extra tokens) (contracts/connectors/BalancerFlashLoan.sol#92)
+CompoundConnector.getCollBlanace(IComet,bool) (contracts/connectors/CompoundConnector.sol#95-123) has external calls inside a loop: info = comet.getAssetInfo(i) (contracts/connectors/CompoundConnector.sol#109)
+CompoundConnector.getCollBlanace(IComet,bool) (contracts/connectors/CompoundConnector.sol#95-123) has external calls inside a loop: (collateralBalance) = comet.userCollateral(address(this),info.asset) (contracts/connectors/CompoundConnector.sol#112)
+CompoundConnector.getCollBlanace(IComet,bool) (contracts/connectors/CompoundConnector.sol#95-123) has external calls inside a loop: collateralPriceInVirtualBase = comet.getPrice(info.priceFeed) (contracts/connectors/CompoundConnector.sol#115)
+CurveConnector.harvestRewards(address[]) (contracts/connectors/CurveConnector.sol#221-227) has external calls inside a loop: IRewardsGauge(gauges[i]).claim_rewards(address(this)) (contracts/connectors/CurveConnector.sol#223)
+CurveConnector.harvestPrismaRewards(address[]) (contracts/connectors/CurveConnector.sol#233-241) has external calls inside a loop: IDepositToken(pools[i]).claimReward(address(this)) (contracts/connectors/CurveConnector.sol#235)
+CurveConnector.harvestConvexRewards(address[]) (contracts/connectors/CurveConnector.sol#247-255) has external calls inside a loop: baseRewardPool.getReward(address(this),true) (contracts/connectors/CurveConnector.sol#250)
+DolomiteConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/Dolomite.sol#106-122) has external calls inside a loop: value = valueOracle.getValue(tokens[i],base,amounts[i].value) (contracts/connectors/Dolomite.sol#114)
+MaverickConnector.claimBoostedPositionRewards(IMaverickReward) (contracts/connectors/MaverickConnector.sol#137-147) has external calls inside a loop: tokenIndex = rewardContract.tokenIndex(address(earnedInfo[i].rewardToken)) (contracts/connectors/MaverickConnector.sol#142)
+MaverickConnector.claimBoostedPositionRewards(IMaverickReward) (contracts/connectors/MaverickConnector.sol#137-147) has external calls inside a loop: rewardContract.getReward(address(this),tokenIndex) (contracts/connectors/MaverickConnector.sol#143)
+UNIv3Connector.getCurrentLiquidity(uint256) (contracts/connectors/UNIv3Connector.sol#116-119) has external calls inside a loop: (token0,token1,liquidity) = positionManager.positions(tokenId) (contracts/connectors/UNIv3Connector.sol#117)
+UNIv3Connector._collectFees(uint256) (contracts/connectors/UNIv3Connector.sol#122-125) has external calls inside a loop: (amount0,amount1) = positionManager.collect(params) (contracts/connectors/UNIv3Connector.sol#124)
+SiloConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/SiloConnector.sol#109-128) has external calls inside a loop: depositAmount = IERC20(assetsS[i].collateralToken).balanceOf(address(this)) (contracts/connectors/SiloConnector.sol#117)
+SiloConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/SiloConnector.sol#109-128) has external calls inside a loop: depositAmount += IERC20(assetsS[i].collateralOnlyToken).balanceOf(address(this)) (contracts/connectors/SiloConnector.sol#118)
+SiloConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/SiloConnector.sol#109-128) has external calls inside a loop: borrowAmount = IERC20(assetsS[i].debtToken).balanceOf(address(this)) (contracts/connectors/SiloConnector.sol#119)
+BaseConnector._getValue(address,address,uint256) (contracts/helpers/BaseConnector.sol#253-261) has external calls inside a loop: valueOracle.getValue(token,baseToken,amount) (contracts/helpers/BaseConnector.sol#260)
+SiloConnector.isSiloEmpty(ISilo) (contracts/connectors/SiloConnector.sol#130-141) has external calls inside a loop: IERC20(assetsS[i].collateralToken).balanceOf(address(this)) + IERC20(assetsS[i].collateralOnlyToken).balanceOf(address(this)) > 0 (contracts/connectors/SiloConnector.sol#134-135)
+ConnectorMock2.addLiquidity(address[],uint256[],bytes) (contracts/helpers/ConnectorMock2.sol#40-49) has external calls inside a loop: ITokenTransferCallBack(msg.sender).sendTokensToTrustedAddress(tokens[i],amounts[i],msg.sender,) (contracts/helpers/ConnectorMock2.sol#44)
+ConnectorMock2._updateTokenInRegistry(address) (contracts/helpers/ConnectorMock2.sol#91-93) has external calls inside a loop: _updateTokenInRegistry(token,IERC20(token).balanceOf(address(this)) == 0) (contracts/helpers/ConnectorMock2.sol#92)
+ConnectorMock2._updateTokenInRegistry(address,bool) (contracts/helpers/ConnectorMock2.sol#79-89) has external calls inside a loop: (accountingManager) = registry.getVaultAddresses(vaultId) (contracts/helpers/ConnectorMock2.sol#80)
+ConnectorMock2._updateTokenInRegistry(address,bool) (contracts/helpers/ConnectorMock2.sol#79-89) has external calls inside a loop: positionId = registry.calculatePositionId(accountingManager,0,abi.encode(token)) (contracts/helpers/ConnectorMock2.sol#82)
+ConnectorMock2._updateTokenInRegistry(address,bool) (contracts/helpers/ConnectorMock2.sol#79-89) has external calls inside a loop: positionIndex = registry.getHoldingPositionIndex(vaultId,positionId,address(this),abi.encode(address(this))) (contracts/helpers/ConnectorMock2.sol#84-85)
+ConnectorMock2._updateTokenInRegistry(address,bool) (contracts/helpers/ConnectorMock2.sol#79-89) has external calls inside a loop: registry.updateHoldingPosition(vaultId,positionId,abi.encode(address(this)),,remove) (contracts/helpers/ConnectorMock2.sol#87)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+INFO:Detectors:
+Reentrancy in AccountingManager.deposit(address,uint256,address) (contracts/accountingManager/AccountingManager.sol#200-219):
+	External calls:
+	- baseToken.safeTransferFrom(msg.sender,address(this),amount) (contracts/accountingManager/AccountingManager.sol#205)
+	State variables written after the call(s):
+	- depositQueue.queue[depositQueue.last] = DepositRequest(receiver,block.timestamp,0,amount,0) (contracts/accountingManager/AccountingManager.sol#215)
+	- depositQueue.last += 1 (contracts/accountingManager/AccountingManager.sol#217)
+	- depositQueue.totalAWFDeposit += amount (contracts/accountingManager/AccountingManager.sol#218)
+Reentrancy in AccountingManager.executeWithdraw(uint256) (contracts/accountingManager/AccountingManager.sol#396-446):
+	External calls:
+	- baseToken.safeTransfer(data.receiver,baseTokenAmount) (contracts/accountingManager/AccountingManager.sol#428)
+	State variables written after the call(s):
+	- totalWithdrawnAmount += processedBaseTokenAmount (contracts/accountingManager/AccountingManager.sol#436)
+Reentrancy in BalancerFlashLoan.makeFlashLoan(IERC20[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#37-45):
+	External calls:
+	- vault.flashLoan(this,tokens,amounts,userData) (contracts/connectors/BalancerFlashLoan.sol#43)
+	State variables written after the call(s):
+	- caller = address(0) (contracts/connectors/BalancerFlashLoan.sol#44)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+INFO:Detectors:
+Reentrancy in SNXV3Connector.claimRewards(uint128,uint128,address,address) (contracts/connectors/SNXConnector.sol#94-100):
+	External calls:
+	- SNXCoreProxy.claimRewards(accountId,poolId,collateralType,distributor) (contracts/connectors/SNXConnector.sol#98)
+	- _updateTokenInRegistry(collateralType) (contracts/connectors/SNXConnector.sol#99)
+		- registry.updateHoldingPosition(vaultId,positionId,abi.encode(address(this)),,remove) (contracts/helpers/BaseConnector.sol#144)
+	Event emitted after the call(s):
+	- UpdateTokenInRegistry(token,remove) (contracts/helpers/BaseConnector.sol#143)
+		- _updateTokenInRegistry(collateralType) (contracts/connectors/SNXConnector.sol#99)
+Reentrancy in Gearboxv3.openAccount(address,uint256) (contracts/connectors/GearBoxV3.sol#24-34):
+	External calls:
+	- c = ICreditFacadeV3(facade).openCreditAccount(address(this),new MultiCall[](0),ref) (contracts/connectors/GearBoxV3.sol#25)
+	- registry.updateHoldingPosition(vaultId,registry.calculatePositionId(address(this),GEARBOX_POSITION_ID,abi.encode(facade)),abi.encode(c),,false) (contracts/connectors/GearBoxV3.sol#26-32)
+	Event emitted after the call(s):
+	- OpenAccount(facade,ref) (contracts/connectors/GearBoxV3.sol#33)
+Reentrancy in AaveConnector.repayWithCollateral(uint256,uint256,address) (contracts/connectors/AaveConnector.sol#88-91):
+	External calls:
+	- IPool(pool).repayWithATokens(_borrowAsset,_amount,i) (contracts/connectors/AaveConnector.sol#89)
+	Event emitted after the call(s):
+	- RepayWithCollateral(_borrowAsset,_amount,i) (contracts/connectors/AaveConnector.sol#90)
+Reentrancy in LifiImplementation.rescueFunds(address,address,uint256) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#193-201):
+	External calls:
+	- (success) = address(userAddress).call{value: amount}() (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#195)
+	- IERC20(token).safeTransfer(userAddress,amount) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#198)
+	External calls sending eth:
+	- (success) = address(userAddress).call{value: amount}() (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#195)
+	Event emitted after the call(s):
+	- Rescued(token,userAddress,amount) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#200)
+Reentrancy in BaseConnector.sendTokensToTrustedAddress(address,uint256,address,bytes) (contracts/helpers/BaseConnector.sol#84-108):
+	External calls:
+	- IERC20(token).safeTransfer(address(accountingManager),newAmount) (contracts/helpers/BaseConnector.sol#96)
+	- IERC20(token).safeTransfer(address(msg.sender),amount) (contracts/helpers/BaseConnector.sol#99)
+	- IERC20(token).safeTransfer(msg.sender,amount) (contracts/helpers/BaseConnector.sol#104)
+	- _updateTokenInRegistry(token) (contracts/helpers/BaseConnector.sol#106)
+		- registry.updateHoldingPosition(vaultId,positionId,abi.encode(address(this)),,remove) (contracts/helpers/BaseConnector.sol#144)
+	Event emitted after the call(s):
+	- UpdateTokenInRegistry(token,remove) (contracts/helpers/BaseConnector.sol#143)
+		- _updateTokenInRegistry(token) (contracts/helpers/BaseConnector.sol#106)
+Reentrancy in CurveConnector.withdrawFromConvexBooster(uint256,uint256) (contracts/connectors/CurveConnector.sol#182-185):
+	External calls:
+	- convexBooster.withdraw(pid,amount) (contracts/connectors/CurveConnector.sol#183)
+	Event emitted after the call(s):
+	- WithdrawFromConvexBooster(pid,amount) (contracts/connectors/CurveConnector.sol#184)
+Reentrancy in CurveConnector.withdrawFromConvexRewardPool(address,uint256) (contracts/connectors/CurveConnector.sol#192-195):
+	External calls:
+	- IConvexBasicRewards(pool).withdraw(amount,true) (contracts/connectors/CurveConnector.sol#193)
+	Event emitted after the call(s):
+	- WithdrawFromConvexRewardPool(pool,amount) (contracts/connectors/CurveConnector.sol#194)
+Reentrancy in CurveConnector.withdrawFromGauge(address,uint256) (contracts/connectors/CurveConnector.sol#202-205):
+	External calls:
+	- IRewardsGauge(pool).withdraw(amount) (contracts/connectors/CurveConnector.sol#203)
+	Event emitted after the call(s):
+	- WithdrawFromGauge(pool,amount) (contracts/connectors/CurveConnector.sol#204)
+Reentrancy in CurveConnector.withdrawFromPrisma(address,uint256) (contracts/connectors/CurveConnector.sol#212-215):
+	External calls:
+	- IDepositToken(depostiToken).withdraw(address(this),amount) (contracts/connectors/CurveConnector.sol#213)
+	Event emitted after the call(s):
+	- WithdrawFromPrisma(depostiToken,amount) (contracts/connectors/CurveConnector.sol#214)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+INFO:Detectors:
+BalancerFlashLoan.receiveFlashLoan(IERC20[],uint256[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#54-94) tries to limit the gas of an external call that controls implicit decoding
+	(success) = destinationConnector[i_scope_0].call{gas: gas[i_scope_0],value: 0}(callingData[i_scope_0]) (contracts/connectors/BalancerFlashLoan.sol#81)
+Keepers.execute(address,bytes,uint256,address,bytes32[],bytes32[],uint8[],uint256) (contracts/governance/Keepers.sol#84-118) tries to limit the gas of an external call that controls implicit decoding
+	(success) = destination.call{gas: gasLimit}(data) (contracts/governance/Keepers.sol#116)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#return-bomb
+INFO:Detectors:
+AccountingManager._update(address,address,uint256) (contracts/accountingManager/AccountingManager.sol#185-190) uses timestamp for comparisons
+	Dangerous comparisons:
+	- ! (from == address(0)) && balanceOf(from) < amount + withdrawRequestsByAddress[from] (contracts/accountingManager/AccountingManager.sol#186)
+AccountingManager.executeDeposit(uint256,address,bytes) (contracts/accountingManager/AccountingManager.sol#257-299) uses timestamp for comparisons
+	Dangerous comparisons:
+	- depositQueue.middle > firstTemp && depositQueue.queue[firstTemp].calculationTime + depositWaitingTime <= block.timestamp && i < maxI (contracts/accountingManager/AccountingManager.sol#268-269)
+AccountingManager.withdraw(uint256,address) (contracts/accountingManager/AccountingManager.sol#304-316) uses timestamp for comparisons
+	Dangerous comparisons:
+	- balanceOf(msg.sender) < share + withdrawRequestsByAddress[msg.sender] (contracts/accountingManager/AccountingManager.sol#305)
+AccountingManager.startCurrentWithdrawGroup() (contracts/accountingManager/AccountingManager.sol#360-365) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(currentWithdrawGroup.isStarted == false && currentWithdrawGroup.isFullfilled == false) (contracts/accountingManager/AccountingManager.sol#361)
+AccountingManager.fulfillCurrentWithdrawGroup() (contracts/accountingManager/AccountingManager.sol#370-390) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool)(currentWithdrawGroup.isStarted == true && currentWithdrawGroup.isFullfilled == false) (contracts/accountingManager/AccountingManager.sol#371)
+	- neededAssets != 0 && amountAskedForWithdraw != currentWithdrawGroup.totalCBAmount (contracts/accountingManager/AccountingManager.sol#374)
+	- availableAssets >= currentWithdrawGroup.totalCBAmount (contracts/accountingManager/AccountingManager.sol#380)
+AccountingManager.executeWithdraw(uint256) (contracts/accountingManager/AccountingManager.sol#396-446) uses timestamp for comparisons
+	Dangerous comparisons:
+	- currentWithdrawGroup.lastId > firstTemp && withdrawQueue.queue[firstTemp].calculationTime + withdrawWaitingTime <= block.timestamp && i < maxIterations (contracts/accountingManager/AccountingManager.sol#407-409)
+AccountingManager.collectManagementFees() (contracts/accountingManager/AccountingManager.sol#505-523) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp - lastFeeDistributionTime < 86400 (contracts/accountingManager/AccountingManager.sol#506)
+	- timePassed > 864000 (contracts/accountingManager/AccountingManager.sol#510)
+AccountingManager.collectPerformanceFees() (contracts/accountingManager/AccountingManager.sol#526-541) uses timestamp for comparisons
+	Dangerous comparisons:
+	- preformanceFeeSharesWaitingForDistribution == 0 || block.timestamp - profitStoredTime < 43200 || block.timestamp - profitStoredTime > 172800 (contracts/accountingManager/AccountingManager.sol#528-529)
+AccountingManager.retrieveTokensForWithdraw(RetrieveData[]) (contracts/accountingManager/AccountingManager.sol#548-573) uses timestamp for comparisons
+	Dangerous comparisons:
+	- amountAskedForWithdraw_temp > neededAssets (contracts/accountingManager/AccountingManager.sol#570)
+AccountingManager.neededAssetsForWithdraw() (contracts/accountingManager/AccountingManager.sol#616-625) uses timestamp for comparisons
+	Dangerous comparisons:
+	- currentWithdrawGroup.isStarted == false || currentWithdrawGroup.isFullfilled == true || availableAssets >= currentWithdrawGroup.totalCBAmount (contracts/accountingManager/AccountingManager.sol#619-620)
+Keepers.execute(address,bytes,uint256,address,bytes32[],bytes32[],uint8[],uint256) (contracts/governance/Keepers.sol#84-118) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(block.timestamp <= deadline,Transaction expired) (contracts/governance/Keepers.sol#98)
+OmnichainLogic.startBridgeTransaction(BridgeRequest) (contracts/helpers/OmniChainHandler/OmnichainLogic.sol#68-84) uses timestamp for comparisons
+	Dangerous comparisons:
+	- approvedBridgeTXN[txn] == 0 || approvedBridgeTXN[txn] + BRIDGE_TXN_WAITING_TIME > block.timestamp (contracts/helpers/OmniChainHandler/OmnichainLogic.sol#71)
+TVLHelper.getLatestUpdateTime(uint256,PositionRegistry) (contracts/helpers/TVLHelper.sol#41-53) uses timestamp for comparisons
+	Dangerous comparisons:
+	- latestUpdateTime == 0 || positions[i].positionTimestamp < latestUpdateTime (contracts/helpers/TVLHelper.sol#45)
+	- latestUpdateTime == 0 (contracts/helpers/TVLHelper.sol#49)
+ChainlinkOracleConnector.getValueFromChainlinkFeed(AggregatorV3Interface,uint256,uint256,bool) (contracts/helpers/valueOracle/oracles/ChainlinkOracleConnector.sol#115-135) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp - updatedAt > chainlinkPriceAgeThreshold (contracts/helpers/valueOracle/oracles/ChainlinkOracleConnector.sol#125)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Detectors:
+Void constructor called in Keepers.constructor(address[],uint8) (contracts/governance/Keepers.sol#27-34):
+	- Ownable2Step() (contracts/governance/Keepers.sol#27)
+Void constructor called in LZHelperReceiver.constructor(address,address) (contracts/helpers/LZHelpers/LZHelperReceiver.sol#31):
+	- OAppReceiver() (contracts/helpers/LZHelpers/LZHelperReceiver.sol#31)
+Void constructor called in LZHelperSender.constructor(address,address) (contracts/helpers/LZHelpers/LZHelperSender.sol#29):
+	- OAppSender() (contracts/helpers/LZHelpers/LZHelperSender.sol#29)
+Void constructor called in LifiImplementation.constructor(address,address) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#27-30):
+	- Ownable2Step() (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#27)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#void-constructor
+INFO:Detectors:
+AccountingManager.calculateWithdrawShares(uint256) (contracts/accountingManager/AccountingManager.sol#328-355) compares to a boolean constant:
+	-currentWithdrawGroup.isFullfilled == false && currentWithdrawGroup.isStarted == true (contracts/accountingManager/AccountingManager.sol#335)
+AccountingManager.startCurrentWithdrawGroup() (contracts/accountingManager/AccountingManager.sol#360-365) compares to a boolean constant:
+	-require(bool)(currentWithdrawGroup.isStarted == false && currentWithdrawGroup.isFullfilled == false) (contracts/accountingManager/AccountingManager.sol#361)
+AccountingManager.fulfillCurrentWithdrawGroup() (contracts/accountingManager/AccountingManager.sol#370-390) compares to a boolean constant:
+	-require(bool)(currentWithdrawGroup.isStarted == true && currentWithdrawGroup.isFullfilled == false) (contracts/accountingManager/AccountingManager.sol#371)
+AccountingManager.executeWithdraw(uint256) (contracts/accountingManager/AccountingManager.sol#396-446) compares to a boolean constant:
+	-currentWithdrawGroup.isFullfilled == false (contracts/accountingManager/AccountingManager.sol#397)
+AccountingManager.neededAssetsForWithdraw() (contracts/accountingManager/AccountingManager.sol#616-625) compares to a boolean constant:
+	-currentWithdrawGroup.isStarted == false || currentWithdrawGroup.isFullfilled == true || availableAssets >= currentWithdrawGroup.totalCBAmount (contracts/accountingManager/AccountingManager.sol#619-620)
+PositionRegistry.addTrustedPosition(uint256,uint256,address,bool,bool,bytes,bytes) (contracts/accountingManager/Registry.sol#238-263) compares to a boolean constant:
+	-vault.connectors[calculatorConnector].enabled == false (contracts/accountingManager/Registry.sol#251)
+PositionRegistry.onlyVaultMaintainer(uint256) (contracts/accountingManager/Registry.sol#32-37) compares to a boolean constant:
+	-msg.sender != vaults[_vaultId].maintainer || hasRole(EMERGENCY_ROLE,msg.sender) == false (contracts/accountingManager/Registry.sol#33)
+PositionRegistry.onlyVaultMaintainerWithoutTimeLock(uint256) (contracts/accountingManager/Registry.sol#39-44) compares to a boolean constant:
+	-msg.sender != vaults[_vaultId].maintainerWithoutTimeLock && hasRole(EMERGENCY_ROLE,msg.sender) == false (contracts/accountingManager/Registry.sol#40)
+PositionRegistry.onlyVaultGoverner(uint256) (contracts/accountingManager/Registry.sol#46-51) compares to a boolean constant:
+	-msg.sender != vaults[_vaultId].governer && hasRole(EMERGENCY_ROLE,msg.sender) == false (contracts/accountingManager/Registry.sol#47)
+LifiImplementation.verifyBridgeData(BridgeRequest) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#150-163) compares to a boolean constant:
+	-isBridgeWhiteListed[bridgeData.bridge] == false (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#153)
+LifiImplementation.verifyBridgeData(BridgeRequest) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#150-163) compares to a boolean constant:
+	-isChainSupported[bridgeData.destinationChainId] == false (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#154)
+LifiImplementation.onlyHandler() (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#34-37) compares to a boolean constant:
+	-require(bool,string)(isHandler[msg.sender] == true,LifiImplementation: INVALID_SENDER) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#35)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#boolean-equality
+INFO:Detectors:
+Pragma version0.8.20 (contracts/accountingManager/AccountingManager.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/accountingManager/NoyaFeeReceiver.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/accountingManager/Registry.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/AaveConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/AerodromeConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/BalancerConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/BalancerFlashLoan.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/CamelotConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/CompoundConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/CurveConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/Dolomite.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/FraxConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/GearBoxV3.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/LidoConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/MaverickConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/MorphoBlueConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/PancakeswapConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/PendleConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/PrismaConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/SNXConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/SiloConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/StargateConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/connectors/UNIv3Connector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/governance/Keepers.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/governance/NoyaGovernanceBase.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/governance/TimeLock.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/governance/Watchers.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/BaseConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/ConnectorMock2.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/LZHelpers/LZHelperReceiver.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/LZHelpers/LZHelperSender.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/OmniChainHandler/OmnichainLogic.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/OmniChainHandler/OmnichainManagerBaseChain.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/OmniChainHandler/OmnichainManagerNormalChain.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/TVLHelper.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/valueOracle/NoyaValueOracle.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/valueOracle/oracles/ChainlinkOracleConnector.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/valueOracle/oracles/UniswapValueOracle.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+Pragma version0.8.20 (contracts/helpers/valueOracle/oracles/WETH_Oracle.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.
+solc-0.8.20 is not recommended for deployment
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+INFO:Detectors:
+Low level call in AccountingManager.rescue(address,uint256) (contracts/accountingManager/AccountingManager.sol#683-691):
+	- (success) = address(msg.sender).call{value: amount}() (contracts/accountingManager/AccountingManager.sol#685)
+Low level call in BalancerFlashLoan.receiveFlashLoan(IERC20[],uint256[],uint256[],bytes) (contracts/connectors/BalancerFlashLoan.sol#54-94):
+	- (success) = destinationConnector[i_scope_0].call{gas: gas[i_scope_0],value: 0}(callingData[i_scope_0]) (contracts/connectors/BalancerFlashLoan.sol#81)
+Low level call in Keepers.execute(address,bytes,uint256,address,bytes32[],bytes32[],uint8[],uint256) (contracts/governance/Keepers.sol#84-118):
+	- (success) = destination.call{gas: gasLimit}(data) (contracts/governance/Keepers.sol#116)
+Low level call in LifiImplementation._forward(IERC20,address,uint256,address,bytes,uint256) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#165-183):
+	- (success,err) = lifi.call{value: msg.value}(data) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#176)
+Low level call in LifiImplementation.rescueFunds(address,address,uint256) (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#193-201):
+	- (success) = address(userAddress).call{value: amount}() (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#195)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+INFO:Detectors:
+Parameter AccountingManager.updateValueOracle(INoyaValueOracle)._valueOracle (contracts/accountingManager/AccountingManager.sol#124) is not in mixedCase
+Parameter AccountingManager.setFeeReceivers(address,address,address)._withdrawFeeReceiver (contracts/accountingManager/AccountingManager.sol#136) is not in mixedCase
+Parameter AccountingManager.setFeeReceivers(address,address,address)._performanceFeeReceiver (contracts/accountingManager/AccountingManager.sol#137) is not in mixedCase
+Parameter AccountingManager.setFeeReceivers(address,address,address)._managementFeeReceiver (contracts/accountingManager/AccountingManager.sol#138) is not in mixedCase
+Parameter AccountingManager.sendTokensToTrustedAddress(address,uint256,address,bytes)._caller (contracts/accountingManager/AccountingManager.sol#150) is not in mixedCase
+Parameter AccountingManager.sendTokensToTrustedAddress(address,uint256,address,bytes)._data (contracts/accountingManager/AccountingManager.sol#150) is not in mixedCase
+Parameter AccountingManager.setFees(uint256,uint256,uint256)._withdrawFee (contracts/accountingManager/AccountingManager.sol#170) is not in mixedCase
+Parameter AccountingManager.setFees(uint256,uint256,uint256)._performanceFee (contracts/accountingManager/AccountingManager.sol#170) is not in mixedCase
+Parameter AccountingManager.setFees(uint256,uint256,uint256)._managementFee (contracts/accountingManager/AccountingManager.sol#170) is not in mixedCase
+Function AccountingManager.TVL() (contracts/accountingManager/AccountingManager.sol#627-630) is not in mixedCase
+Parameter AccountingManager.setDepositLimits(uint256,uint256)._depositLimitPerTransaction (contracts/accountingManager/AccountingManager.sol#667) is not in mixedCase
+Parameter AccountingManager.setDepositLimits(uint256,uint256)._depositTotalAmount (contracts/accountingManager/AccountingManager.sol#667) is not in mixedCase
+Parameter AccountingManager.changeDepositWaitingTime(uint256)._depositWaitingTime (contracts/accountingManager/AccountingManager.sol#673) is not in mixedCase
+Parameter AccountingManager.changeWithdrawWaitingTime(uint256)._withdrawWaitingTime (contracts/accountingManager/AccountingManager.sol#678) is not in mixedCase
+Parameter PositionRegistry.setMaxNumHoldingPositions(uint256)._maxNumHoldingPositions (contracts/accountingManager/Registry.sol#79) is not in mixedCase
+Parameter PositionRegistry.setFlashLoanAddress(address)._flashLoan (contracts/accountingManager/Registry.sol#84) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._accountingManager (contracts/accountingManager/Registry.sol#108) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._baseToken (contracts/accountingManager/Registry.sol#109) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._governer (contracts/accountingManager/Registry.sol#110) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._maintainer (contracts/accountingManager/Registry.sol#111) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._maintainerWithoutTimelock (contracts/accountingManager/Registry.sol#112) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._keeperContract (contracts/accountingManager/Registry.sol#113) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._watcher (contracts/accountingManager/Registry.sol#114) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._emergency (contracts/accountingManager/Registry.sol#115) is not in mixedCase
+Parameter PositionRegistry.addVault(uint256,address,address,address,address,address,address,address,address,address[])._trustedTokens (contracts/accountingManager/Registry.sol#116) is not in mixedCase
+Parameter PositionRegistry.changeVaultAddresses(uint256,address,address,address,address,address,address)._governer (contracts/accountingManager/Registry.sol#160) is not in mixedCase
+Parameter PositionRegistry.changeVaultAddresses(uint256,address,address,address,address,address,address)._maintainer (contracts/accountingManager/Registry.sol#161) is not in mixedCase
+Parameter PositionRegistry.changeVaultAddresses(uint256,address,address,address,address,address,address)._maintainerWithoutTimelock (contracts/accountingManager/Registry.sol#162) is not in mixedCase
+Parameter PositionRegistry.changeVaultAddresses(uint256,address,address,address,address,address,address)._keeperContract (contracts/accountingManager/Registry.sol#163) is not in mixedCase
+Parameter PositionRegistry.changeVaultAddresses(uint256,address,address,address,address,address,address)._watcher (contracts/accountingManager/Registry.sol#164) is not in mixedCase
+Parameter PositionRegistry.changeVaultAddresses(uint256,address,address,address,address,address,address)._emergency (contracts/accountingManager/Registry.sol#165) is not in mixedCase
+Parameter PositionRegistry.addConnector(uint256,address[],bool[])._connectorAddresses (contracts/accountingManager/Registry.sol#188) is not in mixedCase
+Parameter PositionRegistry.addConnector(uint256,address[],bool[])._enableds (contracts/accountingManager/Registry.sol#188) is not in mixedCase
+Parameter PositionRegistry.updateConnectorTrustedTokens(uint256,address,address[],bool)._connectorAddress (contracts/accountingManager/Registry.sol#209) is not in mixedCase
+Parameter PositionRegistry.updateConnectorTrustedTokens(uint256,address,address[],bool)._tokens (contracts/accountingManager/Registry.sol#210) is not in mixedCase
+Parameter PositionRegistry.getPositionBP(uint256,bytes32)._positionId (contracts/accountingManager/Registry.sol#224) is not in mixedCase
+Parameter PositionRegistry.addTrustedPosition(uint256,uint256,address,bool,bool,bytes,bytes)._positionTypeId (contracts/accountingManager/Registry.sol#240) is not in mixedCase
+Parameter PositionRegistry.addTrustedPosition(uint256,uint256,address,bool,bool,bytes,bytes)._isDebt (contracts/accountingManager/Registry.sol#243) is not in mixedCase
+Parameter PositionRegistry.addTrustedPosition(uint256,uint256,address,bool,bool,bytes,bytes)._data (contracts/accountingManager/Registry.sol#244) is not in mixedCase
+Parameter PositionRegistry.addTrustedPosition(uint256,uint256,address,bool,bool,bytes,bytes)._additionalData (contracts/accountingManager/Registry.sol#245) is not in mixedCase
+Parameter PositionRegistry.removeTrustedPosition(uint256,bytes32)._positionId (contracts/accountingManager/Registry.sol#266) is not in mixedCase
+Parameter PositionRegistry.updateHoldingPosition(Vault,uint256,bytes32,bytes,bytes,uint256,bytes32)._positionId (contracts/accountingManager/Registry.sol#296) is not in mixedCase
+Parameter PositionRegistry.updateHoldingPosition(Vault,uint256,bytes32,bytes,bytes,uint256,bytes32).AD (contracts/accountingManager/Registry.sol#298) is not in mixedCase
+Parameter PositionRegistry.updateHoldingPosition(uint256,bytes32,bytes,bytes,bool)._positionId (contracts/accountingManager/Registry.sol#337) is not in mixedCase
+Parameter PositionRegistry.updateHoldingPosition(uint256,bytes32,bytes,bytes,bool)._data (contracts/accountingManager/Registry.sol#338) is not in mixedCase
+Parameter PositionRegistry.updateHoldingPostionWithTime(uint256,bytes32,bytes,bytes,bool,uint256)._positionId (contracts/accountingManager/Registry.sol#372) is not in mixedCase
+Parameter PositionRegistry.updateHoldingPostionWithTime(uint256,bytes32,bytes,bytes,bool,uint256)._data (contracts/accountingManager/Registry.sol#373) is not in mixedCase
+Parameter PositionRegistry.getHoldingPositionIndex(uint256,bytes32,address,bytes)._positionId (contracts/accountingManager/Registry.sol#394) is not in mixedCase
+Parameter PositionRegistry.getHoldingPositionIndex(uint256,bytes32,address,bytes)._connector (contracts/accountingManager/Registry.sol#394) is not in mixedCase
+Parameter PositionRegistry.isPositionTrusted(uint256,bytes32)._positionId (contracts/accountingManager/Registry.sol#426) is not in mixedCase
+Parameter PositionRegistry.isPositionTrustedForConnector(uint256,bytes32,address)._positionId (contracts/accountingManager/Registry.sol#436) is not in mixedCase
+Parameter PositionRegistry.isPositionDebt(uint256,bytes32)._positionId (contracts/accountingManager/Registry.sol#508) is not in mixedCase
+Parameter AaveConnector.borrow(uint256,uint256,address)._amount (contracts/connectors/AaveConnector.sol#62) is not in mixedCase
+Parameter AaveConnector.borrow(uint256,uint256,address)._interestRateMode (contracts/connectors/AaveConnector.sol#62) is not in mixedCase
+Parameter AaveConnector.borrow(uint256,uint256,address)._borrowAsset (contracts/connectors/AaveConnector.sol#62) is not in mixedCase
+Parameter AaveConnector.repayWithCollateral(uint256,uint256,address)._amount (contracts/connectors/AaveConnector.sol#88) is not in mixedCase
+Parameter AaveConnector.repayWithCollateral(uint256,uint256,address)._borrowAsset (contracts/connectors/AaveConnector.sol#88) is not in mixedCase
+Parameter AaveConnector.withdrawCollateral(uint256,address)._collateralAmount (contracts/connectors/AaveConnector.sol#100) is not in mixedCase
+Parameter AaveConnector.withdrawCollateral(uint256,address)._collateral (contracts/connectors/AaveConnector.sol#100) is not in mixedCase
+Function AaveConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/AaveConnector.sol#114-118) is not in mixedCase
+Function AaveConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/AaveConnector.sol#120-122) is not in mixedCase
+Function AerodromeConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/AerodromeConnector.sol#117-123) is not in mixedCase
+Function AerodromeConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/AerodromeConnector.sol#125-134) is not in mixedCase
+Parameter BalancerConnector.depositIntoAuraBooster(bytes32,uint256)._amount (contracts/connectors/BalancerConnector.sol#109) is not in mixedCase
+Function BalancerConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/BalancerConnector.sol#162-173) is not in mixedCase
+Variable BalancerConnector.BAL (contracts/connectors/BalancerConnector.sol#29) is not in mixedCase
+Variable BalancerConnector.AURA (contracts/connectors/BalancerConnector.sol#30) is not in mixedCase
+Variable BalancerConnector.BALANCER_LP_POSITION (contracts/connectors/BalancerConnector.sol#32) is not in mixedCase
+Function CamelotConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/CamelotConnector.sol#88-97) is not in mixedCase
+Function CamelotConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/CamelotConnector.sol#99-105) is not in mixedCase
+Parameter CompoundConnector.withdrawOrBorrow(address,address,uint256)._market (contracts/connectors/CompoundConnector.sol#48) is not in mixedCase
+Function CompoundConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/CompoundConnector.sol#125-132) is not in mixedCase
+Function CompoundConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/CompoundConnector.sol#134-136) is not in mixedCase
+Variable CompoundConnector.COMPOUND_LP (contracts/connectors/CompoundConnector.sol#8) is not in mixedCase
+Function CurveConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/CurveConnector.sol#265-271) is not in mixedCase
+Function CurveConnector.LPToUnder(PoolInfo,uint256) (contracts/connectors/CurveConnector.sol#279-288) is not in mixedCase
+Variable CurveConnector.CVX (contracts/connectors/CurveConnector.sol#27) is not in mixedCase
+Variable CurveConnector.CRV (contracts/connectors/CurveConnector.sol#28) is not in mixedCase
+Variable CurveConnector.PRISMA (contracts/connectors/CurveConnector.sol#29) is not in mixedCase
+Parameter DolomiteConnector.deposit(uint256,uint256)._amount (contracts/connectors/Dolomite.sol#30) is not in mixedCase
+Parameter DolomiteConnector.withdraw(uint256,uint256)._amount (contracts/connectors/Dolomite.sol#43) is not in mixedCase
+Parameter DolomiteConnector.openBorrowPosition(uint256,uint256,uint256)._amountWei (contracts/connectors/Dolomite.sol#58) is not in mixedCase
+Parameter DolomiteConnector.transferBetweenAccounts(uint256,uint256,uint256,bool)._amountWei (contracts/connectors/Dolomite.sol#77) is not in mixedCase
+Function DolomiteConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/Dolomite.sol#106-122) is not in mixedCase
+Function FraxConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/FraxConnector.sol#142-148) is not in mixedCase
+Function FraxConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/FraxConnector.sol#150-163) is not in mixedCase
+Variable FraxConnector.COLLATERAL_AND_DEBT_POSITION_TYPE (contracts/connectors/FraxConnector.sol#22) is not in mixedCase
+Function Gearboxv3._getPositionTVL(HoldingPI,address) (contracts/connectors/GearBoxV3.sol#93-104) is not in mixedCase
+Function LidoConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/LidoConnector.sol#91-94) is not in mixedCase
+Variable LidoConnector.LIDO_WITHDRAWAL_REQUEST_ID (contracts/connectors/LidoConnector.sol#13) is not in mixedCase
+Function MaverickConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/MaverickConnector.sol#153-159) is not in mixedCase
+Function MaverickConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/MaverickConnector.sol#161-167) is not in mixedCase
+Variable MaverickConnector.MAVERICK_LP (contracts/connectors/MaverickConnector.sol#35) is not in mixedCase
+Parameter MorphoBlueConnector.getHealthFactor(Id,Market)._id (contracts/connectors/MorphoBlueConnector.sol#108) is not in mixedCase
+Parameter MorphoBlueConnector.getHealthFactor(Id,Market)._market (contracts/connectors/MorphoBlueConnector.sol#108) is not in mixedCase
+Function MorphoBlueConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/MorphoBlueConnector.sol#118-135) is not in mixedCase
+Function MorphoBlueConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/MorphoBlueConnector.sol#141-148) is not in mixedCase
+Parameter PendleConnector.depositIntoMarket(IPMarket,uint256,uint256).SYamount (contracts/connectors/PendleConnector.sol#112) is not in mixedCase
+Parameter PendleConnector.depositIntoMarket(IPMarket,uint256,uint256).PTamount (contracts/connectors/PendleConnector.sol#112) is not in mixedCase
+Parameter PendleConnector.depositIntoPenpie(address,uint256)._market (contracts/connectors/PendleConnector.sol#126) is not in mixedCase
+Parameter PendleConnector.depositIntoPenpie(address,uint256)._amount (contracts/connectors/PendleConnector.sol#126) is not in mixedCase
+Parameter PendleConnector.withdrawFromPenpie(address,uint256)._market (contracts/connectors/PendleConnector.sol#137) is not in mixedCase
+Parameter PendleConnector.withdrawFromPenpie(address,uint256)._amount (contracts/connectors/PendleConnector.sol#137) is not in mixedCase
+Parameter PendleConnector.decreasePosition(IPMarket,uint256,bool)._amount (contracts/connectors/PendleConnector.sol#216) is not in mixedCase
+Function PendleConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/PendleConnector.sol#257-285) is not in mixedCase
+Function PendleConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/PendleConnector.sol#311-317) is not in mixedCase
+Function PrismaConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/PrismaConnector.sol#145-156) is not in mixedCase
+Function PrismaConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/PrismaConnector.sol#164-173) is not in mixedCase
+Parameter SNXV3Connector.deposit(address,uint256,uint128)._token (contracts/connectors/SNXConnector.sol#30) is not in mixedCase
+Parameter SNXV3Connector.deposit(address,uint256,uint128)._amount (contracts/connectors/SNXConnector.sol#30) is not in mixedCase
+Parameter SNXV3Connector.deposit(address,uint256,uint128)._accountId (contracts/connectors/SNXConnector.sol#30) is not in mixedCase
+Parameter SNXV3Connector.withdraw(address,uint256,uint128)._token (contracts/connectors/SNXConnector.sol#46) is not in mixedCase
+Parameter SNXV3Connector.withdraw(address,uint256,uint128)._amount (contracts/connectors/SNXConnector.sol#46) is not in mixedCase
+Parameter SNXV3Connector.withdraw(address,uint256,uint128)._accountId (contracts/connectors/SNXConnector.sol#46) is not in mixedCase
+Parameter SNXV3Connector.delegateIntoPreferredPool(uint128,address,uint256,uint256)._accountId (contracts/connectors/SNXConnector.sol#69) is not in mixedCase
+Parameter SNXV3Connector.delegateIntoApprovedPool(uint256,uint128,address,uint256,uint256)._accountId (contracts/connectors/SNXConnector.sol#83) is not in mixedCase
+Parameter SNXV3Connector.mintOrBurnSUSD(uint256,uint128,uint128,address,bool)._amount (contracts/connectors/SNXConnector.sol#103) is not in mixedCase
+Parameter SNXV3Connector.mintOrBurnSUSD(uint256,uint128,uint128,address,bool)._accountId (contracts/connectors/SNXConnector.sol#104) is not in mixedCase
+Function SNXV3Connector._getPositionTVL(HoldingPI,address) (contracts/connectors/SNXConnector.sol#121-126) is not in mixedCase
+Function SNXV3Connector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/SNXConnector.sol#128-130) is not in mixedCase
+Variable SNXV3Connector.SNXCoreProxy (contracts/connectors/SNXConnector.sol#14) is not in mixedCase
+Function SiloConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/SiloConnector.sol#109-128) is not in mixedCase
+Function SiloConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/SiloConnector.sol#143-148) is not in mixedCase
+Function StargateConnector._getPositionTVL(HoldingPI,address) (contracts/connectors/StargateConnector.sol#110-121) is not in mixedCase
+Function StargateConnector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/StargateConnector.sol#123-129) is not in mixedCase
+Variable StargateConnector.LPStaking (contracts/connectors/StargateConnector.sol#22) is not in mixedCase
+Function UNIv3Connector._getPositionTVL(HoldingPI,address) (contracts/connectors/UNIv3Connector.sol#127-150) is not in mixedCase
+Function UNIv3Connector._getUnderlyingTokens(uint256,bytes) (contracts/connectors/UNIv3Connector.sol#152-156) is not in mixedCase
+Parameter Keepers.updateOwners(address[],bool[])._owners (contracts/governance/Keepers.sol#42) is not in mixedCase
+Parameter Keepers.setThreshold(uint8)._threshold (contracts/governance/Keepers.sol#63) is not in mixedCase
+Parameter BaseConnector.updateMinimumHealthFactor(uint256)._minimumHealthFactor (contracts/helpers/BaseConnector.sol#45) is not in mixedCase
+Parameter BaseConnector.updateSwapHandler(address)._swapHandler (contracts/helpers/BaseConnector.sol#58) is not in mixedCase
+Parameter BaseConnector.updateValueOracle(address)._valueOracle (contracts/helpers/BaseConnector.sol#67) is not in mixedCase
+Function BaseConnector._getUnderlyingTokens(uint256,bytes) (contracts/helpers/BaseConnector.sol#263-265) is not in mixedCase
+Function BaseConnector._getPositionTVL(HoldingPI,address) (contracts/helpers/BaseConnector.sol#271-273) is not in mixedCase
+Variable BaseConnector.MINIMUM_HEALTH_FACTOR (contracts/helpers/BaseConnector.sol#28) is not in mixedCase
+Variable BaseConnector.DUST_LEVEL (contracts/helpers/BaseConnector.sol#31) is not in mixedCase
+Parameter ConnectorMock2.updatePositionToRegistryUsingType(bytes32,bytes,bool)._positionId (contracts/helpers/ConnectorMock2.sol#51) is not in mixedCase
+Parameter ConnectorMock2.addPositionToRegistryUsingType(uint256,bytes)._positionType (contracts/helpers/ConnectorMock2.sol#59) is not in mixedCase
+Parameter LZHelperSender.updateMessageSetting(bytes)._messageSetting (contracts/helpers/LZHelpers/LZHelperSender.sol#36) is not in mixedCase
+Function OmnichainManagerBaseChain._getPositionTVL(HoldingPI,address) (contracts/helpers/OmniChainHandler/OmnichainManagerBaseChain.sol#51-57) is not in mixedCase
+Function OmnichainManagerNormalChain._getPositionTVL(HoldingPI,address) (contracts/helpers/OmniChainHandler/OmnichainManagerNormalChain.sol#33-41) is not in mixedCase
+Parameter SwapAndBridgeHandler.setValueOracle(address)._valueOracle (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#48) is not in mixedCase
+Parameter SwapAndBridgeHandler.setGeneralSlippageTolerance(uint256)._slippageTolerance (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#57) is not in mixedCase
+Parameter SwapAndBridgeHandler.setSlippageTolerance(address,address,uint256)._inputToken (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#68) is not in mixedCase
+Parameter SwapAndBridgeHandler.setSlippageTolerance(address,address,uint256)._outputToken (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#68) is not in mixedCase
+Parameter SwapAndBridgeHandler.setSlippageTolerance(address,address,uint256)._slippageTolerance (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#68) is not in mixedCase
+Parameter SwapAndBridgeHandler.addEligibleUser(address)._user (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#80) is not in mixedCase
+Parameter SwapAndBridgeHandler.executeSwap(SwapRequest)._swapRequest (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#90) is not in mixedCase
+Parameter SwapAndBridgeHandler.executeBridge(BridgeRequest)._bridgeRequest (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#126) is not in mixedCase
+Parameter SwapAndBridgeHandler.addRoutes(RouteData[])._routes (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#147) is not in mixedCase
+Parameter SwapAndBridgeHandler.setEnableRoute(uint256,bool)._routeId (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#158) is not in mixedCase
+Parameter SwapAndBridgeHandler.verifyRoute(uint256,address)._routeId (contracts/helpers/SwapHandler/GenericSwapAndBridgeHandler.sol#164) is not in mixedCase
+Parameter LifiImplementation.addHandler(address,bool)._handler (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#45) is not in mixedCase
+Parameter LifiImplementation.addChain(uint256,bool)._chainId (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#55) is not in mixedCase
+Parameter LifiImplementation.performSwapAction(address,SwapRequest)._request (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#77) is not in mixedCase
+Parameter LifiImplementation.verifySwapData(SwapRequest)._request (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#110) is not in mixedCase
+Parameter LifiImplementation.performBridgeAction(address,BridgeRequest)._request (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#133) is not in mixedCase
+Parameter LifiImplementation.verifyBridgeData(BridgeRequest)._request (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#150) is not in mixedCase
+Parameter ChainlinkOracleConnector.updateChainlinkPriceAgeThreshold(uint256)._chainlinkPriceAgeThreshold (contracts/helpers/valueOracle/oracles/ChainlinkOracleConnector.sol#56) is not in mixedCase
+Parameter UniswapValueOracle.setPeriod(uint32)._period (contracts/helpers/valueOracle/oracles/UniswapValueOracle.sol#38) is not in mixedCase
+Contract WETH_Oracle (contracts/helpers/valueOracle/oracles/WETH_Oracle.sol#4-12) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+INFO:Detectors:
+Variable CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_0 (contracts/connectors/CurveConnector.sol#133) is too similar to CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_1 (contracts/connectors/CurveConnector.sol#137)
+Variable CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_0 (contracts/connectors/CurveConnector.sol#133) is too similar to CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_2 (contracts/connectors/CurveConnector.sol#141)
+Variable CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_1 (contracts/connectors/CurveConnector.sol#137) is too similar to CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_2 (contracts/connectors/CurveConnector.sol#141)
+Variable CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_0 (contracts/connectors/CurveConnector.sol#133) is too similar to CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_3 (contracts/connectors/CurveConnector.sol#145)
+Variable CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_1 (contracts/connectors/CurveConnector.sol#137) is too similar to CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_3 (contracts/connectors/CurveConnector.sol#145)
+Variable CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_2 (contracts/connectors/CurveConnector.sol#141) is too similar to CurveConnector.openCurvePosition(address,uint256,uint256,uint256).amounts_scope_3 (contracts/connectors/CurveConnector.sol#145)
+Variable UNIv3Connector._getPositionTVL(HoldingPI,address).tokensOwed0 (contracts/connectors/UNIv3Connector.sol#138) is too similar to UNIv3Connector._getPositionTVL(HoldingPI,address).tokensOwed1 (contracts/connectors/UNIv3Connector.sol#138)
+Variable LifiImplementation.performSwapAction(address,SwapRequest).balanceOut0 (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#85) is too similar to LifiImplementation.performSwapAction(address,SwapRequest).balanceOut1 (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#92)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#variable-names-too-similar
+INFO:Detectors:
+LZHelperReceiver.TVL_UPDATE (contracts/helpers/LZHelpers/LZHelperReceiver.sol#24) is never used in LZHelperReceiver (contracts/helpers/LZHelpers/LZHelperReceiver.sol#18-73)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+INFO:Detectors:
+BalancerConnector.BALANCER_LP_POSITION (contracts/connectors/BalancerConnector.sol#32) should be constant 
+BaseConnector.DUST_LEVEL (contracts/helpers/BaseConnector.sol#31) should be constant 
+BaseConnector.MINIMUM_HEALTH_FACTOR (contracts/helpers/BaseConnector.sol#28) should be constant 
+CompoundConnector.COMPOUND_LP (contracts/connectors/CompoundConnector.sol#8) should be constant 
+FraxConnector.COLLATERAL_AND_DEBT_POSITION_TYPE (contracts/connectors/FraxConnector.sol#22) should be constant 
+LidoConnector.LIDO_WITHDRAWAL_REQUEST_ID (contracts/connectors/LidoConnector.sol#13) should be constant 
+MaverickConnector.MAVERICK_LP (contracts/connectors/MaverickConnector.sol#35) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+INFO:Detectors:
+AccountingManager.baseToken (contracts/accountingManager/AccountingManager.sol#60) should be immutable 
+AerodromeConnector.aerodromeRouter (contracts/connectors/AerodromeConnector.sol#33) should be immutable 
+AerodromeConnector.voter (contracts/connectors/AerodromeConnector.sol#34) should be immutable 
+BalancerConnector.AURA (contracts/connectors/BalancerConnector.sol#30) should be immutable 
+BalancerConnector.BAL (contracts/connectors/BalancerConnector.sol#29) should be immutable 
+BalancerConnector.balancerVault (contracts/connectors/BalancerConnector.sol#27) should be immutable 
+BalancerFlashLoan.registry (contracts/connectors/BalancerFlashLoan.sol#16) should be immutable 
+BalancerFlashLoan.vault (contracts/connectors/BalancerFlashLoan.sol#15) should be immutable 
+BaseConnector.DUST_LEVEL (contracts/helpers/BaseConnector.sol#31) should be immutable 
+BaseConnector.MINIMUM_HEALTH_FACTOR (contracts/helpers/BaseConnector.sol#28) should be immutable 
+CamelotConnector.factory (contracts/connectors/CamelotConnector.sol#32) should be immutable 
+CamelotConnector.router (contracts/connectors/CamelotConnector.sol#31) should be immutable 
+ChainlinkOracleConnector.registry (contracts/helpers/valueOracle/oracles/ChainlinkOracleConnector.sol#11) should be immutable 
+ConnectorMock2.registry (contracts/helpers/ConnectorMock2.sol#18) should be immutable 
+ConnectorMock2.vaultId (contracts/helpers/ConnectorMock2.sol#17) should be immutable 
+CurveConnector.CRV (contracts/connectors/CurveConnector.sol#28) should be immutable 
+CurveConnector.CVX (contracts/connectors/CurveConnector.sol#27) should be immutable 
+CurveConnector.PRISMA (contracts/connectors/CurveConnector.sol#29) should be immutable 
+CurveConnector.convexBooster (contracts/connectors/CurveConnector.sol#26) should be immutable 
+DolomiteConnector.borrowPositionProxy (contracts/connectors/Dolomite.sol#14) should be immutable 
+DolomiteConnector.depositWithdrawalProxy (contracts/connectors/Dolomite.sol#12) should be immutable 
+DolomiteConnector.dolomiteMargin (contracts/connectors/Dolomite.sol#13) should be immutable 
+LidoConnector.lido (contracts/connectors/LidoConnector.sol#8) should be immutable 
+LidoConnector.lidoWithdrawal (contracts/connectors/LidoConnector.sol#9) should be immutable 
+LidoConnector.steth (contracts/connectors/LidoConnector.sol#10) should be immutable 
+LidoConnector.weth (contracts/connectors/LidoConnector.sol#11) should be immutable 
+LifiImplementation.lifi (contracts/helpers/SwapHandler/Implementaions/LifiImplementation.sol#16) should be immutable 
+MaverickConnector.mav (contracts/connectors/MaverickConnector.sol#30) should be immutable 
+MaverickConnector.maverickRouter (contracts/connectors/MaverickConnector.sol#32) should be immutable 
+MaverickConnector.positionInspector (contracts/connectors/MaverickConnector.sol#33) should be immutable 
+MaverickConnector.veMav (contracts/connectors/MaverickConnector.sol#31) should be immutable 
+NoyaFeeReceiver.accountingManager (contracts/accountingManager/NoyaFeeReceiver.sol#9) should be immutable 
+NoyaFeeReceiver.baseToken (contracts/accountingManager/NoyaFeeReceiver.sol#10) should be immutable 
+NoyaFeeReceiver.receiver (contracts/accountingManager/NoyaFeeReceiver.sol#8) should be immutable 
+NoyaGovernanceBase.registry (contracts/governance/NoyaGovernanceBase.sol#7) should be immutable 
+NoyaGovernanceBase.vaultId (contracts/governance/NoyaGovernanceBase.sol#8) should be immutable 
+NoyaValueOracle.registry (contracts/helpers/valueOracle/NoyaValueOracle.sol#11) should be immutable 
+OmnichainLogic.lzHelper (contracts/helpers/OmniChainHandler/OmnichainLogic.sol#17) should be immutable 
+PancakeswapConnector.masterchef (contracts/connectors/PancakeswapConnector.sol#12) should be immutable 
+PendleConnector.pendleMarketDepositHelper (contracts/connectors/PendleConnector.sol#22) should be immutable 
+PendleConnector.pendleRouter (contracts/connectors/PendleConnector.sol#23) should be immutable 
+PendleConnector.staticRouter (contracts/connectors/PendleConnector.sol#24) should be immutable 
+SNXV3Connector.SNXCoreProxy (contracts/connectors/SNXConnector.sol#14) should be immutable 
+SiloConnector.siloRepository (contracts/connectors/SiloConnector.sol#9) should be immutable 
+StargateConnector.LPStaking (contracts/connectors/StargateConnector.sol#22) should be immutable 
+StargateConnector.rewardToken (contracts/connectors/StargateConnector.sol#24) should be immutable 
+StargateConnector.stargateRouter (contracts/connectors/StargateConnector.sol#23) should be immutable 
+UniswapValueOracle.factory (contracts/helpers/valueOracle/oracles/UniswapValueOracle.sol#16) should be immutable 
+UniswapValueOracle.registry (contracts/helpers/valueOracle/oracles/UniswapValueOracle.sol#17) should be immutable 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-immutable
+INFO:Slither:. analyzed (242 contracts with 94 detectors), 525 result(s) found

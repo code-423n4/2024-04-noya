@@ -1,4 +1,5 @@
 # NOYA audit details
+
 - Total Prize Pool: $65,000 in USDC
   - HM awards: $49,920 in USDC
   - QA awards: $2080 in USDC
@@ -15,10 +16,7 @@
 
 The 4naly3er report can be found [here](https://github.com/code-423n4/2024-04-noya/blob/main/4naly3er-report.md).
 
-
-
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
-
 
 # Overview
 
@@ -28,22 +26,18 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 - **Previous audits:**  Hacken - (Need link from sponsor)
   - ✅ SCOUTS: If there are multiple report links, please format them in a list.
-- **Documentation:** docs.noya.ai
-- **Website:** https://noya.ai/
-- **X/Twitter:** https://twitter.com/NetworkNoya
-- **Discord:** https://discord.com/invite/BGS5qX6fPj
+- **Documentation:** <https://docs.noya.ai>
+- **Website:** <https://noya.ai/>
+- **X/Twitter:** <https://twitter.com/NetworkNoya>
+- **Discord:** <https://discord.com/invite/BGS5qX6fPj>
 
 ---
 
-
 # Scope
 
-*See [scope.txt](https://github.com/code-423n4/2024-04-noya/blob/main/scope.txt)*
-[ ✅ SCOUTS: add scoping and technical details here ]
+_See [scope.txt](https://github.com/code-423n4/2024-04-noya/blob/main/scope.txt)_
+
 ### Files in scope
-- ✅ This should be completed using the `metrics.md` file
-- ✅ Last row of the table should be Total: SLOC
-- ✅ SCOUTS: Have the sponsor review and and confirm in text the details in the section titled "Scoping Q amp; A"
 
 | File   | Logic Contracts | Interfaces | SLOC  | Purpose | Libraries used |
 | ------ | --------------- | ---------- | ----- | -----   | ------------ |
@@ -92,8 +86,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 ### Files out of scope
 
-*See [out_of_scope.txt](https://github.com/code-423n4/2024-04-noya/blob/main/out_of_scope.txt)*
-✅ SCOUTS: List files/directories out of scope
+_See [out_of_scope.txt](https://github.com/code-423n4/2024-04-noya/blob/main/out_of_scope.txt)_
 
 | File         |
 | ------------ |
@@ -265,40 +258,14 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 ## Scoping Q &amp; A
 
 ### General questions
-### Are there any ERC20's in scope?: Yes
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-any
-
-### Are there any ERC777's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-### Are there any ERC721's in scope?: Yes
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-uniswap non fungible positions
-
-### Are there any ERC1155's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-✅ SCOUTS: Once done populating the table below, please remove all the Q/A data above.
 
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
-| ERC20 used by the protocol              |       🖊️             |
+| ERC20 used by the protocol              |       Any             |
 | Test coverage                           | ✅ SCOUTS: Please populate this after running the test coverage command                          |
-| ERC721 used  by the protocol            |            🖊️              |
-| ERC777 used by the protocol             |           🖊️                |
-| ERC1155 used by the protocol            |              🖊️            |
+| ERC721 used  by the protocol            |            Yes, uniswap non fungible positions              |
+| ERC777 used by the protocol             |           No                |
+| ERC1155 used by the protocol            |              No            |
 | Chains the protocol will be deployed on | Ethereum,Arbitrum,Base,BSC,Optimism,Polygon,zkSync,Other,Avaxpolygon zkevm  |
 
 ### ERC20 token behaviors in scope
@@ -323,8 +290,7 @@ uniswap non fungible positions
 | [High decimals ( > 18)](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#high-decimals)                                                              | No    |
 | [Blocklists](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#tokens-with-blocklists)                                                                | Yes    |
 
-### External integrations (e.g., Uniswap) behavior in scope:
-
+### External integrations (e.g., Uniswap) behavior in scope
 
 | Question                                                  | Answer |
 | --------------------------------------------------------- | ------ |
@@ -332,92 +298,50 @@ uniswap non fungible positions
 | Pausability (e.g. Uniswap pool gets paused)               |  No   |
 | Upgradeability (e.g. Uniswap gets upgraded)               |   No  |
 
-
 ### EIP compliance checklist
-src/governance/Keepers.sol with EIP712
-src/accountingManager/AccountingManager.sol with ERC4626
-
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
 
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
-| src/Token.sol                           | ERC20, ERC721                |
-| src/NFT.sol                             | ERC721                       |
-
+| src/governance/Keepers.sol                           | EIP712          |
+| src/accountingManager/AccountingManager.sol          | ERC4626         |
 
 # Additional context
 
 ## Main invariants
 
-https://docs.google.com/document/d/1TRYK3Vpr6VsI9B3QLEiGQR-E-NAmTd3tHfwj8eWHf64/edit
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
+<https://docs.google.com/document/d/1TRYK3Vpr6VsI9B3QLEiGQR-E-NAmTd3tHfwj8eWHf64/edit>
 
 ## Attack ideas (where to focus for bugs)
+
 Integrity of the connectors interactions with the protocols (can we deposit and withdraw correctly)
 Fee mechanisms of noya
 
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
 ## All trusted roles in the protocol
-
--Governor
-		This is a timelock smart contract that is responsible for changing the addresses of others. 
-	- Maintainer
-		This smart contract is in charge of adding a new vault, adding trusted tokens for that vault, and adding trusted positions to the registry.
-	- Keepers
-		This is the smart contract that manages execution of the strategies. It’s a multisig contract. Strategy managers can submit their transactions into IPFS in an encrypted way and the keepers will decrypt and execute it.
-	- watchers
-		This smart contract is responsible to make sure the execution of noya is going on correctly. If there is any misbehaving (like price manipulation or any suspicious actions from the keepers) the watchers and undo the action.
-	- emergency 
-		This address is also a cold wallet that is going to be used in situations that a position is stuck or another role of noya is compromised.
-
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
 
 | Role                                | Description                       |
 | --------------------------------------- | ---------------------------- |
-| Owner                          | Has superpowers                |
-| Administrator                             | Can change fees                       |
-
-## Describe any novel or unique curve logic or mathematical models implemented in the contracts:
-
-N/A
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
+|Governor|This is a timelock smart contract that is responsible for changing the addresses of others.|
+|Maintainer|This smart contract is in charge of adding a new vault, adding trusted tokens for that vault, and adding trusted positions to the registry.|
+|Keepers|This is the smart contract that manages execution of the strategies. It’s a multisig contract. Strategy managers can submit their transactions into IPFS in an encrypted way and the keepers will decrypt and execute it.|
+|watchers|This smart contract is responsible to make sure the execution of noya is going on correctly. If there is any misbehaving (like price manipulation or any suspicious actions from the keepers) the watchers and undo the action.|
+|emergency|This address is also a cold wallet that is going to be used in situations that a position is stuck or another role of noya is compromised.|
 
 ## Running tests
 
-git clone git@github.com:Noya-ai/noya-vault-contracts.git
-cd noya-vault-contracts
+```bash
+git clone --recurse https://github.com/code-423n4/2024-04-noya.git
+cd 2024-04-noya
 yarn install
 forge build
-forge test --gas-report
-sh coverage.sh (for coverage)
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-```bash
-git clone https://github.com/code-423n4/2023-08-arbitrum
-git submodule update --init --recursive
-cd governance
-foundryup
-make install
-make build
-make sc-election-test
+forge test
+# To compare gas usage
+forge snapshot --diff .gas-snapshot-init
+# To generate lcov file
+sh coverage.sh
+# See slither.txt
+slither . --foundry-out-directory artifactsFoundry
 ```
-To run code coverage
-```bash
-make coverage
-```
-To run gas benchmarks
-```bash
-make gas
-```
-
-✅ SCOUTS: Add a screenshot of your terminal showing the gas report
-✅ SCOUTS: Add a screenshot of your terminal showing the test coverage
 
 ## Miscellaneous
+
 Employees of NOYA and employees' family members are ineligible to participate in this audit.
