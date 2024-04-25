@@ -6,6 +6,7 @@
   - Judge awards: $7,500 in USDC
   - Lookout awards: $5,000 in USDC
   - Scout awards: $500 in USDC
+  - ⭐️ Wardens who participate in this audit will get, proportionally to their USDC rewards, 5% of NOYA's stars program used to incentivize contributors.
 - Join [C4 Discord](https://discord.gg/code4rena) to register
 - Submit findings [using the C4 form](https://code4rena.com/contests/2024-04-noya/submit)
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
