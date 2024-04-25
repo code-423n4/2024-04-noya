@@ -34,7 +34,7 @@ Contracts
 
 ## Links
 
-- **Previous audits:**  Hacken - (Need link from sponsor)
+- **Previous audits:**  https://docs.noya.ai/audits-and-risk/audits
 - **Documentation:** <https://docs.noya.ai>
 - **Website:** <https://noya.ai/>
 - **X/Twitter:** <https://twitter.com/NetworkNoya>
