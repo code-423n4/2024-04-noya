@@ -354,7 +354,7 @@ slither . --foundry-out-directory artifactsFoundry
 
 - Coverage report:
 
-![](https://github.com/code-423n4/2024-04-noya/assets/47150934/5d9938e0-aea6-4319-9159-5d9904717785)
+![](https://github.com/code-423n4/2024-04-noya/blob/main/screenshot_1.png?raw=true)
 
 
 ## Miscellaneous
