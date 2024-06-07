@@ -22,7 +22,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 # Overview
 
-## Noya smart contracts [![tests](https://github.com/Noya-ai/noya-vault-contracts/actions/workflows/tests.yml)
+## Noya smart contracts [tests](https://github.com/Noya-ai/noya-vault-contracts/actions/workflows/tests.yml)
 **This repo contains noya smart contract**
 
 Contracts
