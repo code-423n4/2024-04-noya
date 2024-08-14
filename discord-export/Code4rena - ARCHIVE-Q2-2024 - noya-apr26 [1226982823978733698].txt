@@ -1,0 +1,3874 @@
+==============================================================
+Guild: Code4rena
+Channel: ARCHIVE-Q2-2024 / noya-apr26
+==============================================================
+
+[04/25/2024 18:21] knownfactc4_29311 (pinned)
+👋 Hello and welcome to the audit channel for the $65,000 NOYA audit!
+
+📆 Audit opens 04/26/2024 20:00 (20:00 UTC) and runs through 05/17/2024 20:00 (20:00 UTC) (21 days).
+
+Please give a warm welcome to the NOYA team, particularly @hadi esna, who will be available for questions either here in the channel or via a PRIVATE thread in the CET timezones. 
+
+🤖 **Documentation bot assistance:** For general questions about the codebase, give our documentation bot a try, by tagging `@Documentation Wolf` in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources.  
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this audit, consider enabling notifications for this channel. 🐺 ⏰
+
+Audit Page: https://code4rena.com/audits/2024-04-noya
+
+Special Note: Wardens who participate in this audit will get, proportionally to their USDC rewards, 5% of NOYA's stars program used to incentivize contributors.
+
+{Reactions}
+chefskiss (10) thankyou (5) 🔥 (7) 
+
+[04/25/2024 18:21] knownfactc4_29311
+Pinned a message.
+
+
+[04/26/2024 00:04] saneryee
+@Docs Wolf Introduce NOYA
+
+
+[04/26/2024 00:05] saneryee
+@Docs Wolf
+
+
+[04/26/2024 00:27] itsmetechjay
+It's not active just yet. 🙂
+
+
+[04/26/2024 00:30] saneryee
+Can't wait to use it! 😁
+
+
+[04/26/2024 00:39] itsmetechjay
+I see! 😉
+
+{Reactions}
+😄 (3) 
+
+[04/26/2024 20:02] C4 (pinned)
+**Automated Findings / Publicly Known Issues**
+
+Reminder: all [Automated Findings / Publicly Known Issues](https://github.com/code-423n4/2024-04-noya/tree/main#automated-findings--publicly-known-issues) are out of scope and ineligible for awards.
+
+{Embed}
+https://github.com/code-423n4/2024-04-noya/tree/main
+GitHub - code-423n4/2024-04-noya
+Contribute to code-423n4/2024-04-noya development by creating an account on GitHub.
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/4fe23cba-7489-45af-b1f5-da6aec526cb7-8B8AA
+
+
+[04/26/2024 20:03] uaarrr
+why you copy Codehawks ?  i hope my critical in the mock file will protect all these real money
+
+{Attachments}
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/Screenshot_1-770ED.png
+
+{Reactions}
+😅 (6) 
+
+[04/26/2024 20:03] ljj
+Impact: Theft of MockERC20.sol tokens
+
+
+[04/26/2024 20:05] ljj
+I assume it was a mistake hopefully we get a clarification on it
+
+
+[04/26/2024 20:09] 0xsorrynotsorry
+Pinned a message.
+
+{Reactions}
+thankyou (4) 
+
+[04/26/2024 20:50] haxatron1
+/contracts/helpers/ConnectorMock2.sol in scope?
+
+
+[04/26/2024 21:23] blckhv
+is it possible to rework the [out-of-scope](https://github.com/code-423n4/2024-04-noya?tab=readme-ov-file#files-out-of-scope) part by grouping the files by folders instead of listing all of them?
+
+{Embed}
+https://github.com/code-423n4/2024-04-noya?tab=readme-ov-file
+GitHub - code-423n4/2024-04-noya
+Contribute to code-423n4/2024-04-noya development by creating an account on GitHub.
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/4fe23cba-7489-45af-b1f5-da6aec526cb7-8B8AA
+
+{Reactions}
+👍 (2) SBSecurity 
+
+[04/26/2024 22:06] mylifechangefast.eth_70767
+@hadi esna please check private dm
+
+
+[04/27/2024 00:14] guy_in0xnito
+If any erc20 behaviour is usee by the protocol 
+Then how come all behaviour is not in scope
+@kartoonjoy | C4🎇🎇
+
+
+[04/27/2024 00:52] guy_in0xnito
+Have the prev audit fixes been done
+
+
+[04/27/2024 04:30] smith3dx
+hello  is the maintainer  a single account
+
+
+[04/27/2024 06:43] xkeywordx
+is this real? Didn't have time to look at the repo yet.
+How do you know that this is from CodeHawks?
+
+
+[04/27/2024 06:46] uaarrr
+it was a joke, codehawks had a past contest few months ago where mocks where in scope  & in the end  vulns in mock files were awarded until everyone start talking and they modified the results with only the ``important`` vulnerabilities , this contest is not linked in any way with that
+
+
+[04/27/2024 06:46] xkeywordx
+ah, ok. Thanks for claryfing
+
+
+[04/27/2024 06:47] uaarrr
+i said that just to get to attention the fact that hackers has to look for useless vulnerabilities in useless places instead  to look at the important elements of the protocol where real users will interact
+
+{Reactions}
+👍 (2) 
+
+[04/27/2024 08:58] optimisticallyomnichain
+yes with hacken you can find the report in the docs
+
+
+[04/27/2024 10:08] hadiesna
+No it's the "TimeLock.sol" contract
+With a multisig as the proposer and another multisig as the executor
+
+
+[04/27/2024 10:09] smith3dx
+Ok thank you
+
+
+[04/27/2024 11:05] 0xtotem
+You need to call the bot in a private or a public thread.
+
+{Reactions}
+👆 
+
+[04/27/2024 14:12] guy_in0xnito
+Are the contracts in connectors
+For different types of yield generating options?
+
+
+[04/27/2024 14:14] guy_in0xnito
+So we can assume they are fixed
+We can expect bit of new codes!
+
+{Reactions}
+👍 
+
+[04/27/2024 14:42] uaarrr
+each connector corresponds with a specific protocol
+
+
+[04/27/2024 18:18] uaarrr
+in case of privileged addresses, they will behave  correctly 100% of time right ?
+
+
+[04/27/2024 18:43] mylifechangefast.eth_70767
+@hadi esna please check dm
+
+
+[04/27/2024 19:21] hadiesna
+You haven't sent anything?
+
+
+[04/27/2024 19:21] hadiesna
+Yes
+
+
+[04/27/2024 20:47] dedohwale
+What is the purpose of the queues?
+
+
+[04/27/2024 20:53] saneryee
+
+
+{Stickers}
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/816086882823831613-3C537.json
+
+
+[04/27/2024 20:55] moeid3
+where does `AccountingManager::_update` internal function used?
+ @hadi esna
+
+
+[04/28/2024 08:16] mylifechangefast.eth_70767
+I did please check
+
+
+[04/28/2024 09:20] uaarrr
+as i understand , normal users can't interact directly with the `` connectors ``  smart contracts right ?
+
+
+[04/28/2024 09:22] valkataaa
+yes
+
+{Reactions}
+👍 
+
+[04/28/2024 09:24] valkataaa
+where is the calculation of shares in AccountManager? `previewDeposit`
+
+
+[04/28/2024 09:40] stakog
+`calculateDepositShares`
+
+
+[04/28/2024 11:48] hadiesna
+It's being used to prevent someone who has started the withdraw process, transfer his/her tokens to another address
+
+
+[04/28/2024 11:48] hadiesna
+true
+
+
+[04/28/2024 11:49] hadiesna
+To prevent price manipulation attacks, also to make sure data from other chains are updated
+
+
+[04/28/2024 12:43] brivan
+@hadi esna What is `positionTimestamp` in the `HoldingPI` struct?
+
+
+[04/28/2024 12:57] hadiesna
+Hey
+It's explained here in the docs "Holding positions with timestamp" in https://docs.noya.ai/technical-architecture/technical-architecture/registry-flows
+
+{Embed}
+https://docs.noya.ai/technical-architecture/technical-architecture/registry-flows
+Registry flows | NOYA
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/spaces%252FrGMrQr7vOtFr68cv039Y%252Fsocial-37A5E.png
+
+{Reactions}
+thankyou 
+
+[04/28/2024 13:04] 0xabhay.
+@hadi esna kindly check my private thread
+
+
+[04/28/2024 13:05] hadiesna
+Can you mention me there?
+
+
+[04/28/2024 13:05] 0xabhay.
+Already sir
+
+
+[04/28/2024 13:20] stakog
+You mentioned `previewDeposit`. It's there
+
+
+[04/28/2024 13:23] stakog
+You might wanna check the ERC4626 contract its inheriting
+
+{Reactions}
+💯 👍 🔥 (2) 
+
+[04/28/2024 15:18] smith3dx
+is the recordProfitForFee and checkIfTVLHasDropped functions  intensionally designed to work independently
+
+
+[04/28/2024 15:41] hadiesna
+what do you mean by "independently"?
+
+
+[04/28/2024 15:44] smith3dx
+i mean independently of each of other
+
+
+[04/28/2024 15:57] lihwy
+Hello i am newbie to web3 sec. How can i find the guide for smart contract from previous audits? Like a blog or tutorial. Thanks in advance
+
+
+[04/28/2024 16:16] hadiesna
+you mean previous "Noya" audit or in general C4 audits?
+
+
+[04/28/2024 16:29] lihwy
+general audits, sorry for asking here
+
+
+[04/28/2024 16:31] hadiesna
+Np 🫡
+Maybe start with Noya 🙂
+
+
+[04/28/2024 17:19] nour99
+@hadi esna hey why there is hardhat and foundry ? and are i can delete hardhat and use just foundry ?
+
+
+[04/28/2024 18:00] hadiesna
+we use foundry for tests and hardhat for deployment scripts, 
+Also we handle dependencies using yarn not foundry
+
+
+[04/28/2024 18:01] hadiesna
+hmmm
+You can but why do you want to do it?
+
+
+[04/28/2024 18:02] nour99
+so hardhat for final deployment right ?
+
+
+[04/28/2024 19:25] stakog
+Instead of just saying thanks, he deleted his messages and now it just looks like I'm talking to myself 🤨
+
+{Reactions}
+🤣 (12) 
+
+[04/28/2024 21:05] mylifechangefast.eth_70767
+Where can I find information about the  onlyManager and matainer??
+
+
+[04/28/2024 21:05] mylifechangefast.eth_70767
+Anyone please
+
+
+[04/28/2024 21:15] 0xellipticcurve
+NoyaGovernanceBase.sol
+
+{Reactions}
+✅ 
+
+[04/28/2024 21:50] mylifechangefast.eth_70767
+Ty
+
+{Reactions}
+🤝 
+
+[04/29/2024 01:50] yau0292
+hey guys sry if its a dumb question but ive just started recently , it write that were supposed to register on the discord but i dont find any register section ? its normal or the fact that ive joined the discord is enough to consider that im registered ? thanks
+
+
+[04/29/2024 01:59] itsabinashb
+Yes
+
+
+[04/29/2024 02:09] yau0292
+kk thanks man
+
+
+[04/29/2024 09:07] by_dlife
+After executing the "forge test" command, a large number of errors are reported，who can tell me why？
+
+
+[04/29/2024 09:10] moeid3
+you should insert your RPCs in .env file . although i did that and got less errors not 0
+
+
+[04/29/2024 09:11] by_dlife
+Let me try it
+
+
+[04/29/2024 09:12] hadiesna
+Hmmm
+I think because RPCs are set in "testFoundry/utils/resources/*" files
+Please update the RPC endpoints there to fix the issue
+In each file there is a "RPC_URL" variable that you can change
+Tests are not using ".env"
+
+{Reactions}
+👍 
+
+[04/29/2024 09:12] hadiesna
+@0xJoyBoy03
+
+
+[04/29/2024 09:13] moeid3
+ok thanks
+
+
+[04/29/2024 09:20] georgefalcon_
+https://docs.noya.ai/technical-architecture/technical-architecture/roles-in-noya
+
+{Embed}
+https://docs.noya.ai/technical-architecture/technical-architecture/roles-in-noya
+Roles in NOYA | NOYA
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/spaces%252FrGMrQr7vOtFr68cv039Y%252Fsocial-37A5E.png
+
+{Reactions}
+✅ 
+
+[04/29/2024 09:28] by_dlife
+You're a genius
+
+{Reactions}
+👍 
+
+[04/29/2024 09:31] by_dlife
+What is the content of the audit? Is it the content under the contracts folder? I am a beginner.
+
+
+[04/29/2024 09:46] 0xsorrynotsorry
+Please go through the contest page here: https://code4rena.com/audits/2024-04-noya
+
+{Reactions}
+👆🏻 (2) 💓 
+
+[04/29/2024 09:56] by_dlife
+ok
+
+
+[04/29/2024 13:32] Deleted User
+What is role of referrer in deposit function of `accountingManager.sol`?
+
+
+[04/29/2024 13:34] moeid3
+just for emitting an event
+
+
+[04/29/2024 15:02] 0xtotem
+Started a thread.
+
+
+[04/29/2024 15:03] mylifechangefast.eth_70767
+Please where can I find the Bridge request struct??
+
+
+[04/29/2024 15:03] mylifechangefast.eth_70767
+Anyone?
+
+
+[04/29/2024 15:09] moeid3
+is this doc bot accurate?
+
+{Reactions}
+😅 (3) 
+
+[04/29/2024 15:11] mylifechangefast.eth_70767
+Let me give it a try.
+
+
+[04/29/2024 15:12] 0xtotem
+It is more accurate than the usual LLM architecture but it still can make mistakes because it's a bot. We encourage you to read the documentation listed in the message.
+
+{Reactions}
+🙏 (2) ☝️ 
+
+[04/29/2024 19:06] 0xhacksmithh
+@hadi esna sir, asked something in PT,  whenever you have free time pls check
+
+
+[04/29/2024 20:35] maxwell4426
+Anyone know the nsloc of the audit?
+
+
+[04/29/2024 20:36] ljj
+3999 according to audit page
+
+{Reactions}
+🫡 
+
+[04/30/2024 06:58] moeid3
+so close
+
+
+[04/30/2024 08:31] ahmedaghadi
+Running `forge test` broke foundry 🙂
+
+{Attachments}
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/image-D4C56.png
+
+{Reactions}
+😅 
+
+[04/30/2024 08:45] guy_in0xnito
+Error: not found @openzeppelin/contracts-5.0/token/ERC20/extensions/ERC4626.sol
+......What does this error mean in remix & how to fix this
+
+
+[04/30/2024 08:46] mansa11
+You have to import the module
+
+
+[04/30/2024 08:48] guy_in0xnito
+Import " openzeppelin/contracts-5.0/token/ERC20/extensions/ERC4626.sol".  ... This thing. Right ?
+
+
+[04/30/2024 09:08] senyab
+How the LPStaking process differentiate from the router flow in terms of stargate connector?
+
+
+[04/30/2024 09:56] senyab
+@hadi esna
+
+
+[04/30/2024 09:59] georgefalcon_
+@hadi esna how does the trusted position, and updating connector to trusted token?, i have read the docs, but they don't quite do justice to explaining it?, is it even a thing in web3?
+
+
+[04/30/2024 11:02] recursiveeth_70175
+@hadi esna hey can you explain what does it mean by positions and what's the role of it.
+
+
+[04/30/2024 11:06] senyab
+@hadi esna  where and how the OmnichainManagerNormalChain is added into the registry? Can't find the respective function
+
+
+[04/30/2024 11:25] senyab
+@hadi esna  wake up man
+
+{Reactions}
+😂 (7) 🫡 🐧 
+
+[04/30/2024 11:36] cholakovv
+calm down a bit bro, he's not a robot
+
+{Reactions}
+😥 (2) THIS (19) 
+
+[04/30/2024 12:43] mctoady
+https://tenor.com/view/-gif-8162509
+
+{Embed}
+https://tenor.com/view/-gif-8162509
+what is you doing
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/tenor-E1D22.png
+
+
+[04/30/2024 13:06] azadxx
+@hadi esna what's this  `uint256 totalCBAmountFullfilled` in `IAccountingMaganer.sol` contract
+
+
+[04/30/2024 13:12] azadxx
+I guess it's total amount of base token that has been withdrawn... It's doc is missing in contract
+
+
+[04/30/2024 13:16] brivan
+Check the comments on the interface `IAccountingMangaer`
+
+
+[04/30/2024 13:16] mylifechangefast.eth_70767
+Would there be anyway users can withdraw to reduce the Tvl?
+
+
+[04/30/2024 13:58] hadiesna
+It's just depositing the LP position into stargate staking contract
+Can you ask the question more clearly?
+
+
+[04/30/2024 13:59] hadiesna
+It's being added as a connector to the registry
+
+
+[04/30/2024 14:00] hadiesna
+So the flow is:
+- Add trusted tokens to the registry
+- Add trusted position of those tokes
+- Create the position in the connector (and it'll be added to the registry, as a holding position)
+
+
+[04/30/2024 14:01] hadiesna
+yes they can withdraw and reduce the TVL
+
+
+[04/30/2024 14:01] hadiesna
+But when they withdraw, the price of each share in terms of base tokens will be the same
+
+
+[04/30/2024 14:03] mylifechangefast.eth_70767
+The Tvl will not reduce?
+
+
+[04/30/2024 14:05] hadiesna
+The TVL will be reduced
+I'm talking about the price of each token
+
+{Reactions}
+✅ 
+
+[04/30/2024 14:06] mylifechangefast.eth_70767
+Please check private thread
+
+
+[04/30/2024 15:51] georgefalcon_
+thanks🚀
+
+
+[05/01/2024 03:27] tamayonft
+How watchers and keeper make decicison?  They read the events emited?
+
+
+[05/01/2024 04:02] cholakovv
+yep, mostly through events and internal schedulers
+
+
+[05/01/2024 08:32] evokid
+I thought only through schedulers
+
+
+[05/01/2024 09:45] zdravkohr
+For each vault there will be an account manager and connectors deployed?
+
+
+[05/01/2024 10:05] evokid
+I assume so, since the AccountingManager only using one vaultId that comes by NoyaGovernanceBase
+
+{Reactions}
+👍 (2) 
+
+[05/01/2024 11:17] hadiesna
+True
+
+{Reactions}
+✅ (2) 
+
+[05/01/2024 12:08] zdravkohr
+What are debt positions
+
+
+[05/01/2024 13:02] mylifechangefast.eth_70767
+@hadi esna please check private chat
+
+{Reactions}
+🫡 
+
+[05/01/2024 14:44] sp1cymeatball
+Are vault managers trusted?
+
+
+[05/01/2024 15:38] guy_in0xnito
+@hadi esna mentioned you in a pvt thread
+Check it when you are free
+
+{Reactions}
+🫡 
+
+[05/02/2024 11:28] hadiesna
+Basically positions where we owe money to a protocol
+Doesn’t happen in noya current implementation of connectors but might happen in future (for example sth like over collateralized positions where we have more debt than credit (it's just an example and we don't have this now))
+
+
+[05/02/2024 11:28] hadiesna
+yes ser
+
+{Reactions}
+thankyou 
+
+[05/02/2024 11:43] mrpotatomagic
+@hadi esna please check private thread
+
+
+[05/02/2024 14:52] alexczm
+Hey @hadi esna , I was looking at `testSwap()` from BaseConnector.t.sol file. I see the `swapData` passed to `connector.swapHoldings` is hardcoded. 
+I was hoping you could help me (and the other wardens) with a relatively easy way to compute new `swapData`.
+
+
+[05/02/2024 15:59] tychaios.
+Is the `Watchers` contract supposed to be the emergency account?
+
+
+[05/02/2024 16:12] hadiesna
+It's the "data" field of the Li.fi response 
+https://docs.li.fi/li.fi-api/li.fi-api/requesting-a-quote
+please read here
+and here:
+https://apidocs.li.fi/reference/get_quote
+
+{Embed}
+https://docs.li.fi/li.fi-api/li.fi-api/requesting-a-quote
+Requesting a Quote | LI.FI Documentation
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/spaces%252Ff8wrmfL9sMgx2g3g358V%252Fsocial-0E155.png
+
+{Embed}
+https://apidocs.li.fi/reference/get_quote
+Get a quote for a token transfer
+This endpoint can be used to request a quote for a transfer of one token to another, cross chain or not.<br/>The endpoint returns a <button aria-label="Copy Code" class="rdmd-code-copy fa"></button>Step object which contains information about the estimated result as well as a <b...
+
+{Reactions}
+🫡 
+
+[05/02/2024 16:41] noro9954
+@hadi esna hello, in a Connector **who** will call function to enter the protocol (**E.g. ** the supply function in AaveConnector) ? and at what frequency it will be called ?
+
+
+[05/02/2024 16:48] hadiesna
+@here Hey everyone 
+It's been a really great week so far talking to all of you about Noya
+You guys are truly amazing and we appreciate your effort 
+I wanted to give a feedback that I think will help both of us. I noticed in the past couple of days that there aren’t many activity around "connectors" folder. I understand that you need to understand other sections to get there but I just wanted to emphasis that this section due to its nature (connecting with other protocols and more moving parts) is more likely to have issues.
+So you'll probably find less duplicate stuff if you search more evenly  💓
+
+{Reactions}
+✅ (10) ❤️ (2) 
+
+[05/02/2024 16:49] hadiesna
+The vault manager (keeper network) will call these functions
+The frequency depends on the market and decision of strategy managers and AI models
+
+{Reactions}
+thankyou 
+
+[05/03/2024 00:05] guy_in0xnito
+@hadi esna
+
+
+[05/03/2024 09:16] daniel526
+@hadi esna check on the private thread kindly!
+
+
+[05/03/2024 10:12] senyab
+Someone has the similar issue during the forge test?
+
+{Attachments}
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/Screenshot_2024-05-03_at_12.12.15-6A993.png
+
+
+[05/03/2024 11:47] alexczm
+failed to compile with *zksolc* 
+I guess you installed zksolc compiler and some configuration is broken now. I got same problem some time ago and because I couldn't get rid of it I installed a new linux distribution (WSL2 user here) 
+let me/ us know if you find another solution please.
+
+{Reactions}
+🐧 
+
+[05/03/2024 12:07] mansa11
+Can anyone please explain how the calls to the connectors from the accountingManager works?
+
+
+[05/03/2024 12:57] kombainera
+@hadi esna Could you please check my private thread when you have time?
+
+
+[05/03/2024 17:52] cholakovv
+from my understanding the keepers interact with the connector contracts and the normal users can't.
+for example in the withdraw flow, after starting a withdraw group the keeper interacts with the connectors to burn positions and swap tokens to the base token
+
+
+[05/03/2024 18:54] mansa11
+Thanks man
+
+{Reactions}
+🫡 
+
+[05/03/2024 20:07] stakog
+When `executeDeposit` is called, funds (base token) are moved from `accountingManager` to a connector contract via the connector's `addLiquidity` function. For the opposite direction, when the `accountingManager` needs funds for withdrawal requests, it has the function `retrieveTokensForWithdraw` to retrieve the base token from the connectors. Note that the connectors should already hold the funds. There is another flow for depositing and retrieving funds between connectors and external protocols (i.e. positions). This is how I understand the mechanics.
+
+{Reactions}
+🙏 (2) 
+
+[05/03/2024 20:26] mansa11
+🫡 Thank you!
+
+{Reactions}
+👍 
+
+[05/04/2024 02:23] baldur_6
+I want to start a bounty program for my lost wallet seeds. Filled a form in website. Any admin available to show me the way?
+Thanks for your help
+
+
+[05/04/2024 07:44] evokid
+here is not the right channel to ask, this is ongoing contest, go to #❓・questions  or submit a request through help desk
+
+
+[05/04/2024 09:24] optimisticallyomnichain (pinned)
+Reminder: 5% of season one rewards go to security contributors 🫶 
+
+https://medium.com/@noyanetwork/noyas-gratitude-rewarding-security-contributors-in-defi-6a9059e3bd1b
+
+{Embed}
+https://medium.com/@noyanetwork/noyas-gratitude-rewarding-security-contributors-in-defi-6a9059e3bd1b
+NOYA’s Gratitude: Rewarding Security Contributors in DeFi
+NOYA places a strong emphasis on security, recognizing its importance in the rapidly evolving and often unpredictable landscape of DeFi. As…
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/1%2AodBhlS2pFC5q6VKd8kMjZg-431C4.png
+
+{Reactions}
+👍 (10) 🔥 (3) code4rena (4) ❤️ (3) 
+
+[05/05/2024 17:49] 0xarav
+Hi @hadi esna 
+
+As for `execute `function in `keepers `contract 
+
+1. is the executor expected  to feed the signatures  in ascending order of their corresponsing address values ? 
+
+2. What is the purpose of the `executor ` parameter (which can be set by the caller) , when there is already the` isOwner[msg.sender] ` check?
+
+
+[05/05/2024 18:09] ui.ui.ui
+Started a thread.
+
+
+[05/06/2024 08:44] hadiesna
+1. yes
+
+
+[05/06/2024 08:45] hadiesna
+2.  it can be removed because it should be identical to msg.sender
+
+
+[05/06/2024 08:46] 0xarav
+alright thanks : )
+
+
+[05/06/2024 14:55] senyab
+@hadi esna  what is AURA and what role does it play in the BalancerConnector?
+
+
+[05/06/2024 15:49] guy_in0xnito
+In the connectors which are the versions of each used ?
+What are the chains that the project will be deployed on 
+I see other being specified?
+@hadi esna
+
+
+[05/06/2024 16:30] senyab
+IERC20(data.pool).balanceOf(address(this))  could someone explain how to understand it? I mean it -> IERC20(data.pool)?
+
+Why pool needs to inherit the IERC20 interface?
+
+
+[05/06/2024 17:43] benrai
+The shares it the pool should be ERC20 tokens, right? 🤔
+
+
+[05/06/2024 17:45] 0xauditism
+I don't think we need to attach the interface to it, but it is more understandable this way
+
+
+[05/06/2024 17:46] evokid
+data.pool should equal an address
+`struct WithdrawData {
+    address pool;
+    uint256 amountLiquidity;
+    uint256 min0Min;
+    uint256 min1Min;
+    uint2`56 deadline;
+}
+
+
+[05/06/2024 17:47] evokid
+meaning IERC20 token of P address
+
+
+[05/06/2024 17:51] kartoonjoy
+Pinned a message.
+
+
+[05/07/2024 10:20] perki0226
+Which contracts/users are possible `onlyEligibleUser` in `SwapAndBridgeHandler` contract?
+
+
+[05/07/2024 10:40] hadiesna
+https://aura.finance/
+It's this one
+
+{Embed}
+https://aura.finance/
+Aura Finance · DeFi's Yield & Liquidity Hub
+Aura Finance is a DeFi protocol that allows you to boost your yield and governance power on Balancer, a platform for decentralised exchange of tokens. Provide liquidity, vote, stake and lock AURA tokens to earn rewards, Balancer fees and governance tokens
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/aKVs61ADx7L9tFqjrYK92hadeU-06348.png
+
+
+[05/07/2024 10:41] hadiesna
+Sure
+I'll add this to the docs later today
+Can you ask which one exactly is what you are asking about?
+
+
+[05/07/2024 10:42] hadiesna
+"data.pool" is the address of the pool
+By inheriting from IERC20 we can call "balanceOf" method of it
+
+
+[05/07/2024 10:43] guy_in0xnito
+I haven't gone through all the connectors so i am asking this 
+I from the code understood aave is using v3 
+Balancer is using v2 
+But would be better if we have all the other in a place
+@hadi esna
+
+
+[05/07/2024 10:43] hadiesna
+all connectors
+No users
+
+
+[05/07/2024 10:48] senyab
+struct RetrieveData {
+    uint256 withdrawAmount;
+    address connectorAddress;
+    bytes data;
+}
+What information the bytes data aim to store?
+
+
+[05/07/2024 10:51] senyab
+@hadi esna
+
+
+[05/07/2024 10:55] hadiesna
+the data stores information about how much token is available for withdrawing
+
+
+[05/07/2024 10:56] senyab
+So, basically it is withdrawAmount?
+
+
+[05/07/2024 10:56] hadiesna
+it could be less if we occur any withdrawal fee (withdrawing from protocols) or slippage
+
+
+[05/07/2024 10:57] senyab
+Thanks 🙏  Check dm pls
+
+
+[05/07/2024 11:04] karl_38410
+@hadi esna pls check private thread.
+
+
+[05/07/2024 11:52] hadiesna
+Hey everyone @here
+I think I've answered everyone but if there is a message that I missed, please ping me again so I can see it
+
+{Reactions}
+🫡 (4) 🚀 
+
+[05/07/2024 11:56] stakog
+Hi @hadi esna please check private thread
+
+
+[05/07/2024 11:58] jovi6132
+Solid! Thanks!!
+
+
+[05/07/2024 18:57] stakog
+Are AI agents (as seen in the docs) and strategy managers the same entity? If not, what is their relationship?
+
+
+[05/08/2024 01:15] wangxx2026
+@hadi esna I would like to ask which chains the noya protocol is mainly deployed on
+
+
+[05/08/2024 03:46] 0xni8mare
+From the contest readme - Ethereum,Arbitrum,Base,BSC,Optimism,Polygon,zkSync,Other,Avaxpolygon zkevm
+
+{Reactions}
+🫡 (3) 
+
+[05/08/2024 05:57] moeid3
+Hadi-san check threads kudasai
+@hadi esna
+
+
+[05/08/2024 10:28] moeid3
+good question. That trustedPositionBP is a bummer
+
+
+[05/08/2024 11:13] hadiesna
+yes they are the same entity
+
+
+[05/08/2024 11:13] hadiesna
+Sure on it
+
+
+[05/08/2024 11:18] hadiesna
+So I'll explain the idea with an example:
+In uniswap connector, the goal is to deposit tokens into the uniswap pool and hold the position NFT
+For doing so, we need to add its corresponding "trustedPositionBP" to the registery so the registry acknowledges this position as a valid position in this vault
+Then later when we actually create that position, the connector contract creates a Holding position in the registry which represents the position NFT
+
+To explain in simple words:
+trustedPositionBP are the potential positions and Holding positions are the positions that we actually have at the moment
+
+{Reactions}
+👍 (5) 
+
+[05/08/2024 11:30] hadiesna
+There are some positions, that can be transferred to other connectors (or other connectors can create them) like position of holding a token.
+by setting "onlyOwner" bool we can set that other connectors can create this position or not
+"isDebt" indicates that we have to deduct the value of this position from the total value of the vault (it's not a credit positon)
+We don't have any of these positions at the moment but we might have later
+
+{Reactions}
+👍 (2) 
+
+[05/08/2024 11:34] guy_in0xnito
+@hadi esna this
+
+
+[05/08/2024 11:36] hadiesna
+Sure
+I'll add it in the docs later today 👍 🫡
+
+
+[05/08/2024 11:37] guy_in0xnito
+Both the things right the connectors and also all the chains ?
+
+
+[05/08/2024 11:37] guy_in0xnito
+And also can you kindly check the pvt thread in my nane
+
+
+[05/08/2024 11:37] hadiesna
+Sure I'm going one by one
+
+
+[05/08/2024 11:38] hadiesna
+I'll get to you shortly
+
+
+[05/08/2024 11:38] hadiesna
+yes
+
+
+[05/08/2024 11:40] guy_in0xnito
+Np take your time !
+
+
+[05/08/2024 13:28] moeid3
+https://tenor.com/view/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F-gif-14069407559898631685
+
+{Embed}
+https://tenor.com/view/%D0%B2%D1%80%D0%B5%D0%BC%D1%8F-gif-14069407559898631685
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/%25D0%25B2%25D1%2580%25D0%25B5%25D0%25BC%2-52C9A.png
+
+
+[05/08/2024 14:37] loserdavictor
+maybe he thought it was a stupid question and wanted to hide his embarrassment from himself bc no one really cares but oneself
+i started reading docs and contracts and chat(for a couple mins) when i stumbled on your funny comment `:)~
+
+
+[05/08/2024 14:48] loserdavictor
+im glad to be starting to review code again, this made me crack
+
+
+[05/08/2024 15:16] stakog
+Probably, but its ancient history now 😁
+
+{Reactions}
+👎 
+
+[05/08/2024 16:22] 0xarav
+Guys, 
+can someone link me to the bot race known findings for this contest ??
+
+
+[05/08/2024 16:36] loserdavictor
+pinned
+
+
+[05/08/2024 16:42] 0xarav
+but i only see the 4naly3er report ? 
+Didnt we used to have bot race findings separately in prev contests ?
+
+
+[05/08/2024 16:43] loserdavictor
+i think races are halted (twitter info)
+
+
+[05/08/2024 16:44] loserdavictor
+also there is no channel to reg a bot so confidence increase that it def is halted🐧 🐧
+
+
+[05/08/2024 16:45] 0xarav
+I see .. Thanks mate  : )
+
+{Reactions}
+💜 (2) 
+
+[05/08/2024 18:25] noro9954
+@hadi esna what are the functions to be called to transfer funds from a protocol to another protocol in another chain ?
+
+
+[05/08/2024 19:32] hadiesna
+So in other chains connectors will be deployed and we can use "transferPositionToAnotherConnector" function to do this
+
+
+[05/08/2024 19:33] hadiesna
+for each position type it should be the number that is used when the position is being created (like UNI_LP_POSITION_TYPE in uniswapV3 connector)
+
+
+[05/09/2024 00:45] noro9954
+but where the bridging stuff is handled after this function call ?
+
+
+[05/09/2024 02:18] guy_in0xnito
+Can anyone tell me the bridging flow
+
+
+[05/09/2024 09:06] mylifechangefast.eth_70767
+Does the lzSender hold monetary value?
+
+
+[05/09/2024 09:24] mylifechangefast.eth_70767
+@hadi esna ?
+
+
+[05/09/2024 10:46] senyab
+yes for LZ fees
+but it's not vaults money
+
+{Reactions}
+👍 
+
+[05/09/2024 11:23] hadiesna
+So instead of "ethereum" chain we are using "base" chain
+
+
+[05/09/2024 11:23] hadiesna
+SwapHandler is one for all vaults
+
+
+[05/09/2024 11:23] hadiesna
+Can you rephrase the question please?
+
+
+[05/09/2024 11:24] hadiesna
+https://docs.noya.ai/technical-architecture/technical-architecture/omnichain-architecture
+
+{Embed}
+https://docs.noya.ai/technical-architecture/technical-architecture/omnichain-architecture
+Omnichain Architecture | NOYA
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/spaces%252FrGMrQr7vOtFr68cv039Y%252Fsocial-37A5E.png
+
+
+[05/09/2024 12:00] hadiesna
+It's a vault just for setting governance addresses and doesn't have any other use-case (it's not going to receive money)
+
+{Reactions}
+👍 
+
+[05/09/2024 13:48] noro9954
+to send tokens from a connector to another connector in another chain they need to be bridged, but  "transferPositionToAnotherConnector" does not bridge the tokens .
+
+
+[05/09/2024 14:11] noro9954
+its impossible but i don't know where the bridging happens
+
+
+[05/09/2024 14:14] jovi6132
+If this doesnt happen then it should be reported as a bug 🙂
+
+{Reactions}
+🤣 (2) 😂 (2) 
+
+[05/09/2024 14:15] noro9954
+it surely happens but i don't know where
+
+
+[05/09/2024 14:36] hadiesna
+yes
+
+
+[05/09/2024 14:38] hadiesna
+yes
+They can be bridged by adding "OmnichainManagerBaseChain.sol" and "OmnichainManagerNormalChain.sol" to these chains as connectors
+
+
+[05/09/2024 14:39] hadiesna
+and then these contracts can take care of the bridging
+
+
+[05/09/2024 14:41] noro9954
+what functions in "OmnichainManagerBaseChain" that are responsible for that ?
+
+
+[05/09/2024 14:48] hadiesna
+It inherits from "OmnichainLogic" and you can check "startBridgeTransaction" function there
+
+
+[05/09/2024 15:12] noro9954
+from what i can see its using lifi to bridge tokens, not LayerZero, is that correct ?
+
+
+[05/09/2024 15:15] hadiesna
+yes
+Layer zero is just for passing information (sending messages) not for bridging
+
+{Reactions}
+👌 
+
+[05/09/2024 15:16] noro9954
+thanks a lot
+
+
+[05/09/2024 15:55] 0xauditism
+I think each vault has an AcountingManager and those are on several chains as well
+
+
+[05/09/2024 17:32] kombainera
+Hi guys, which Compound version is it using?
+
+
+[05/10/2024 03:13] guy_in0xnito
+Where did you get the different connectors for vault 
+Like aave for usdc vault & weth vault are diff
+
+
+[05/10/2024 08:02] 0xaman.
+great docs ,  👍
+
+
+[05/10/2024 08:30] mylifechangefast.eth_70767
+Vault money in what sense?
+
+{Reactions}
+👍 
+
+[05/10/2024 09:14] 0xauditism
+vault basetokenz
+
+
+[05/10/2024 09:29] mylifechangefast.eth_70767
+What the token fee here? Base too?
+
+
+[05/10/2024 09:34] 0xauditism
+Native tokens
+
+
+[05/10/2024 10:16] mylifechangefast.eth_70767
+Okay
+
+
+[05/10/2024 11:11] guy_in0xnito
+There are two base tokens 
+Weth and usdc ?
+
+
+[05/10/2024 12:29] mylifechangefast.eth_70767
+Where?
+
+
+[05/10/2024 12:30] mylifechangefast.eth_70767
+I think it just WETH
+
+
+[05/10/2024 13:09] yotov721
+So is the mock in scope ? `/contracts/helpers/ConnectorMock2.sol`
+
+
+[05/10/2024 13:46] senyab
+Yup
+
+{Reactions}
+👍 🙅‍♀️ 
+
+[05/10/2024 14:33] yotov721
+And what severity would the bugs found there be 😄
+
+
+[05/10/2024 15:13] senyab
+like from the codehawks contest 😂
+
+{Reactions}
+🔝 
+
+[05/10/2024 15:39] tamayonft
+Is you see the test, base tokens will be usdc too
+
+{Reactions}
+✅ 
+
+[05/10/2024 15:42] mylifechangefast.eth_70767
+Come again please
+
+
+[05/10/2024 16:20] vectoroperator
+On the c4 audit page, it says there's a maintainer contract. However, there's no such contract in the github repo. So is maintainer just a privileged address that can operate on the registry and other contracts per vault/position creation?
+
+
+[05/10/2024 18:06] 0xauditism
+I thought base may be any token depending on the vault
+
+
+[05/10/2024 19:13] evokid
+USDC, WETH, WBTC, SNX
+
+{Reactions}
+✅ 
+
+[05/10/2024 19:14] mylifechangefast.eth_70767
+Thanks
+
+{Reactions}
+🫡 
+
+[05/10/2024 23:43] guy_in0xnito
+I actually found that  in a struct where it was written 
+Weth for eth vault 
+Usdc for usdc vault ...
+
+{Reactions}
+4739_Skeletor 
+
+[05/11/2024 09:01] kmm77
+Started a thread.
+
+
+[05/11/2024 09:40] hadiesna
+no only on the base chain the accounting manager is deployed
+
+{Reactions}
+✅ 
+
+[05/11/2024 09:41] hadiesna
+Comound V3
+
+
+[05/11/2024 09:41] hadiesna
+No it's not ser
+
+{Reactions}
+❤️ (3) 
+
+[05/11/2024 09:42] hadiesna
+it can be USDC, WETH, WBTC and SNX
+
+{Reactions}
+👌 
+
+[05/11/2024 09:43] hadiesna
+It's the time lock contract (contracts/governance) with a multisig as the owner
+
+{Reactions}
+👍 
+
+[05/11/2024 11:07] mylifechangefast.eth_70767
+Check private thread
+
+
+[05/11/2024 15:26] moeid3
+i need the implementation of the `IRewardgauge` interface
+anyone?
+
+
+[05/11/2024 16:14] noro9954
+@hadi esna from the docs of value oracle : 
+> we have a price source for tokens A-B, B-C, C-D and we want to get the price of A-D. we can define the route of [B,C] in the smart contract and it loops through the route to get the price of A-D.
+the example here is not very clear, what is meant by a route ?
+
+
+[05/11/2024 16:58] ivi4yh3ivi
+i understood that to mean that a token pair is a route. 
+
+ `[B,C]` is a token pair/price source that can represent something like a `[ETH/BTC]` pair. that can be used as a route to figure out whatever the price is of the  `[A,D]` pair.
+
+
+[05/12/2024 03:15] ak19966
+hey.. its nice UI.. awesome.. team
+
+
+[05/12/2024 05:16] 0xdemonnn
+create a PT, pls check if have a time. Thank you @hadi esna
+
+
+[05/12/2024 09:17] mylifechangefast.eth_70767
+@hadi esna please check our private thread.
+
+
+[05/12/2024 09:19] senyab
+@hadi esna  +++
+
+{Reactions}
+😂 (2) 
+
+[05/12/2024 09:46] mylifechangefast.eth_70767
+@hadi esna vvvv...
+
+
+[05/12/2024 12:35] 0xdice91
+@hadi esna 🤚
+Please ser check private thread
+
+
+[05/12/2024 13:06] emmac002
+@hadi esna  please check dm please
+
+
+[05/12/2024 13:50] hadiesna
+coming guys one by one
+
+{Reactions}
+empathy (3) 
+
+[05/12/2024 16:16] hadiesna
+Guys please ping me if there is any questions unanswered
+
+
+[05/12/2024 16:59] noro9954
+@hadi esna
+
+
+[05/12/2024 18:02] emmac002
+@hadi esna  Unfortunately, you missed answering my question. Haven't got your reply privately. 😆
+
+
+[05/12/2024 19:18] loserdavictor
+my brain started hurting after trying to understand the struct to mapping to struct to another mapping and struct and so on ...
+so far 8-9 hours[in 3-4 days] (google docs, web doc and interfaces and contracts)
+
+{Reactions}
+😆 (7) 💓 
+
+[05/13/2024 02:23] guy_in0xnito
+Did you understand?
+
+
+[05/13/2024 05:23] mrcrownft
+same XD
+
+
+[05/13/2024 08:09] moeid3
+@hadi esna wake up man
+
+{Reactions}
+👎 (11) 4739_Skeletor ❌ (3) 💓 😂 
+
+[05/13/2024 08:16] benrai
+Stop harrassing the sponsor! He will get back to you when he gets back to you! Just because you are awake and auditing does not mean that it is day in his time zone
+
+{Reactions}
+✅ (5) 💯 (6) 10_10 (2) 💓 
+
+[05/13/2024 08:34] 0xauditism
+Just be respectfull, is this how you would talk to your client ?
+
+{Reactions}
+🤣 
+
+[05/13/2024 08:34] moeid3
+no need to worry yourself. he said ping me if there is any questions
+
+{Reactions}
+😂 
+
+[05/13/2024 08:35] moeid3
+@auditism
+
+
+[05/13/2024 09:12] loserdavictor
+def making progress but still feeling that im lacking a major portion
+
+
+[05/13/2024 09:34] 0xumarkhatab
+Guys what do we call an Omnichain
+
+
+[05/13/2024 09:38] 0xumarkhatab
+Which type of data does AI oracles send ?
+
+
+[05/13/2024 12:04] hadiesna
+imagine this situation where we have these price sources:
+A-B, B-C, C-D
+And we want to get the price of A in terms of D
+There is no price source for A-D 
+But we can get the price of A based on B
+Then B based on C
+Then C based on D
+And that we we've got the price of A based on D
+This is a route
+
+
+[05/13/2024 12:05] hadiesna
+Imagine writing down those then 😂
+
+{Reactions}
+😂 (7) 
+
+[05/13/2024 12:06] hadiesna
+Can you rephrase the question please?
+
+
+[05/13/2024 12:07] hadiesna
+Are you asking about the inputs of the keepers?
+
+
+[05/13/2024 12:07] hadiesna
+Coming ser
+
+{Reactions}
+🙏 ❤️ (2) 
+
+[05/13/2024 12:22] 0xumarkhatab
+hi sir , sorry for incomplete questions , they were just generic , i will ask again if needed
+
+{Reactions}
+🫡 
+
+[05/13/2024 12:22] 0xumarkhatab
+i'm afraid i've to spend my time on other contest : )
+
+
+[05/13/2024 12:51] loserdavictor
+maybe 3-5 weeks (commited 3h everyday and already having the mindmap of architecture), but not knowing if there will be bugs or not :)`
+
+ps: w/ tests it would take double or even triple or even more due to errors... etc etc, idk i didnt write these, lopl
+
+
+[05/13/2024 13:58] hadiesna
+Guys please ping me if there is any questions unanswered
+I don't have any unread chats but I might've missed some of the questions
+I'll be back in 3h - 4h
+
+{Reactions}
+👍 👑 (3) 
+
+[05/13/2024 15:46] emmac002
+Sorry to say, my question is still unanswered. Appreciate if you could reply my dm. 🙏
+
+
+[05/13/2024 17:05] hadiesna
+Can you ping me in the private chat?
+So I can see it
+
+{Reactions}
+👍 
+
+[05/14/2024 00:54] mylifechangefast.eth_70767
+Please check our PT @hadi esna
+
+
+[05/14/2024 10:26] emmac002
+Just ping you there, thanks!
+
+
+[05/14/2024 10:30] mylifechangefast.eth_70767
+@hadi esna please our Private thread
+
+
+[05/14/2024 10:30] mylifechangefast.eth_70767
+Check it
+
+
+[05/14/2024 14:43] oxtenma
+@hadi esna please check my PT, thanks!
+
+
+[05/15/2024 03:22] 0xarav
+@hadi esna 
+Pinged you in PT ser
+
+
+[05/15/2024 07:39] wanziskata
+Would the CurveConnector support pools created by users?
+
+
+[05/15/2024 07:55] hadiesna
+yes
+
+{Reactions}
+❤️ 
+
+[05/15/2024 07:58] wanziskata
+ty 🤝
+
+
+[05/15/2024 09:03] mylifechangefast.eth_70767
+@hadi esna check our pt, sorry I didn't see your message early!
+
+
+[05/15/2024 09:43] guy_in0xnito
+Who are supposed to be handlers and owner in lifi implementation?
+
+
+[05/15/2024 10:43] hex_panda
+@hadi esna  Is it true that the connector mock contract is in-scope? "So is the mock in scope ? /contracts/helpers/ConnectorMock2.sol" (@yotov721)
+
+
+[05/15/2024 10:47] yotov721
+He answered no: https://discord.com/channels/810916927919620096/1226982823978733698/1238788132648910908
+
+
+[05/15/2024 17:37] senyab
+Hi 👋 Which version of the Lz is used in the protocol?
+
+
+[05/15/2024 17:44] 0xabhay.
+V2
+
+
+[05/15/2024 18:56] wanziskata
+If `calculatePositionId`, from the Registry contract, is used to create a unique id for a position, would it necessarily mean that the created id is for a holding position?
+
+
+[05/16/2024 00:23] mylifechangefast.eth_70767
+@hadi esna ??
+
+
+[05/16/2024 00:23] mylifechangefast.eth_70767
+Check our pt
+
+
+[05/16/2024 12:18] moeid3
+@hadi esna
+
+
+[05/16/2024 16:40] hadiesna
+guys
+
+
+[05/16/2024 16:40] hadiesna
+This is the last day of the audit I think
+
+{Reactions}
+👎 (2) 👍 (2) 🫵 (2) ☝️ (2) 👆 (2) 
+
+[05/16/2024 16:40] hadiesna
+If there is anything that I need to check please send over again
+
+
+[05/16/2024 16:40] hadiesna
+I might've lost the message to answer back
+
+
+[05/16/2024 18:38] wanziskata
+should be tomorrow
+
+
+[05/16/2024 19:49] hadiesna
+right my mistake
+
+
+[05/16/2024 19:50] hadiesna
+but feel free to ping me
+
+
+[05/17/2024 06:31] wanziskata
+@hadi esna I've opened a lil thread, please check it out once possible ✌️
+
+
+[05/17/2024 08:06] alexczm
+Last day motivation
+
+{Attachments}
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/image-1A983.png
+
+{Reactions}
+🫡 💜 (2) 
+
+[05/17/2024 10:54] josephdara
+Turned in my bugs for Noya. Interesting codebase with multiple integrations. 
+See yall at top 10:4739_Skeletor: :4739_Skeletor:
+
+{Reactions}
+👍 (3) 
+
+[05/17/2024 10:59] moeid3
+the number of onlyManager is more than the number of functions
+
+{Reactions}
+😂 (4) 😆 
+
+[05/17/2024 11:01] josephdara
+Critical-01✅
+
+{Reactions}
+😂 (8) 
+
+[05/17/2024 11:22] benrai
+How many bugs did you submit?
+
+
+[05/17/2024 11:25] senyab
+Hi 👋  What is the withdrawFee will be ?
+
+
+[05/17/2024 11:58] 0xauditism
+0.5%
+
+
+[05/17/2024 11:58] senyab
+Thanks, in what decimals? 1e6?
+
+
+[05/17/2024 12:01] 0xauditism
+I think so
+
+{Reactions}
+🤝 
+
+[05/17/2024 12:07] shealtielanz
+Hello @hadi esna  or anyone well acquainted with the protocol
+- will different different vaults share same connectors?
+
+
+[05/17/2024 12:09] shealtielanz
+The question is weird but like 
+2 vaults on polygon chain use same aave connector on the chain
+
+
+[05/17/2024 12:09] shealtielanz
+?
+
+
+[05/17/2024 12:11] shealtielanz
+Managed to spot 2 mediums 🎉
+
+{Reactions}
+👍 (7) 🕵️‍♂️ (5) 🔥 (4) 🚀 (5) 4739_Skeletor (3) 👏 (3) chefskiss (3) hi5 (3) 😮 (3) thankyou (3) 💯 (3) 🫡 (5) C4Keycap (3) andbang (3) hearteyesshark (3) koolaid (3) 10_10 (3) 😂 (2) 
+
+[05/17/2024 12:22] shealtielanz
+👀
+
+
+[05/17/2024 13:58] hadiesna
+No
+
+
+[05/17/2024 13:58] hadiesna
+They'll have different connectors for aave
+
+{Reactions}
+❤️ 
+
+[05/17/2024 18:57] saint6704
+All the best to the team 💯
+This Was longest I've ever worked on a codebase
+
+{Reactions}
+chefskiss (6) 
+
+[05/17/2024 18:58] sancybars
+@Shaheen  I think you missed some other reactions
+
+{Reactions}
+😂 (5) 😅 🤣 
+
+[05/17/2024 19:04] mylifechangefast.eth_70767
+It's about to go down!!
+
+
+[05/17/2024 19:05] mylifechangefast.eth_70767
+That was my critical number 2
+
+
+[05/17/2024 19:43] 0xdemonnn
+Dont forget to use the power of last minutes :chefskiss:
+
+
+[05/17/2024 19:43] sancybars
+@hadi esna was awesome during this contest.. thanks for answering my questions ser 🫡
+
+{Reactions}
+chefskiss (7) 💜 (7) 
+
+[05/17/2024 20:02] C4
+**🚨 AUDIT ALERT**
+
+@🐺Wardens The **NOYA** audit is now closed! Huge thanks to everyone who participated 🔍, whether you submitted a finding or not.
+
+What's next: The sponsor team and judge will review the findings over the next couple of weeks. Keep an eye on #📢・c4-updates for regular updates on how the audit is progressing through awarding 🤑🏆, judging 🧑‍⚖️ and reporting 📜. Feel free to ping a Contest-Admin if you have questions along the way!
+
+{Reactions}
+C4Keycap (2) 
+
+[05/17/2024 20:06] moeid3
+@hadi esna thank you for everything
+It was a pleasure working with you
+You may want to go to sleep now
+
+{Reactions}
+🤣 (13) 
+
+[05/17/2024 20:26] evokid
+Much appreciation for the sponsor @hadi esna for answering all of my questions, was very helpful 🎉
+
+{Reactions}
+🚀 (2) 
+
+[05/17/2024 20:58] benrai
+1400 issues, this will take some time...
+
+{Reactions}
+😱 (11) 😵‍💫 (5) 
+
+[05/17/2024 21:02] jovi6132
+Poor judge
+
+
+[05/18/2024 02:12] tamayonft
+thanks to the sponsor and thanks to the judge for the work that come, interesting codebase
+
+
+[05/18/2024 04:00] mylifechangefast.eth_70767
+Please you guys should take your time!! 
+
+My subs were 🔥🔥
+
+{Reactions}
+🔥 
+
+[05/18/2024 05:43] moeid3
+1 percent of this is mine
+
+{Reactions}
+🔥 (5) 
+
+[05/18/2024 08:18] hadiesna
+Hey everyone 
+It was great working with you guys
+I'm sure your work will make noya more secure
+
+{Reactions}
+❤️ (36) 🫡 (13) 4739_Skeletor (6) 
+
+[05/20/2024 12:07] mylifechangefast.eth_70767
+Please you guys should come back after this audit, your contracts were :chefskiss: 
+
+Just discovered some issues but we'll it all good! 
+
+There is always another time:c4ship:
+
+{Reactions}
+❤️ 
+
+[05/25/2024 06:11] itsabinashb
+Kindly update me with backstage condition 😊
+
+
+[05/25/2024 08:25] forgebyola
+Almost done with sponsor review
+
+
+[05/25/2024 12:49] moeid3
+what? Are almost 1400 reviews done?
+
+
+[05/25/2024 12:51] itsabinashb
+when we can expect the result?
+
+
+[05/25/2024 14:18] forgebyola
+Probably 3 weeks
+
+
+[05/25/2024 14:19] forgebyola
+I expect PJQA to be a lot
+
+
+[05/25/2024 14:19] forgebyola
+Yea the issues have been pregrouped by the validators so it's faster
+
+{Reactions}
+👍 (2) 
+
+[05/27/2024 16:17] mylifechangefast.eth_70767
+In your DM
+
+
+[05/27/2024 16:30] mylifechangefast.eth_70767
+C4 page get me worried sometimes, I just checked my mail if my updates on particular report was changed which I know I did. 
+
+Probably when I get this error on c4 page
+
+*There was a problem or error occurred*
+
+Now my wordings are not right in a report been submitted. 
+
+In essence judge well
+
+You guys should know what I'm talking about please. 
+
+Well I can proof of that I changed it.
+
+
+[05/28/2024 12:38] no.one7777
+does anyone have a backstage
+
+
+[05/31/2024 08:48] itsabinashb
+Any update on backstage??
+
+
+[05/31/2024 16:35] daniel526
+Not soon!
+
+
+[05/31/2024 19:16] oxtenma
+Judging not started yet.
+
+{Reactions}
+😱 (2) 
+
+[05/31/2024 19:28] benrai
+You mean the escalation period has not started yet. Judging is making good progress and there A LOT of issues already confirmed by the team
+
+
+[05/31/2024 19:43] itsabinashb
+how much time it may take to start escalation?
+
+
+[05/31/2024 19:49] oxtenma
+No. team is confirming/disputing now. Judge labels with satisfactory / unsatisfactory. By judging I meant judging by the judge.
+
+
+[05/31/2024 19:56] oxtenma
+What you are referring is called sponsor reviewing submissions, not judging.
+
+
+[05/31/2024 20:13] benrai
+So many phases 😅
+
+
+[05/31/2024 20:14] oxtenma
+Yeah haha.
+
+
+[06/01/2024 00:22] forgebyola
+Isn't that what I said?
+
+
+[06/01/2024 05:06] oxtenma
+You are right boss, I referred to that message during the convo.
+
+{Reactions}
+✅ 
+
+[06/03/2024 13:36] daniel526
+amazing finding @Tigerfrake 🫡
+
+
+[06/03/2024 13:37] tigerfrake
+Yoh bro. 😎
+
+
+[06/03/2024 13:37] daniel526
+super impressed! :chefskiss:
+
+
+[06/03/2024 13:38] tigerfrake
+All credit to you pal.
+
+{Reactions}
+🔥 
+
+[06/03/2024 21:11] forgebyola
+It's in PJQA now, for all non backstage
+
+{Reactions}
+👍 (5) 
+
+[06/04/2024 00:50] itsabinashb
+Someone please escalate this issue for me : **Untrusted tokens can be supplied in deposit pool of Aave through AaveConnector contract if all balance is sent**
+
+
+[06/04/2024 00:51] itsabinashb
+I don't have SR role.
+
+
+[06/04/2024 06:57] no.one7777
+does the result is out?
+
+
+[06/04/2024 06:59] blckhv
+unless you see them here, they are not
+
+
+[06/04/2024 07:09] no.one7777
+ok, because someone someone asked about escalate and a just wondered, tnx
+
+
+[06/04/2024 09:15] hex_panda
+Could someone please help me figure out whether you should be able to see the findings you submitted and that were confirmed by the judges somewhere on the dashboard or receive an email about that? Or you are not supposed to know which of your findings were confirmed until the whole judging period ends and rewards are announced?
+
+
+[06/04/2024 09:20] volokinn
+if you don't have the SR role, you will see what is accepted when the audit report is out, if customer opts for it to be released.
+
+{Reactions}
+❤️ 
+
+[06/04/2024 09:26] hex_panda
+Aaah, thank you, got it!
+
+
+[06/04/2024 11:16] hadiesna
+which one are you referring to?
+
+
+[06/04/2024 11:37] demorextess
+I am also curious about it but i don't have role 🙂
+
+
+[06/04/2024 11:45] daniel526
+all
+
+
+[06/05/2024 11:47] mylifechangefast.eth_70767
+
+
+{Stickers}
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/796141648471916574-9CF8C.json
+
+
+[06/05/2024 19:43] shealtielanz
+Shout out to @gzeon 🔥 Judging Noya and validating Arbitrium💯
+
+{Reactions}
+🔥 (8) 
+
+[06/06/2024 01:33] itsabinashb
+What is approximate time of result ?
+
+
+[06/06/2024 01:46] fastchecker_27
+I am sure it's today
+
+
+[06/06/2024 01:49] itsabinashb
+How?
+
+
+[06/06/2024 05:07] benrai
+The escalation periode is now over, time of results normaly depent on the number of comments left and a lot of comments were left (arround 130). So it will take a while I think
+
+
+[06/06/2024 05:15] haxatron1
+Seems like alot of people want those 🌟
+
+{Reactions}
+😂 (5) 
+
+[06/06/2024 10:26] demorextess
+Congrats by the way
+
+{Reactions}
+❤️ (2) 
+
+[06/06/2024 20:50] forgebyola
+pkqs90  doing the lord's work
+
+
+[06/06/2024 23:17] sancybars
+https://tenor.com/view/daffy-what-nervous-anxiety-anxious-gif-9905478
+
+{Embed}
+https://tenor.com/view/daffy-what-nervous-anxiety-anxious-gif-9905478
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/daffy-what-6DB31.png
+
+
+[06/07/2024 10:46] demorextess
+How it's going, is there any possibility to see the results today ?
+
+{Reactions}
+hearteyesshark 
+
+[06/07/2024 11:13] forgebyola
+Give it a week
+
+
+[06/07/2024 11:20] demorextess
+Oh nice at least now, i can prevent myself to refresh the page 😅
+
+
+[06/10/2024 12:42] ruan_53970
+any news regarding the results
+
+
+[06/10/2024 12:52] forgebyola
+@gzeon would need a vacation after judging this damn
+
+{Reactions}
+4739_Skeletor 
+
+[06/10/2024 13:10] gzeon
+fun fact I am on vacation judging Noya and feel like I need another vacation
+
+{Reactions}
+😂 (24) empathy (5) 
+
+[06/10/2024 13:56] demorextess
+What is going on, I really wondered 😄
+
+
+[06/10/2024 13:58] forgebyola
+You deserve a bonus after this🫂
+
+
+[06/10/2024 15:24] itsabinashb
+When we can see the result? No hope for bounty, just excited for SR role.
+
+{Reactions}
+🙏🏼 
+
+[06/10/2024 16:45] yotov721
+You're awesome. Keep it up!
+
+
+[06/10/2024 17:13] devpelz
+same thing i'm aiming for lol
+
+
+[06/11/2024 16:39] daniel526
+ok, wen?
+
+{Reactions}
+👀 (3) 
+
+[06/11/2024 16:59] buggsy__
+Guys patience is the greatest virtue - " quoting some old smart guy "
+
+
+[06/11/2024 16:59] buggsy__
+https://tenor.com/view/waiting-waiting-patiently-waiting-for-you-waiting-on-you-gif-15489516379864441176
+
+{Embed}
+https://tenor.com/view/waiting-waiting-patiently-waiting-for-you-waiting-on-you-gif-15489516379864441176
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/waiting-waiting-patiently-C8F8A.png
+
+{Reactions}
+🫡 
+
+[06/11/2024 17:53] tigerfrake
+Let's give it another 2weeks,lol
+
+{Reactions}
+😥 (2) 😮 (3) 
+
+[06/11/2024 18:10] daniel526
+I am going to get thrown out by my landlord, don't say that!!
+
+{Reactions}
+😂 (4) 
+
+[06/11/2024 18:12] tigerfrake
+This sh** crazy, lol. Judge be on vacation so... 🥶
+
+
+[06/12/2024 10:01] moeid3
+i'm out of food
+
+{Reactions}
+😂 (2) 
+
+[06/12/2024 11:17] mylifechangefast.eth_70767
+Tell your landlord this👀 @Daniel526
+
+
+[06/12/2024 11:18] mylifechangefast.eth_70767
+He might reconsider your kind words
+
+{Reactions}
+😂 
+
+[06/12/2024 14:25] mrxsnowden
+First of all, I have to thank Code4rena judges for taking the trouble and doing the hard work of judging 🥇❤️‍🔥   , I think that what the platforms should consider is that in the future the judging  process should take much less time (for example, one to two weeks) because definitely in the future, competitions and demand will increase, so the speed of our actions must increase. Thank you to Code4rena and its judges :10_10: 🙏
+
+{Reactions}
+chefskiss (5) 
+
+[06/12/2024 15:36] itsabinashb
+https://tenor.com/view/when-you-attending-to-your-crush-wedding-sangeet-akashykumar-dance-crying-sad-gif-17108219294645205070
+
+{Embed}
+https://tenor.com/view/when-you-attending-to-your-crush-wedding-sangeet-akashykumar-dance-crying-sad-gif-17108219294645205070
+when you attending to your crush wedding sangeet.gif
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/when-you-attending-to-your-crush-wedding-s-D8F74.png
+
+
+[06/12/2024 19:03] ruan_53970
+Thanks to the Judges who worked so hard. Please have mercy I need to get paid or I will jump out my window. Luckily I stay on the ground floor.
+
+{Reactions}
+😂 (3) 
+
+[06/12/2024 22:39] shealtielanz
+The only thing that can save us now is Noya stars ⭐️.  😂
+
+{Reactions}
+😂 (5) 
+
+[06/13/2024 01:26] tamayonft
+Wait the result are out yet?
+
+
+[06/13/2024 03:39] tigerfrake
+Not yet  for Noya. Lol
+
+
+[06/13/2024 12:09] tamayonft
+Wen
+
+
+[06/13/2024 12:43] daniel526
+Please make it today :chefskiss:
+
+{Reactions}
+👍 (3) 
+
+[06/13/2024 14:07] itsabinashb
+https://tenor.com/view/loading-windows98-timer-hourglass-waiting-gif-13519507
+
+{Embed}
+https://tenor.com/view/loading-windows98-timer-hourglass-waiting-gif-13519507
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/loading-windows98-68E98.png
+
+
+[06/13/2024 14:12] buggsy__
+Dont worry brother , you can come live with me but bring food pls 🤣🤣🤣
+
+
+[06/13/2024 14:12] buggsy__
+🤣
+
+
+[06/13/2024 14:23] itsabinashb
+what is the status of Noya now? All escalations resolved?
+
+
+[06/13/2024 14:23] itsabinashb
+I want that SR role today:andbang:
+
+
+[06/13/2024 14:42] volokinn
+https://tenor.com/view/soon-cat-peek-gif-10008520
+
+{Embed}
+https://tenor.com/view/soon-cat-peek-gif-10008520
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/soon-cat-10DB2.png
+
+
+[06/13/2024 15:11] benrai
+@KnownFact do you know if this contest already is judged with the new criteria (10% of the pot for the most issues found) or if it is still judged the old way?
+
+
+[06/13/2024 15:21] buggsy__
+Im curious for this aswell but i think we are not in the new criteria not sure tho
+
+
+[06/13/2024 15:25] itsabinashb
+No, we not in new criteria.
+
+
+[06/13/2024 15:34] knownfactc4_29311
+This contest pre-dates the implementation of Hunter/Gatherer rewards, so there aren't any.
+
+{Reactions}
+👍 (6) 
+
+[06/14/2024 14:08] tigerfrake
+So quiet. Wetin dey happen? 🥲
+
+{Reactions}
+😥 (5) 😂 
+
+[06/15/2024 06:44] buggsy__
+Noya judging got me like
+
+
+[06/15/2024 06:44] buggsy__
+https://tenor.com/view/i-identify-as-poor-chris-rock-chris-rock-selective-outrage-im-not-wealthy-im-broke-gif-7068350681723523282
+
+{Embed}
+https://tenor.com/view/i-identify-as-poor-chris-rock-chris-rock-selective-outrage-im-not-wealthy-im-broke-gif-7068350681723523282
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/i-identify-as-poor-chris-rock-72EE7.png
+
+{Reactions}
+😂 (5) 
+
+[06/15/2024 06:46] buggsy__
+😂😂
+
+
+[06/15/2024 08:45] tigerfrake
+One more week guys, lol
+
+
+[06/15/2024 09:48] moeid3
+really?
+
+
+[06/15/2024 09:48] tigerfrake
+Don't trip. It felt about the same last weekend 😂
+
+{Reactions}
+😂 (4) 
+
+[06/15/2024 14:18] itsabinashb
+https://tenor.com/view/when-asking-imdb-imdb-show-gif-13019628
+
+{Embed}
+https://tenor.com/view/when-asking-imdb-imdb-show-gif-13019628
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/when-asking-AFF67.png
+
+
+[06/15/2024 16:19] swizz1337
+So when's my 3 cent payout
+
+
+[06/15/2024 16:19] swizz1337
+Hehe
+
+
+[06/15/2024 16:19] swizz1337
+:jack:
+
+
+[06/15/2024 16:19] swizz1337
+What I'm gonna do when I get my usdc
+
+
+[06/15/2024 21:18] ruan_53970
+https://tenor.com/view/i-need-that-money-brother-x-the-family-business-give-me-that-money-i-need-cash-gif-4677618580811021127
+
+{Embed}
+https://tenor.com/view/i-need-that-money-brother-x-the-family-business-give-me-that-money-i-need-cash-gif-4677618580811021127
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/i-need-that-money-brother-x-0816B.png
+
+{Reactions}
+😂 (8) 
+
+[06/16/2024 16:54] tamayonft
+💀
+
+
+[06/16/2024 19:21] forgebyola
+Is there any reason this is delaying?
+
+
+[06/16/2024 19:21] forgebyola
+Escalations should be done sometime ago
+
+{Reactions}
+👍 (8) 
+
+[06/17/2024 11:53] tigerfrake
+If only bills were as patient as y'all trynna be here... 😂
+
+{Reactions}
+👍 (2) 
+
+[06/17/2024 13:04] itsabinashb
+how long we will wait sir???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+
+
+[06/17/2024 15:13] buggsy__
+...
+
+
+[06/17/2024 16:55] buggsy__
+And there are people who depend on that money , not all of us are part timers with other jobs
+
+
+[06/18/2024 08:03] mylifechangefast.eth_70767
+😏
+
+
+[06/18/2024 08:16] tigerfrake
+Only way is to forget you ever did this contest and work on others. Won't be surprised if `Predy` results come out earlier than this one😂
+
+Tho I know nobody wants to have this conversation, lol.
+
+{Reactions}
+👀 
+
+[06/18/2024 09:49] mylifechangefast.eth_70767
+My birthday is in two weeks time👀 how about that sir
+
+{Reactions}
+😥 
+
+[06/18/2024 12:17] itsabinashb
+If all escalations were resolved then please release the result.
+
+
+[06/18/2024 12:55] buggsy__
+Lol on 20th is mine . 🤣 bank account empty
+
+{Reactions}
+😃 (2) 
+
+[06/18/2024 13:02] mylifechangefast.eth_70767
+I lend some money👀.... So Noya probably can pay back
+
+
+[06/18/2024 13:03] tigerfrake
+Lol
+
+{Reactions}
+😂 
+
+[06/18/2024 13:36] novamanbg
+Mine too!
+
+
+[06/18/2024 13:51] buggsy__
+heyyy we found each other xD
+
+{Reactions}
+❤️ 
+
+[06/18/2024 14:23] saint6704
+I'm with you ser
+
+
+[06/18/2024 15:13] tamayonft
+Wen?
+
+
+[06/18/2024 15:16] daniel526
+may they announce this contest results maybe several months to come, I am too patient at the moment! :chefskiss:
+
+{Reactions}
+😂 (4) 
+
+[06/18/2024 15:47] cloudellie
+Hey all, appreciate your patience. As always we endeavour to send awards ASAP, and are just waiting for the sponsor team to confirm that they have no further questions for the judge before we finalize results. This was a busy audit with many submissions, so we don't want to rush them.
+
+{Reactions}
+❤️ (6) 🙏 🩷 
+
+[06/18/2024 15:58] guy_in0xnito
+I see some of the comments on issues not getting addressed, is it because they were done after pjqa ?
+
+
+[06/18/2024 16:13] mylifechangefast.eth_70767
+Please get all comments addressed, we can wait.
+
+
+[06/18/2024 16:26] mrpotatomagic
+There are still some comments made during PJQA waiting to receive a decision from the judge.
+
+
+[06/18/2024 16:33] buggsy__
+Yeap.
+
+
+[06/18/2024 16:42] t1moh
+You mean borrow?
+
+{Reactions}
+😂 (2) 
+
+[06/18/2024 16:47] mylifechangefast.eth_70767
+Lend/borrow protocol type shit birthday party 😂
+
+{Reactions}
+🤣 
+
+[06/18/2024 18:11] devpelz
+patiently waiting for my .01 cents
+
+
+[06/19/2024 08:45] saint6704
+Kindly close all the comments before announcement of the results
+
+
+[06/19/2024 10:10] tigerfrake
+Mmhh, nah. Just mute notifications on your end
+
+
+[06/19/2024 10:10] saint6704
+I meant to say on GitHub PJQA section
+
+
+[06/19/2024 10:11] tigerfrake
+Ah, I see. That should be done for sure.
+
+{Reactions}
+✅ (3) 
+
+[06/19/2024 12:45] volokinn
+https://tenor.com/view/soon-cat-peek-gif-10008520
+
+{Embed}
+https://tenor.com/view/soon-cat-peek-gif-10008520
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/soon-cat-10DB2.png
+
+
+[06/19/2024 13:40] demorextess
+please don't 😂
+
+{Reactions}
+😂 (4) 
+
+[06/20/2024 03:22] ruan_53970
+I also need to borrow some money 💰.
+
+
+[06/20/2024 07:19] buggsy__
+...
+
+
+[06/20/2024 08:30] novamanbg
+Happy birthday!!! Hope those results are worth the wait for you!
+
+{Reactions}
+🙏 (4) 
+
+[06/20/2024 08:45] georgefalcon_
+happy birthday @buggsy  🚀
+
+
+[06/20/2024 13:15] buggsy__
+Thankk you fellow birthday boyy i wish u all the best and only top places on contests just leave some for me 🤩🤩🤑
+
+{Reactions}
+🔥 
+
+[06/20/2024 13:15] buggsy__
+Thankk you maaan
+
+
+[06/20/2024 13:16] buggsy__
+Now only leaves noya to finalize the results and we are cooking 😆😁😁
+
+
+[06/20/2024 14:23] tamayonft
+💀
+
+
+[06/20/2024 14:54] daniel526
+hbd to me too
+
+
+[06/20/2024 15:09] tigerfrake
+You don't say?
+
+
+[06/20/2024 15:13] daniel526
+I have said 😂
+
+{Reactions}
+😂 (2) 
+
+[06/20/2024 15:25] mylifechangefast.eth_70767
+Lol
+
+
+[06/20/2024 15:30] mylifechangefast.eth_70767
+$type(uint).max USDC » @buggsy 
+
+We all will sacrifice our payout for the birthday man. 🙌
+
+{Reactions}
+10_10 (3) 
+
+[06/20/2024 15:32] buggsy__
+:chefskiss: ☺️
+
+
+[06/20/2024 17:52] babazero
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/IMG_8562-FCE3C.gif
+
+
+[06/20/2024 18:39] saint6704
+https://tenor.com/view/dead-my-honest-reaction-damn-skull-skeleton-gif-15885937969029652188
+
+{Embed}
+https://tenor.com/view/dead-my-honest-reaction-damn-skull-skeleton-gif-15885937969029652188
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/dead-my-honest-reaction-521AA.png
+
+{Reactions}
+😂 (8) 
+
+[06/21/2024 00:04] tamayonft
+That the more longest wait for a contest i ever wait uajaja
+
+
+[06/21/2024 06:40] marioyordanov
+dyad waiting was more
+
+
+[06/21/2024 08:09] benrai
+I guess you did not take part in Blast then 😅
+
+{Reactions}
+🤣 (3) 
+
+[06/21/2024 10:31] alexfilippov314
+Have you already forgotten about Dopex?
+
+
+[06/21/2024 11:30] tamayonft
+Jajajajaaj i didn't
+
+
+[06/21/2024 12:11] forgebyola
+Blast changed lives. Folks got 2 cents off dyad
+
+
+[06/21/2024 12:11] forgebyola
+Folks gonna get 2 cents off noya too
+
+
+[06/21/2024 13:55] saint6704
+I'm folks
+
+
+[06/21/2024 16:02] tigerfrake
+Lol
+
+
+[06/21/2024 18:55] tamayonft
+results for today?
+
+
+[06/21/2024 19:20] mylifechangefast.eth_70767
+No more results.. Please let's us know
+
+
+[06/21/2024 19:20] mylifechangefast.eth_70767
+Biko
+
+{Reactions}
+👀 (3) 
+
+[06/21/2024 19:20] mylifechangefast.eth_70767
+🙏
+
+
+[06/22/2024 18:09] ruan_53970
+https://tenor.com/view/super-dead-superman-super-tired-dead-tired-gif-7485517679996452344
+
+{Embed}
+https://tenor.com/view/super-dead-superman-super-tired-dead-tired-gif-7485517679996452344
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/super-dead-superman-87E4C.png
+
+
+[06/23/2024 05:17] buggsy__
+I have no food in my fridge guys, send donations like apples , some leftover chicken ... burger on a few days everything works 😭😭
+
+{Reactions}
+😂 
+
+[06/23/2024 05:19] buggsy__
+https://tenor.com/view/why-really-gif-20942424
+
+{Embed}
+https://tenor.com/view/why-really-gif-20942424
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/why-really-D3751.png
+
+
+[06/23/2024 14:45] itsabinashb
+https://tenor.com/view/how-long-will-that-take-ella-payne-house-of-payne-ho-hate-s9e4-gif-25259922
+
+{Embed}
+https://tenor.com/view/how-long-will-that-take-ella-payne-house-of-payne-ho-hate-s9e4-gif-25259922
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/how-long-will-that-take-ella-payne-89FF4.png
+
+
+[06/23/2024 16:07] devpelz
+I don't know why but when audits take so long for results to come out i usually feel there are lots of dupes lol
+
+
+[06/23/2024 16:18] tigerfrake
+2  more weeks  guys. Y'all gotta be patient now🤣😂
+
+
+[06/23/2024 16:23] josephdara
+Well. You’re not wrong 💀
+
+
+[06/23/2024 16:28] devpelz
+💀
+
+
+[06/23/2024 17:07] daniel526
+lmao
+
+{Reactions}
+💀 
+
+[06/23/2024 17:11] forgebyola
+Not exactly dupes. More like issues
+
+
+[06/23/2024 19:13] ruan_53970
+https://tenor.com/view/cars-movie-mater-aw-dang-dang-dang-it-gif-2382149005641120105
+
+{Embed}
+https://tenor.com/view/cars-movie-mater-aw-dang-dang-dang-it-gif-2382149005641120105
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/cars-movie-mater-802CE.png
+
+
+[06/23/2024 19:16] ruan_53970
+Can one of the rich wardens start a loan business. 🤑
+
+
+[06/23/2024 19:16] ruan_53970
+Just need 1k to hold me over 😆
+
+{Reactions}
+😂 (5) 
+
+[06/23/2024 21:49] devpelz
+ah yes
+
+
+[06/24/2024 05:40] hunter0x01
+Just like AiArena
+
+
+[06/24/2024 05:56] devpelz
+mhmm
+
+
+[06/24/2024 09:38] volokinn
+wen?
+
+{Reactions}
+🇼 (5) 🇪 (4) 🇳 (4) ❔ (4) 
+
+[06/24/2024 09:42] mansa11
+Today
+
+
+[06/24/2024 09:48] kombainera
+https://tenor.com/view/kyriostsahs-lonely-waiting-quarantine-life-gif-18073672
+
+{Embed}
+https://tenor.com/view/kyriostsahs-lonely-waiting-quarantine-life-gif-18073672
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/kyriostsahs-lonely-80C0F.png
+
+
+[06/24/2024 14:57] tamayonft
+You sure about that?
+
+{Reactions}
+💯 (2) 
+
+[06/24/2024 16:19] tigerfrake
+I wouldn't have my hopes so high on this one,lol
+
+
+[06/24/2024 18:09] gr34t.l4k3
+seems like everything is ready 👀
+
+
+[06/24/2024 18:17] benrai
+Nope, some issues are still not finally settled
+
+
+[06/24/2024 19:09] jovi6132
+So many issues were found. Gonna be happy if I make more than 10 USD in this :4739_Skeletor:
+
+
+[06/24/2024 19:21] alexxander
+@CloudEllie - away ‘til 19 Aug Hey, I can see from backstage that the issue are being finalized, however there are still unanswered questions that followed up immediately after a pjqa ruling, are those going to be reviewed by the judge ?
+
+{Reactions}
+👆 (4) 
+
+[06/24/2024 19:22] dimulski
+the judge has been unresponsive for more than two weeks, I think it would be great if we get some info on what is going on
+
+
+[06/24/2024 19:24] buggsy__
+i have noticed this aswell ..
+
+
+[06/24/2024 19:24] dimulski
+how 😄
+
+{Reactions}
+😆 (2) 
+
+[06/24/2024 19:24] alexxander
+Also to add to this that the judge waited for the whole pjqa to expire before answering so its only fair to have the questions raised answered.
+
+{Reactions}
+👍 (2) 
+
+[06/24/2024 19:24] buggsy__
+by looking at his responses or lack off
+
+
+[06/24/2024 19:25] dimulski
+I see you don't have back stage role this is why I asked 😄
+
+
+[06/24/2024 19:25] buggsy__
+i am on a team , the other one has backstage.
+
+{Reactions}
+👌 
+
+[06/24/2024 19:26] saint6704
+Atleast finally we'll see some results
+Although alot of questions are unanswered in PJQA and it is a cause of concern
+
+{Reactions}
+✅ (5) 
+
+[06/24/2024 19:28] forgebyola
+The judge is probably exhausted 
+This was a tough contest to judge lol
+
+
+[06/24/2024 19:29] forgebyola
+A lead judge should definitely come in to finalize the pjqa though
+
+
+[06/24/2024 19:30] dimulski
+nobody is implying that it was an easy one, but plenty of time has passed, and a lot of comments are not resolved which won't be fair to wardens at the end
+
+{Reactions}
+👍 (2) 
+
+[06/24/2024 19:31] forgebyola
+A second judge should come in to assist so this can get resolved
+
+{Reactions}
+✅ 
+
+[06/24/2024 19:33] saint6704
+Yeah, It is not fair towards wardens to be left hanging!
+I can literally wait more to get my 2 cents
+
+{Reactions}
+this (2) 
+
+[06/25/2024 01:17] mylifechangefast.eth_70767
+I ghosted for three good days.. Nothing has dropped👀😭
+
+
+[06/25/2024 02:43] guy_in0xnito
+How can you see this ?
+
+
+[06/25/2024 05:45] daniel526
+steady lads, it is happening!
+
+
+[06/25/2024 05:46] georgefalcon_
+what's that?
+
+
+[06/25/2024 06:11] tigerfrake
+Finally. But there'll be alot of decimals though course there's a shit load of  vuls. Lol
+
+{Reactions}
+this 
+
+[06/25/2024 06:28] daniel526
+yeah, you guys ensured nothing's left behind!
+
+{Reactions}
+😂 (2) 
+
+[06/25/2024 07:15] forgebyola
+There should be a mitigation review after this because wth
+
+
+[06/25/2024 08:46] buggsy__
+For sure , the amount of vuln's is astonishing damn
+
+
+[06/25/2024 08:47] buggsy__
+Soon brother we will have money for rent and food 🤣🤣🤣🤣
+
+
+[06/25/2024 10:18] tigerfrake
+I fear it might not be much this time💀
+
+{Reactions}
+10_10 
+
+[06/25/2024 12:52] itsabinashb
+https://tenor.com/view/you-have-no-idea-gif-27149353
+
+{Embed}
+https://tenor.com/view/you-have-no-idea-gif-27149353
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/you-have-16653.png
+
+
+[06/25/2024 12:52] itsabinashb
+Any expected time?
+
+
+[06/25/2024 14:34] saint6704
+https://tenor.com/view/mord-mit-aussicht-murder-with-a-view-serie-b%C3%A4r-bjarne-m%C3%A4del-gif-9429734737806974484
+
+{Embed}
+https://tenor.com/view/mord-mit-aussicht-murder-with-a-view-serie-b%C3%A4r-bjarne-m%C3%A4del-gif-9429734737806974484
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/mord-mit-aussicht-murder-with-a-view-BC632.png
+
+
+[06/25/2024 15:55] bigsam0831
+soon
+
+
+[06/26/2024 01:13] mylifechangefast.eth_70767
+0pf
+
+
+[06/26/2024 01:36] jacobmartin0406
+https://tenor.com/view/boring-bored-yawn-ali-g-gif-10978886
+
+{Embed}
+https://tenor.com/view/boring-bored-yawn-ali-g-gif-10978886
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/boring-bored-F05C5.png
+
+
+[06/26/2024 09:42] mosharaf
+https://tenor.com/view/viyeongg-bored-monkey-gif-27573689
+
+{Embed}
+https://tenor.com/view/viyeongg-bored-monkey-gif-27573689
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/viyeongg-bored-monkey-72D34.png
+
+
+[06/26/2024 11:06] buggsy__
+https://tenor.com/view/sad-sea-dog-gif-10539169426521065658
+
+{Embed}
+https://tenor.com/view/sad-sea-dog-gif-10539169426521065658
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/sad-sea-D3E35.png
+
+
+[06/26/2024 13:21] tigerfrake
+Two more weeks, guys😂
+
+
+[06/26/2024 13:26] guy_in0xnito
+How do you know?
+
+
+[06/26/2024 13:26] tigerfrake
+I don't.
+
+
+[06/26/2024 13:27] guy_in0xnito
+Too many issues already man 
+Even stars can't save me atm
+
+
+[06/26/2024 13:28] bigsam0831
+It has been marked in a day or 2
+
+
+[06/26/2024 13:31] tigerfrake
+Yea, Just saw the damn logo on profile
+
+
+[06/26/2024 16:48] yotov721
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/625-56567.png
+
+{Reactions}
+😃 (2) 
+
+[06/26/2024 16:56] buggsy__
+https://tenor.com/view/stone-cold-steve-austin-gif-27207643
+
+{Embed}
+https://tenor.com/view/stone-cold-steve-austin-gif-27207643
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/stone-cold-1A90B.png
+
+
+[06/26/2024 19:25] tamayonft
+Probably today 👀
+
+
+[06/26/2024 20:10] itsabinashb
+nice
+
+
+[06/27/2024 01:12] tigerfrake
+Just woke up to  none💀
+
+{Reactions}
+🤣 
+
+[06/27/2024 02:44] daniel526
+:4739_Skeletor:
+
+
+[06/27/2024 04:14] mylifechangefast.eth_70767
+https://tenor.com/view/i-dont-care-spend-the-money-splash-the-cash-spending-ball-out-gif-16512666
+
+{Embed}
+https://tenor.com/view/i-dont-care-spend-the-money-splash-the-cash-spending-ball-out-gif-16512666
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/i-dont-care-spend-the-money-2DA10.png
+
+
+[06/27/2024 06:00] ruan_53970
+When
+
+
+[06/27/2024 16:02] daniel526
+I swear to God if it wasn't zk airdrop, I would have already committed suicide due to bills. I can imagine the feeling of those who were onto this:chefskiss:
+
+
+[06/27/2024 16:17] tigerfrake
+This sh** crazy yoh. Ain't seen none like it, i mean what's goin on?
+
+
+[06/27/2024 16:17] itsabinashb
+seriously brother, its so annoying
+
+
+[06/27/2024 16:18] itsabinashb
+what is the status of backstage?
+
+
+[06/27/2024 16:18] itsabinashb
+all escalation resolved?
+
+
+[06/27/2024 16:20] tigerfrake
+Everything seems set. Even icon already on profile. Maybe there's a button `claim` that we should be pressing, lol
+
+{Reactions}
+😅 
+
+[06/27/2024 16:24] mylifechangefast.eth_70767
+How much was yours👀
+
+
+[06/27/2024 16:24] mylifechangefast.eth_70767
+To $
+
+
+[06/27/2024 16:24] mylifechangefast.eth_70767
+https://tenor.com/view/what-monkey-shook-shocked-surprised-gif-8153885586429536809
+
+{Embed}
+https://tenor.com/view/what-monkey-shook-shocked-surprised-gif-8153885586429536809
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/what-monkey-59096.png
+
+
+[06/27/2024 16:24] itsabinashb
+https://tenor.com/view/robert-downey-jr-facepalm-annoyed-rdj-ugh-gif-14728589
+
+{Embed}
+https://tenor.com/view/robert-downey-jr-facepalm-annoyed-rdj-ugh-gif-14728589
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/robert-downey-jr-facepalm-D0B73.png
+
+
+[06/27/2024 16:24] daniel526
+focus
+
+{Reactions}
+😂 (3) 
+
+[06/28/2024 02:39] georgefalcon_
+Today.., I swear it by the old gods🙂
+
+{Reactions}
+👌 (4) 
+
+[06/28/2024 05:46] tigerfrake
+I die. It's gonna be one hella disappointment 😂
+
+
+[06/28/2024 06:35] benrai
+And what about the new gods? 😉
+
+
+[06/28/2024 08:54] tigerfrake
+New? You mean `AI` ?, lol
+
+{Reactions}
+😂 
+
+[06/28/2024 10:23] saint6704
+Congratulations @BenRai 💐🎉👏
+
+
+[06/28/2024 10:26] dimulski
+results are out somewhere?
+
+
+[06/28/2024 10:33] saint6704
+Naah just wishing him in advance 😆
+
+{Reactions}
+😂 (7) 
+
+[06/28/2024 10:37] benrai
+Why do you think I won when the result are not final yet? 🤔
+
+
+[06/28/2024 10:48] pkqs90
+I'm also willing to bet you win
+
+
+[06/28/2024 10:49] pkqs90
+Because of the number of submissions I guess 🤣
+
+
+[06/28/2024 11:02] benrai
+Time will tell if not only the quantity but also the quality was enough to win the contest 😅
+
+
+[06/28/2024 11:09] saint6704
+I am just guessing 
+You've submitted so many issues 🙌
+
+{Reactions}
+😅 
+
+[06/28/2024 12:58] mrxsnowden
+Is there a place where I can see the reports of Code4rena competitions? Like the Sherlock site, where you can see the reports and preliminary results on their GitHub
+
+
+[06/28/2024 15:18] tigerfrake
+Login to C4 and head to `Reports`. There's everything.
+
+{Reactions}
+❤️ 
+
+[06/28/2024 17:20] demorextess
+If you want to reach reports for study purpose, I advice solodit.xyz
+
+
+[06/28/2024 17:22] demorextess
+You can filter for C4 of course
+
+
+[06/29/2024 03:50] tigerfrake
+Lol, the old gods couldn't do sh**
+
+
+[06/29/2024 05:27] 0xfox_
+Damn bros i didn't even participate and you got me anticipating this thing like the second coming of Christ
+
+{Reactions}
+🤣 (5) 
+
+[06/29/2024 06:21] buggsy__
+Ummm , code4rena i need my lunch money
+
+
+[06/29/2024 06:22] buggsy__
+https://tenor.com/view/bigay-ng-barya-kimpoy-feliciano-kimpoy-feliciano-vlog-mga-barya-bigyan-ng-pera-gif-18452299
+
+{Embed}
+https://tenor.com/view/bigay-ng-barya-kimpoy-feliciano-kimpoy-feliciano-vlog-mga-barya-bigyan-ng-pera-gif-18452299
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/bigay-ng-barya-kimpoy-feliciano-E3135.png
+
+
+[06/29/2024 06:57] benrai
+Hi @CloudEllie - away ‘til 19 Aug, respectfully, it seams to me that not much has happened in the judging process for the last 10 days. 
+I think me and some other participants are wondering if it is normal that it takes 10 days + for a sponsor to give a feedback if they still have questions or not.  Would be great to get an official statement of the state of the judging and if we should be expecting the results to take 2 more weeks or if the target time for finalization is more like a couple of day away. Thanks in advance for your feedback 🙂
+
+{Reactions}
+this (8) 
+
+[06/29/2024 07:07] buggsy__
+.........
+
+
+[06/29/2024 07:18] buggsy__
+I think everything about the judging proccess should've been done by now , so some explanation would be nice
+
+{Reactions}
+👍 
+
+[06/29/2024 20:15] mylifechangefast.eth_70767
+They should pay compensation ngl.. For keeping us waiting🥺🥺
+
+Or is it the reward noya promised us that's keeping this longer?
+
+
+[06/29/2024 20:44] benrai
+There is nothing written in the rules that states the the judging and reward distribution needs to be done within a specific time frame. Or am I mistaking? 🤔 So I would say compensation for waiting is not appropriate 😉 But a little bit more communication about expected time frames would not be the worst thing to improve the way people perceive the judging process  of C4 I guess 🤷🏻‍♂️
+
+{Reactions}
+✅ (2) 😂 
+
+[06/29/2024 20:46] mylifechangefast.eth_70767
+was just kidding about that compensation of a thing.. I hope it is well though 😇
+
+
+[06/30/2024 02:42] tigerfrake
+Won't be surprised to have `Predy` results come out before this one, lol
+
+
+[06/30/2024 02:47] saint6704
+Won't be surprised to see you topping the list there too
+
+
+[06/30/2024 02:48] tigerfrake
+Lmao
+
+
+[06/30/2024 12:30] itsabinashb
+@CloudEllie - away ‘til 19 Aug hello, I am completely unknown from what is happening in backstage as I don't have required role, from above discussions I understood that the process could be faster than this and result would have been announced, I don't have any problem if it going to take more time if lead judge has to complete escalations but if not please give us some information about the backstage condition. Thanks in advance for your feedback.
+
+{Reactions}
+🖖 (2) 
+
+[06/30/2024 13:20] itsmetechjay
+Hi everyone, we are currently clarifying a few final things with the judge and then we'll get this awarded.  We are all working as hard as we can to move this forward as quickly as possible. We really appreciate your patience.
+
+{Reactions}
+💜 (20) 🥱 (4) c4services (4) 
+
+[07/01/2024 06:13] ruan_53970
+When will it end. Do you need help judging.
+
+
+[07/01/2024 06:18] tigerfrake
+Gotta chill now, lol
+
+
+[07/01/2024 07:21] daniel526
+😂
+
+
+[07/01/2024 07:34] buggsy__
+xD
+
+
+[07/01/2024 08:11] demorextess
+I laughed out loud 😂
+
+
+[07/01/2024 08:23] cloudellie
+Very sorry for the delays, everyone. The combination of a very high volume of submissions, busier-than-average post-judging QA, and the diligence that these two things require from the judge and sponsor team, has stretched the timeline beyond what's typical for Code4rena. 
+
+We always endeavour to post awards as quickly as possible, but our north star is always securing projects, which means that we hold very high standards for both supporting sponsors through the review phase, and thorough and accurate judging. Sometimes -- as is the case here -- that results in delays.
+
+Staff are doing their best to obtain final decisions so we can announce awards ASAP. If we don't post daily updates, it's because we don't like stringing people along or making promises that we can't guarantee. Really appreciate everyone's patience. 🙏
+
+{Reactions}
+🫡 (6) 🙏 (3) c4services (5) 
+
+[07/01/2024 08:50] dany_armstrong
+Fair enough.
+
+{Reactions}
+💯 (3) 
+
+[07/01/2024 12:57] buggsy__
+That sounds like we may be ready in 2 3 days and we might be ready in 1 month ....
+
+
+[07/01/2024 13:00] buggsy__
+That is all nice , but in 3 days there is no activity on the opened issues
+
+
+[07/01/2024 13:00] buggsy__
+I dont see proggress at all
+
+
+[07/01/2024 13:04] buggsy__
+I might be mistaken if so excuse me .
+
+
+[07/01/2024 13:06] cloudellie
+I can understand the frustration. Everyone is working as quickly as they can.
+
+{Reactions}
+❤️ (7) 
+
+[07/01/2024 14:03] buggsy__
+Okey , Thank you for your efforts ❤️
+
+{Reactions}
+💜 (2) 
+
+[07/01/2024 19:28] evokid
+@CloudEllie - away ‘til 19 Aug is doing a lot of work and amazing job constantly in C4, it's not really easy, C4 staff trying to do their best. I can't complain. I can just wait and be thankful that there is amazing people like this to treat and take care of process with no stop with all those contests that coming one after another. Please Wardens be patient be supportive. Please remember that all those efforts always takes time, there is no short cuts or a magic stick to speed up the process. What else we should say? Nothing except I would like to thank this platform and the staff for this amazing work, it doesn't matter how much time it takes. It matters that we support their efforts as good community and spread the good vibe to help them more than complaining. This is my personal opinion, you can like it or disagree, I wish everyone the best. 🎉
+
+{Reactions}
+this (6) ❤️ (3) 
+
+[07/01/2024 19:45] hex_panda
+How can one access the judging dashboard? Do you have to have a certain reputation level on C4?
+
+
+[07/01/2024 19:47] kartoonjoy
+you'll need to be Certified and qualify and approved for the SR role
+
+{Reactions}
+❤️ 
+
+[07/01/2024 19:49] hex_panda
+Thank you for your reply! Is there any way I can ping someone from the judges to satisfy my curiosity to know if one of my issues was accepted? (A specific issue that I reported) Or this is not allowed?
+
+
+[07/01/2024 19:57] kartoonjoy
+no pinging the judges please
+
+{Reactions}
+❤️ 
+
+[07/01/2024 19:58] kartoonjoy
+If you desire not to become certified + SR, we'd ask that you check on your findings once the report is published and repo is public.
+
+{Reactions}
+❤️ (2) 
+
+[07/01/2024 23:32] liveactionllamac4
+🤑 🎉  Awards for **NOYA**:
+
+$6,361.43 USDC » @BenRai 
+$4,693.24 USDC » 0xAlix2 (@a_kalout and @ali_shehab) 
+$3,532.10 USDC » @alexxander 
+$3,396.92 USDC » Sentryx (@flacko and @buggsy) 
+$3,053.17 USDC » KYP (@yotov721 and @givn) 
+$2,893.73 USDC » @pkqs90 
+$2,586.91 USDC » @grearlake 
+$2,086.26 USDC » @iamandreiski 
+$1,878.30 USDC » SeveritySquad (@shealtielanz and @0xdice91) 
+$1,409.41 USDC » @KupiaSec 
+$1,258.18 USDC » @said 
+$1,212.77 USDC » @rbserver 
+$1,002.10 USDC » @MrPotatoMagic 
+$986.89 USDC » @VAD37 
+$965.61 USDC » @SpicyMeatball 
+$948.53 USDC » @Bauchibred 
+$935.18 USDC » @ArsenLupin 
+$928.77 USDC » @joaovwfreire 
+$856.50 USDC » @0xladboy | Sparkware 
+$704.08 USDC » @ZanyBonzy 
+$695.95 USDC » WinSec (@0xweb3boy, @ni8mare and @0xanmol) 
+$666.85 USDC » @AlexCzm 
+$635.98 USDC » SBSecurity (@blckhv and @Slavcheww) 
+$629.96 USDC » @Weed0607 
+$514.29 USDC » @0xbug 
+$482.66 USDC » @Tigerfrake 
+$436.32 USDC » @oakcobalt 
+$347.01 USDC » @MSaptarshi 
+$333.59 USDC » DPS (@0xJaeger and @yvuchev) 
+$304.69 USDC » @Rhaydden 
+$288.57 USDC » TPSec (@PTolev and @Pataroff) 
+$248.15 USDC » @forgebyola 
+$234.32 USDC » @hihen 
+$230.80 USDC » @atoko 
+$229.29 USDC » Inspex (@jokopoppo, @DeStinE21, mimic_f, Rugsurely, ErbaZZ, @rxnnxchxi and doggo) 
+$215.64 USDC » @d3e4 
+$211.53 USDC » @Jorgect 
+$200.62 USDC » @den-sosnowsky 
+$164.58 USDC » @dimulski 
+$150.77 USDC » @Zac🇬🇧 
+$140.44 USDC » @cu5t0mpeo 
+$139.49 USDC » @Kaysoft 
+$138.30 USDC » @Jolah1 
+$138.11 USDC » @Autosaida 
+$135.34 USDC » @alexfilippov314 
+$133.70 USDC » @n1punp 
+$130.67 USDC » @Bigsam 
+$125.51 USDC » @josephdara 
+$125.31 USDC » @eta 
+$123.14 USDC » @shaflow2 
+$74.93 USDC » @btk 
+$70.85 USDC » @0xfalconHoof 
+$69.32 USDC » @JanuaryPersimmon2024 
+$62.86 USDC » @0xJoyBoy03 
+$57.46 USDC » @recursiveAudit 
+$57.23 USDC » @Cryptor 
+$55.81 USDC » @0xbeWater0Given 
+$55.14 USDC » @0xrex 
+$52.50 USDC » @Bareli 
+$48.73 USDC » @0xmystery 
+$45.42 USDC » @Daniel526 
+$42.87 USDC » @wangxx2026 
+$38.88 USDC » @cheatc0d3 
+$38.76 USDC » @shikhar229169 
+$38.49 USDC » @audinarey 
+$37.21 USDC » @evokid 
+$36.65 USDC » @0xDemon 
+$35.86 USDC » @mrMorningstar 
+$35.74 USDC » @auditism 
+$35.02 USDC » @ak1 
+$28.99 USDC » @CodeCipher 
+$25.94 USDC » @0xbepresent 
+$25.83 USDC » @JC 
+$25.06 USDC » @peanuts 
+$24.58 USDC » @d_tony7470 
+$23.68 USDC » @0xblackskull 
+$23.11 USDC » @dimah7 
+$23.09 USDC » @codeslide 
+$23.09 USDC » @rekxor 
+$21.69 USDC » @Stormreckson⛈ 
+$21.34 USDC » @0x486776 
+$19.36 USDC » Centaur (@EFCC Web3🕵🏽, @mazi_xyz, Aristos and @TheWeb3Mechanic)
+
+{Reactions}
+🔥 (6) 🇧🇬 (7) 
+
+[07/01/2024 23:33] liveactionllamac4
+$19.18 USDC » @0xSecuri 
+$19.18 USDC » @Brenzee 
+$19.18 USDC » @Sparrow 
+$19.18 USDC » @djanerch 
+$19.18 USDC » @MrjoryStewartBaxter 
+$19.18 USDC » @slvDev 
+$19.18 USDC » @Tofunmi 
+$19.18 USDC » @twcctop 
+$19.18 USDC » @DemoreX 
+$18.54 USDC » @FastChecker 
+$17.56 USDC » @xg 
+$17.54 USDC » @Stefanov 
+$16.09 USDC » @PENGUN 
+$16.02 USDC » @Ironsidesec 
+$15.08 USDC » @smith3dx 
+$14.57 USDC » Dup1337 (@sorryNotsorry and @deliriusz) 
+$13.15 USDC » @DanielArmstrong 
+$11.08 USDC » @sutter 
+$10.48 USDC » @HONEY 
+$10.40 USDC » @ICP 
+$9.39 USDC » @joicygiore 
+$8.74 USDC » @John_Femi 
+$8.44 USDC » @petro_1912 
+$8.39 USDC » @Topmark 
+$8.21 USDC » @robertodf99 
+$7.58 USDC » @0xmuxyz 
+$5.40 USDC » @Pelz 
+$5.40 USDC » @Aariiif 
+$5.40 USDC » @fandonov 
+$4.79 USDC » @bctester 
+$4.59 USDC » @Draiakoo 
+$4.59 USDC » @Hueber 
+$4.59 USDC » @Lin 
+$4.59 USDC » @codeislight 
+$4.59 USDC » @seeques 
+$3.93 USDC » @biakia 
+$3.91 USDC » @Vancelot 
+$3.67 USDC » @0rpse 
+$3.37 USDC » @itsabinashb 
+$3.37 USDC » @steadyman 
+$3.34 USDC » @SancyBars 
+$3.05 USDC » @tchkvsky 
+$2.89 USDC » @HChang26 
+$2.87 USDC » @cholakovv 
+$2.87 USDC » @Light 
+$2.66 USDC » poslednaya  
+$2.48 USDC » @Ocean_Sky 
+$2.46 USDC » @havewemeetbefore 
+$2.39 USDC » @novamanbg 
+$1.38 USDC » @ZdravkoHr 
+$1.36 USDC » @ChaseTheLight 
+$1.21 USDC » @MrCrowNFT 
+$1.21 USDC » @unix515 
+$1.21 USDC » @web3km 
+$1.21 USDC » @youleeyan 
+$1.18 USDC » @kk 
+$1.18 USDC » @nnez 
+$0.23 USDC » @sh1v 
+$0.18 USDC » @0xch 
+$0.18 USDC » @4rdiii 
+$0.18 USDC » @AvantGard 
+$0.18 USDC » @Nikki 
+$0.18 USDC » @Velislav4o 
+$0.18 USDC » @eldenelder 
+$0.18 USDC » @gavfu 
+$0.18 USDC » @korok 
+$0.02 USDC » @0xBugSlayer 
+$0.02 USDC » @0xMosh 
+$0.02 USDC » @Ali-_-Y 
+$0.02 USDC » @BiasedMerc 
+$0.02 USDC » @heedfxn 
+$0.02 USDC » @lanrebayode77
+
+🏁 Findings summary
+--------------------------------------—
+23 High risk findings
+63 Med risk findings
+Top QA report: Bauchibred
+
+Awards will be distributed on Polygon within the next week. Congratulations all!  💸 💸 💸
+
+Additional Notes: 
+- Information will be provided soon regarding the process for NOYA star allocation.
+- If you participated in this audit and don’t see your name on this list, please wait until the report is published and the findings repo is made public to check on your submissions.
+
+{Reactions}
+hi5 
+
+[07/01/2024 23:34] mylifechangefast.eth_70767
+https://tenor.com/view/what-monkey-shook-shocked-surprised-gif-8153885586429536809
+
+{Embed}
+https://tenor.com/view/what-monkey-shook-shocked-surprised-gif-8153885586429536809
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/what-monkey-59096.png
+
+
+[07/01/2024 23:35] shealtielanz
+My 2 Mediums Saved me tho 🫠❤️
+Congrats @pkqs90 you’re a beast 🌸🫠
+
+
+[07/01/2024 23:36] shealtielanz
+When stars 🌟 👀😂
+
+
+[07/01/2024 23:39] shealtielanz
+This contest wasn’t judge completely though, some solo I saw had a clear duplicate, was pointed out and nothing was said 
+But still happy with the results.
+
+{Reactions}
+🥺 🙌 
+
+[07/01/2024 23:42] mylifechangefast.eth_70767
+Wen reports?
+
+
+[07/01/2024 23:44] gr34t.l4k3
+Maybe some days, some weeks, some months, or never :4739_Skeletor:
+
+{Reactions}
+😂 (3) 
+
+[07/01/2024 23:44] mylifechangefast.eth_70767
+Who be this man😂
+
+
+[07/01/2024 23:48] zdravkohr
+23 highs and 63 meds 🫣
+
+{Reactions}
+😂 (7) 
+
+[07/01/2024 23:48] shealtielanz
+Congrats @EFCC Web3🕵🏽 🔥 Amazing win
+
+{Reactions}
+✅ (3) 🫡 
+
+[07/01/2024 23:49] mylifechangefast.eth_70767
+2H 1 med, minted 19 doliz😆
+
+{Reactions}
+😂 (2) 
+
+[07/01/2024 23:52] gr34t.l4k3
+You can get SR role to read reports  👀
+
+{Reactions}
+😂 (2) 
+
+[07/01/2024 23:55] mylifechangefast.eth_70767
+That's racism 😏
+
+
+[07/01/2024 23:58] gr34t.l4k3
+Have a high report is enough to request for SR role, or im missing sth ? 👀
+
+
+[07/01/2024 23:59] mylifechangefast.eth_70767
+I don't know😅🤷‍♀
+
+
+[07/01/2024 23:59] mylifechangefast.eth_70767
+We all had school exams we should have done more😭
+
+
+[07/02/2024 00:06] demorextess
+Oh no I just learned at least 3 audits required for SR
+
+{Reactions}
+👀 ☝️ 
+
+[07/02/2024 00:19] ladboy233
+@BenRai congrats
+
+
+[07/02/2024 00:19] ladboy233
+I see you grind hard
+
+
+[07/02/2024 00:20] ladboy233
+not sure how much the airdropped star will worth, we will see,
+
+
+[07/02/2024 00:22] ladboy233
+I certainly that protocol do better than blast haha
+
+{Reactions}
+😂 
+
+[07/02/2024 00:29] itsabinashb
+Congratulations legends @0xladboy | Sparkware @BenRai
+
+{Reactions}
+👍 
+
+[07/02/2024 00:29] forgebyola
+This was a tough contest. Congrats everyone
+
+
+[07/02/2024 00:32] pkqs90
+Congrats @BenRai. You did win this one after all 😃
+
+{Reactions}
+😅 (2) 
+
+[07/02/2024 00:36] mrcrownft
+Congrats everyone 😊
+
+
+[07/02/2024 00:54] mylifechangefast.eth_70767
+Airdrop? Nice👏😊
+now I see it because of the reward so many people participated:chefskiss:
+
+
+[07/02/2024 00:58] jovi6132
+Ggs everyone!
+
+
+[07/02/2024 01:00] jovi6132
+You've killed it @BenRai! Nice job!! I'd love to hear some tips from you on how to stay focused after finding so many issues and still keep on searching for more
+
+{Reactions}
+😊 
+
+[07/02/2024 01:00] jovi6132
+IKR! I got 2.3 BLAST from the airdrop 🥲
+
+
+[07/02/2024 01:01] guy_in0xnito
+In the c4 profile 
+Where it says 
+'n' confirmed findings 
+Does it show for all H/M/L(grade a/b)
+
+
+[07/02/2024 01:01] guy_in0xnito
+?
+
+
+[07/02/2024 01:12] guy_in0xnito
++ 1
+
+
+[07/02/2024 03:05] daniel526
+Kudo @Tigerfrake 🎉
+
+
+[07/02/2024 03:49] saint6704
+@BenRai congratulations 
+My prediction was right 💯
+
+{Reactions}
+💯 (2) 
+
+[07/02/2024 03:53] tigerfrake
+Thank buddy. Couldn't have been possible without your efforts, pal
+
+
+[07/02/2024 04:21] benrai
+Thanks! 🙂 This audit was a lot of work 😅
+
+
+[07/02/2024 04:29] benrai
+I think for this contest it was understanding the overall concept of the connectors and grinding through all the connectors. And make sure to also understand how the external protocol works. Also I only focused on the connectors and did not have time to take a look at the other parts of the protocol.
+
+{Reactions}
+💯 (3) 
+
+[07/02/2024 04:31] benrai
+Thanks! 🔮
+
+
+[07/02/2024 05:11] ali_shehab.
+Congrats everyone
+
+
+[07/02/2024 05:46] .satyam_
+Congrats Winsec
+
+{Reactions}
+🫡 (2) 
+
+[07/02/2024 06:05] hunter0x01
+Congrats @ali_shehab
+
+
+[07/02/2024 06:38] ali_shehab.
+Thank you
+
+
+[07/02/2024 06:40] stormreckson
+The wait and the result are the same "long"! ... congratulations everyone 🎉!
+
+{Reactions}
+rocketship 😂 
+
+[07/02/2024 06:55] flackoon
+Congrats everyone 🙂
+
+{Reactions}
+🔥 
+
+[07/02/2024 07:04] buggsy__
+Congratulations to everybody finally we can buy some juice and cereal for breakfast hahaah , jokes
+
+
+[07/02/2024 07:05] buggsy__
+Good work everybody :hi5: :hi5: 🔥
+
+
+[07/02/2024 07:07] buggsy__
+Good work for the code4rena team aswell ❤️ i gave u a little hard time more than i should probably hihihi excuse me 🙈🥳
+
+{Reactions}
+💀 💜 😆 
+
+[07/02/2024 07:10] jolah1
+Finally!😀
+Congratulations everyone
+
+{Reactions}
+🧡 
+
+[07/02/2024 07:28] bulletprime.
+Congrats everyone 💯
+
+
+[07/02/2024 08:02] demorextess
+Congrats everyonee 🖖
+
+
+[07/02/2024 08:14] alexfilippov314
+Congrats everyone🏆
+
+
+[07/02/2024 10:52] saint6704
+Thanks ser ❤️
+
+{Reactions}
+🫡 (3) 
+
+[07/02/2024 11:07] olanre_waju
+congratulations to me:hi5: first last position! Next; first 1st position 🎉
+
+{Reactions}
+😂 (14) hi5 (10) 🎉 (11) 🫡 (6) 
+
+[07/02/2024 14:46] yotov721
+On what chain are NOYA stars going to be distributed  ?
+
+{Reactions}
+❤️ (3) 👀 (3) 
+
+[07/02/2024 19:33] henryfunction
+Congratulations @EFCC Web3🕵🏽
+
+{Reactions}
+🔥 
+
+[07/04/2024 10:08] saint6704
+I'm just curious how noya stars will be distributed ?
+And what's the use of it ?
+
+{Reactions}
+➕ (12) 
+
+[07/04/2024 10:09] saint6704
+if anyone knows do let me know
+
+
+[07/09/2024 08:24] optimisticallyomnichain
+Base
+
+
+[07/09/2024 08:25] optimisticallyomnichain
+Basically it's our version of points! https://x.com/NetworkNoya/status/1801548993035411944
+
+{Embed}
+https://twitter.com/NetworkNoya/status/1801548993035411944
+NOYA.ai (@NetworkNoya) on X
+Into the Stars: NOYA’s Innovative Space Race Program
+Code4rena - ARCHIVE-Q2-2024 - noya-apr26 [1226982823978733698].txt_Files/GPypkrOXIAIqIgC-F0EE5.jpg%3Alarge
+Twitter
+
+{Reactions}
+💜 
+
+[07/09/2024 13:36] optimisticallyomnichain
+alexxander    @alexxander 
+KupiaSec    @KupiaSec 
+SpicyMeatball    @SpicyMeatball 
+joaovwfreire    @joaovwfreire 
+oakcobalt    @oakcobalt 
+DPS    DPS ( @0xJaeger r and @yvuchev chev)
+forgebyola    @forgebyola la
+hihen    @hihen hen
+Inspex    Inspex ( @jokopoppo po , @DeStinE21  , ...)
+den-sosnowsky    @den-sosnowsky 
+Zac    @Zac🇬🇧 
+btk    @btk 
+falconhoof    @0xfalconHoof 
+recursiveEth    @recursiveAudit 
+Cryptor    @Cryptor 
+0xbeWater0given    @0xbeWater0Given ven
+bareli    @Bareli 
+0xmystery    @0xmystery 
+cheatc0d3    @cheatc0d3 
+Audinarey    @audinarey 
+Evo    @evokid 
+Aymen0909    @CodeCipher 
+0xbepresent    @0xbepresent 
+peanuts    @peanuts 
+dimah7    @dimah7 
+0x486776    @0x486776 
+Brenzee    @Brenzee 
+xg    @xg 
+ironsidesec    @Ironsidesec 
+igbinosuneric    @smith3dx 
+DanielArmstrong    @DanielArmstrong 
+valy001    @sutter 
+honey-k12    @HONEY 
+John_Femi    @John_Femi 
+aariiif    @Pelz 
+fandonov    @Aariiif 
+bctester    @bctester 
+codeislight    @Draiakoo 
+Draiakoo    @Hueber 
+Hueber    @Lin 
+LinKenji    @codeislight
+
+
+[07/09/2024 13:36] optimisticallyomnichain
+seeques    @seeques 
+biakia    @biakia 
+Vancelot    @Vancelot 
+0rpse    @0rpse 
+itsabinashb    @itsabinashb 
+Sancybars    @SancyBars 
+HChang26    @HChang26 
+lightoasis    @Light 
+poslednaya    @poslednaya 
+havewemeetbefore    @havewemeetbefore 
+novamanbg    @novamanbg 
+ZdravkoHr    @ZdravkoHr 
+ChaseTheLight    @ChaseTheLight 
+unix515    @unix515 
+youleeyan    @youleeyan 
+kk    @kk 
+sh1v    @sh1v 
+0xch    @Chuuch 
+AvantGard    @AvantGard 
+eldenelder    @Nikki 
+gavfu    @Velislav4o 
+korok    @eldenelder 
+Velislav4o    @korok 
+Ali-_-Y    @Ali-_-Y 
+BiasedMerc    @BiasedMerc 
+heedfxn    @heedfxn
+
+
+[07/09/2024 13:37] optimisticallyomnichain
+Please DM me after you sign up to the space race and send me your address before 15/07/2024 :thankyou: 💜
+
+{Reactions}
+✅ (8) 💜 
+
+[07/09/2024 13:37] optimisticallyomnichain
+If I haven't confirmed the address DM me again! ❤️
+
+
+[08/10/2024 13:38] itsmetechjay
+ℹ️ This channel is pending archive.   As a result, any private threads will be permanently deleted on Friday, 16 August 2024. Please make sure to grab anything you might need before then.
+
+
+==============================================================
+Exported 712 message(s)
+==============================================================
